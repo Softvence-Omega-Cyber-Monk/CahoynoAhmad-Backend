@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { TUser } from 'src/types';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -7,6 +7,8 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
+ 
+   // Retrieves the profile of the currently authenticated user.
   async getMe(user: Partial<TUser>) {
     try {
       const profile = await this.prisma.userProfile.findUnique({
@@ -26,10 +28,11 @@ export class UserService {
       }
       return profile;
     } catch (error) {
-      throw error;
+      throw new HttpException(error.message, error.status)
     }
   }
 
+  // Updates the profile of the currently authenticated user.
   async updateProfile(user: Partial<TUser>, updateProfileDto: UpdateUserDto) {
     try {
       const profile = await this.prisma.userProfile.update({
@@ -52,7 +55,7 @@ export class UserService {
       }
       return profile;
     } catch (error) {
-      throw error;
+      throw new HttpException(error.message, error.status)
     }
   }
 }
