@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { TUser } from 'src/types';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -12,12 +11,45 @@ export class UserService {
     try {
       const profile = await this.prisma.userProfile.findUnique({
         where: {
-          userId: user.id,
+          userId: user.userId,
         },
         include: {
           user: true,
         },
       });
+      if (profile?.user) {
+        const { password, ...safeUser } = profile.user;
+        return {
+          ...profile,
+          user: safeUser,
+        };
+      }
+      return profile;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async updateProfile(user: Partial<TUser>, updateProfileDto: UpdateUserDto) {
+    try {
+      const profile = await this.prisma.userProfile.update({
+        where: {
+          userId: user.userId,
+        },
+        data: {
+          ...updateProfileDto,
+        },
+        include: {
+          user: true,
+        },
+      });
+      if (profile?.user) {
+        const { password, ...safeUser } = profile.user;
+        return {
+          ...profile,
+          user: safeUser,
+        };
+      }
       return profile;
     } catch (error) {
       throw error;
