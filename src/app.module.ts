@@ -8,18 +8,15 @@ import { AuthModule } from './main/auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { UserModule } from './main/user/user.module';
 
-
-
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    
-  PrismaModule,
-  AuthModule,
-  UserModule,
 
+    PrismaModule,
+    AuthModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}
