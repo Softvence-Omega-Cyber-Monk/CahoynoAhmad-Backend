@@ -11,6 +11,7 @@ import { JwtService } from '@nestjs/jwt';
 export class AuthService {
   constructor(private prisma: PrismaService, private jwtService: JwtService) { }
 
+  // This function will create user
   async create(createAuthDto: CreateAuthDto) {
     try {
       const existingUser = await this.prisma.credential.findUnique({
@@ -50,6 +51,7 @@ export class AuthService {
     }
   }
 
+// This function for login user
  async login(loginDto: LoginDTO) {
     const { email, password } = loginDto;
 
@@ -74,7 +76,6 @@ export class AuthService {
       };
 
       const accessToken = await this.jwtService.signAsync(payload);
-
       return {
         accessToken
       };
