@@ -1,15 +1,25 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
+import { LoginDTO } from './dto/login.dto';
 
 @Injectable()
 export class AuthService {
   constructor(private prisma: PrismaService) {}
 
-  async create(createAuthDto: CreateAuthDto, profileDTO: any) {
-    return this.prisma.$transaction(async (tx) => {
+  async create(createAuthDto: CreateAuthDto) {
+   try{
+    const existingUser = await this.prisma.credential.findUnique({
+      where: {
+        email: createAuthDto.email,
+      },
+    });
+    if (existingUser) {
+      throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
+    }
+     return this.prisma.$transaction(async (tx) => {
       const {  password} = createAuthDto;
       const hasshedPassword = await bcrypt.hash(password, 10);
       // Step 1: Create credential using createAuthDto
@@ -21,11 +31,9 @@ export class AuthService {
           userName: createAuthDto.userName,
         },
       });
-
       // Step 2: Create user profile using profileDTO and link it to credential
       const userProfile = await tx.userProfile.create({
         data: {
-          ...profileDTO, 
           userId: credential.id, 
         },
       });
@@ -35,21 +43,29 @@ export class AuthService {
         userProfile,
       };
     });
+   }catch (error) {
+    throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+   }
   }
-
-  findAll() {
-    return `This action returns all auth`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
-
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+  
+  async login(loginDto: LoginDTO) {
+    const { email, password } = loginDto;
+    try{
+        const user = await this.prisma.credential.findUnique({
+          where: {
+            email: email,
+          },
+        });
+        if (!user) {
+          throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+        }
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+          throw new HttpException('Invalid password', HttpStatus.UNAUTHORIZED);
+        }
+        return user;
+    }catch(error){
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }
