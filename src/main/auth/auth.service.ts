@@ -9,7 +9,10 @@ import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(private prisma: PrismaService, private jwtService: JwtService) { }
+  constructor(
+    private prisma: PrismaService,
+    private jwtService: JwtService,
+  ) {}
 
   // This function will create user
   async create(createAuthDto: CreateAuthDto) {
@@ -51,8 +54,8 @@ export class AuthService {
     }
   }
 
-// This function for login user
- async login(loginDto: LoginDTO) {
+  // This function for login user
+  async login(loginDto: LoginDTO) {
     const { email, password } = loginDto;
 
     try {
@@ -77,7 +80,7 @@ export class AuthService {
 
       const accessToken = await this.jwtService.signAsync(payload);
       return {
-        accessToken
+        accessToken,
       };
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
