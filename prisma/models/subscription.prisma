@@ -1,0 +1,22 @@
+model Subscription {
+  id                   String       @id @default(cuid())
+  userId               String
+  planType             PlanType
+  dailyGenerations     Int        
+  toneStylesAllowed    Int        
+  publicFeedAccess     Boolean    
+  communitySharing     Boolean    
+  postInteraction      Boolean    
+  createdAt            DateTime     @default(now())
+  updatedAt            DateTime     @updatedAt
+
+  userProfile          UserProfile?
+
+  @@unique([userId]) // Ensures one subscription per user
+}
+
+enum PlanType {
+  FREE
+  BOOSTED
+  PREMIUM
+}

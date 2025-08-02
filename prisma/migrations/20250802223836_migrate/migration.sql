@@ -1,19 +1,3 @@
--- CreateEnum
-CREATE TYPE "public"."UserRole" AS ENUM ('ADMIN', 'USER');
-
--- CreateTable
-CREATE TABLE "public"."credentials" (
-    "id" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
-    "password" TEXT NOT NULL,
-    "fullName" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-    "role" "public"."UserRole" NOT NULL DEFAULT 'USER',
-
-    CONSTRAINT "credentials_pkey" PRIMARY KEY ("id")
-);
-
 -- CreateTable
 CREATE TABLE "public"."user_profiles" (
     "id" TEXT NOT NULL,
@@ -41,10 +25,7 @@ CREATE TABLE "public"."user_profiles" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "credentials_email_key" ON "public"."credentials"("email");
-
--- CreateIndex
 CREATE UNIQUE INDEX "user_profiles_userId_key" ON "public"."user_profiles"("userId");
 
--- AddForeignKey
-ALTER TABLE "public"."user_profiles" ADD CONSTRAINT "user_profiles_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."credentials"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+-- CreateIndex
+CREATE UNIQUE INDEX "user_profiles_subscriptionId_key" ON "public"."user_profiles"("subscriptionId");

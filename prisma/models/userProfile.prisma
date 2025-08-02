@@ -16,9 +16,10 @@ model UserProfile{
   creditUsed Int? @default(0)
   creditBalance Int? @default(0)
   isActive  Boolean @default(true)
-  subscriptionId String?
+  subscriptionId String? @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   user      Credential @relation(fields: [userId], references: [id])
+   subscription    Subscription?  @relation(fields: [subscriptionId], references: [id])
   @@map("user_profiles")
 }
