@@ -11,14 +11,13 @@ export class ContactService {
       const result=await this.mailService.sendMail({
         to:process.env.SMTP_USER as string,
         subject:'Contact Message',
-        html:`<h1>Name: ${createContactDto.name}</h1><h1>Email: ${createContactDto.email}</h1><h2>Message: ${createContactDto.message}</h2>`,
+        html:`<h1>Name: ${createContactDto.name}</h1><h1>Email: ${createContactDto.email}</h1><h3>Message: ${createContactDto.message}</h3>`,
         from:process.env.SMTP_USER as string,
       });
    }catch(err){
       throw new Error('Failed to create contact');
     }
   }
-
   findAll() {
     return `This action returns all contact`;
   }
