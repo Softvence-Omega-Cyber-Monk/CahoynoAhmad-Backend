@@ -7,8 +7,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
- 
-   // Retrieves the profile of the currently authenticated user.
+  // Retrieves the profile of the currently authenticated user.
   async getMe(user: Partial<TUser>) {
     try {
       const profile = await this.prisma.userProfile.findUnique({
@@ -28,7 +27,7 @@ export class UserService {
       }
       return profile;
     } catch (error) {
-      throw new HttpException(error.message, error.status)
+      throw new HttpException(error.message, error.status);
     }
   }
 
@@ -55,7 +54,7 @@ export class UserService {
       }
       return profile;
     } catch (error) {
-      throw new HttpException(error.message, error.status)
+      throw new HttpException(error.message, error.status);
     }
   }
 }
