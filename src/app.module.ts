@@ -10,6 +10,7 @@ import { UserModule } from './main/user/user.module';
 import { MailModule } from './main/mail/mail.module';
 import { ContactModule } from './main/contact/contact.module';
 import { StripPaymentModule } from './main/strip-payment/strip-payment.module';
+import { SubscriptionModule } from './main/subscription/subscription.module';
 
 
 
@@ -23,6 +24,7 @@ import { StripPaymentModule } from './main/strip-payment/strip-payment.module';
     MailModule,
     ContactModule,
     StripPaymentModule,
+    SubscriptionModule,
  
   ],
   controllers: [AppController],
