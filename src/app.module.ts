@@ -9,6 +9,9 @@ import { JwtModule } from '@nestjs/jwt';
 import { UserModule } from './main/user/user.module';
 import { MailModule } from './main/mail/mail.module';
 import { ContactModule } from './main/contact/contact.module';
+import { StripPaymentModule } from './main/strip-payment/strip-payment.module';
+
+
 
 @Module({
   imports: [
@@ -19,6 +22,8 @@ import { ContactModule } from './main/contact/contact.module';
     UserModule,
     MailModule,
     ContactModule,
+    StripPaymentModule,
+ 
   ],
   controllers: [AppController],
   providers: [AppService],
