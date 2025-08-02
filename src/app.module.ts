@@ -8,6 +8,7 @@ import { AuthModule } from './main/auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { UserModule } from './main/user/user.module';
 import { MailModule } from './main/mail/mail.module';
+import { ContactModule } from './main/contact/contact.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { MailModule } from './main/mail/mail.module';
     AuthModule,
     UserModule,
     MailModule,
+    ContactModule,
   ],
   controllers: [AppController],
   providers: [AppService],
