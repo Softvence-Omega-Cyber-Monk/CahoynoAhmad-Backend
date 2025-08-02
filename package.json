@@ -39,6 +39,9 @@
     "rxjs": "^7.8.1",
     "stripe": "^18.4.0"
   },
+   "prisma": {
+    "schema": "./prisma"
+  },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.18.0",

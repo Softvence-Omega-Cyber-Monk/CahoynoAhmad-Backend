@@ -20,6 +20,6 @@ model UserProfile{
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   user      Credential @relation(fields: [userId], references: [id])
-   subscription    Subscription?  @relation(fields: [subscriptionId], references: [id]) // ✅ now optional
+   subscription    Subscription?  @relation(fields: [subscriptionId], references: [id])
   @@map("user_profiles")
 }
