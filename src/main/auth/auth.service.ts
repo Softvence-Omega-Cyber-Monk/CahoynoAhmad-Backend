@@ -57,17 +57,17 @@ export class AuthService {
   // This function for login user
   async login(loginDto: LoginDTO) {
     const { email, password } = loginDto;
-
     try {
       const user = await this.prisma.credential.findUnique({
         where: { email },
       });
-
+      
       if (!user) {
         throw new HttpException('User not found', HttpStatus.NOT_FOUND);
       }
 
       const isPasswordValid = await bcrypt.compare(password, user.password);
+     
       if (!isPasswordValid) {
         throw new HttpException('Invalid password', HttpStatus.UNAUTHORIZED);
       }
