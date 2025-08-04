@@ -1,7 +1,6 @@
 
 model Subscription {
   id                   String       @id @default(cuid())
-  userId               String       @unique
   planType             PlanType
   dailyGenerations     Int
   toneStylesAllowed    Int
@@ -13,7 +12,6 @@ model Subscription {
 
   // Relations
   userProfile          UserProfile?
-
   @@map("subscriptions")
 }
 enum PlanType {
