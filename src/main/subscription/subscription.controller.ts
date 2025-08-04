@@ -2,7 +2,6 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, HttpStatus, UseGuard
 import { SubscriptionService } from './subscription.service';
 import { CreateSubscriptionDto } from './dto/create-subscription.dto';
 import { UpdateSubscriptionDto } from './dto/update-subscription.dto';
-import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from 'src/utils/authorization/roles.guard';
 import { Roles } from 'src/utils/authorization/roles.decorator';
 import { Role } from 'src/utils/authorization/role.enum';
@@ -26,6 +25,8 @@ export class SubscriptionController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin)
 async findAllSubscription() {
     const result = await this.subscriptionService.findAllSubscription();
     return {
@@ -36,18 +37,30 @@ async findAllSubscription() {
     }
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.subscriptionService.findOne(+id);
-  }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSubscriptionDto: UpdateSubscriptionDto) {
-    return this.subscriptionService.update(+id, updateSubscriptionDto);
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin)
+  async update(@Param('id') id: string, @Body() updateSubscriptionDto: UpdateSubscriptionDto) {
+    const result=await this.subscriptionService.updateSubscription(id, updateSubscriptionDto);
+    return{
+      statusCode:HttpStatus.OK,
+      success:true,
+      message:"Subscription updated successfully",
+      data:result
+    }
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin)
   remove(@Param('id') id: string) {
-    return this.subscriptionService.remove(+id);
+    const result=this.subscriptionService.remove(id);
+    return {
+        statusCode: HttpStatus.OK,
+      success: true,
+      message: 'Subscription deleted successfully',
+      data: result,
+    }
   }
 }
