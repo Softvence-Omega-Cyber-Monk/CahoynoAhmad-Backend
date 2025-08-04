@@ -1,16 +1,32 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { CreateSubscriptionDto } from './dto/create-subscription.dto';
 import { UpdateSubscriptionDto } from './dto/update-subscription.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class SubscriptionService {
+  constructor(private prisma: PrismaService) {}
   async createSubscription(createSubscriptionDto: CreateSubscriptionDto) {
-    console.log(createSubscriptionDto);
-    return 'This action adds a new subscription';
+    try{
+      const subscription=await this.prisma.subscription.create({
+        data:{
+          ...createSubscriptionDto
+        }
+      })
+      return subscription
+    }catch(error){
+      throw new HttpException(error.message,500)
+    }
+    
   }
 
-  findAll() {
-    return `This action returns all subscription`;
+ async findAllSubscription() {
+    try{
+      const result=await this.prisma.subscription.findMany()
+      return result
+    }catch(error){
+      throw new HttpException(error.message, 500)
+    }
   }
 
   findOne(id: number) {

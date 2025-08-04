@@ -3,16 +3,19 @@ import { SubscriptionService } from './subscription.service';
 import { CreateSubscriptionDto } from './dto/create-subscription.dto';
 import { UpdateSubscriptionDto } from './dto/update-subscription.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { RolesGuard } from 'src/utils/authorization/roles.guard';
+import { Roles } from 'src/utils/authorization/roles.decorator';
+import { Role } from 'src/utils/authorization/role.enum';
+import { JwtAuthGuard } from 'src/utils/jwt-auth.guard';
 
 @Controller('subscription')
 export class SubscriptionController {
   constructor(private readonly subscriptionService: SubscriptionService) {}
 
   @Post('create')
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(JwtAuthGuard,RolesGuard)
+  @Roles(Role.Admin)
   async createSubscription(@Body() SubscriptionDto: CreateSubscriptionDto,@Request() req) {
-    console.log(req.user)
-    console.log(SubscriptionDto)
     const subscription=await this.subscriptionService.createSubscription(SubscriptionDto);
     return {
        statusCode:HttpStatus.CREATED,
@@ -23,8 +26,14 @@ export class SubscriptionController {
   }
 
   @Get()
-  findAll() {
-    return this.subscriptionService.findAll();
+async findAllSubscription() {
+    const result = await this.subscriptionService.findAllSubscription();
+    return {
+      statusCode: HttpStatus.OK,
+      success: true,
+      message: 'Subscription fetched successfully',
+      data: result,
+    }
   }
 
   @Get(':id')
