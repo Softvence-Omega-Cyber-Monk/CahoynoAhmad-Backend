@@ -26,8 +26,14 @@ export class SubscriptionController {
   }
 
   @Get()
-  findAll() {
-    return this.subscriptionService.findAll();
+async findAllSubscription() {
+    const result = await this.subscriptionService.findAllSubscription();
+    return {
+      statusCode: HttpStatus.OK,
+      success: true,
+      message: 'Subscription fetched successfully',
+      data: result,
+    }
   }
 
   @Get(':id')

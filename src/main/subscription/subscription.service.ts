@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { CreateSubscriptionDto } from './dto/create-subscription.dto';
 import { UpdateSubscriptionDto } from './dto/update-subscription.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -15,13 +15,18 @@ export class SubscriptionService {
       })
       return subscription
     }catch(error){
-      console.log(error)
+      throw new HttpException(error.message,500)
     }
-    return 'This action adds a new subscription';
+    
   }
 
-  findAll() {
-    return `This action returns all subscription`;
+ async findAllSubscription() {
+    try{
+      const result=await this.prisma.subscription.findMany()
+      return result
+    }catch(error){
+      throw new HttpException(error.message, 500)
+    }
   }
 
   findOne(id: number) {
