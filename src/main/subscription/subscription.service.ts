@@ -29,15 +29,34 @@ export class SubscriptionService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} subscription`;
+
+  updateSubscription(id:string, updateSubscriptionDto: UpdateSubscriptionDto) {
+    try{
+      const result= this.prisma.subscription.update({
+        where:{
+          id:id
+        },
+        data:{
+          ...updateSubscriptionDto
+        }
+      })
+      return result
+    }catch(error){
+      throw new HttpException(error.message, 500)
+    }
   }
 
-  update(id: number, updateSubscriptionDto: UpdateSubscriptionDto) {
-    return `This action updates a #${id} subscription`;
+  remove(id: string) {
+    try{
+      const result=this.prisma.subscription.delete({
+        where:{
+          id:id
+        }
+      })
+      
+    return result
+  }catch(error){
+    throw new HttpException(error.message, 500)
   }
-
-  remove(id: number) {
-    return `This action removes a #${id} subscription`;
   }
 }
