@@ -4,7 +4,8 @@ import { UpdateSubscriptionDto } from './dto/update-subscription.dto';
 
 @Injectable()
 export class SubscriptionService {
-  create(createSubscriptionDto: CreateSubscriptionDto) {
+  async createSubscription(createSubscriptionDto: CreateSubscriptionDto) {
+    console.log(createSubscriptionDto);
     return 'This action adds a new subscription';
   }
 
