@@ -1,25 +1,27 @@
-model UserProfile{
-  id        String   @id @default(cuid())
-  userId    String   @unique
-  profilePhoto String?
-  coverPhoto String?
-  bio       String?
-  location  String?
-  address   String?
-  phone     String?
-  facebook   String?
-  twitter    String?
-  instagram  String?
-  linkedin   String?
-  designation String?
-  creditLimit Int? @default(100)
-  creditUsed Int? @default(0)
-  creditBalance Int? @default(0)
-  isActive  Boolean @default(true)
-  subscriptionId String? @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  user      Credential @relation(fields: [userId], references: [id])
-   subscription    Subscription?  @relation(fields: [subscriptionId], references: [id])
+model UserProfile {
+  id              String        @id @default(cuid())
+  userId          String        @unique
+  profilePhoto    String?
+  coverPhoto      String?
+  bio             String?
+  location        String?
+  address         String?
+  phone           String?
+  facebook        String?
+  twitter         String?
+  instagram       String?
+  linkedin        String?
+  designation     String?
+  creditLimit     Int?          @default(100)
+  creditUsed      Int?          @default(0)
+  isActive        Boolean       @default(true)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  // Relations
+  user            Credential     @relation(fields: [userId], references: [id])
+  subscriptionId  String?        @unique
+  subscription    Subscription?  @relation(fields: [subscriptionId], references: [id])
+
   @@map("user_profiles")
 }

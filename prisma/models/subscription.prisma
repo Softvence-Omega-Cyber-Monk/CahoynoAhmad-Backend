@@ -1,20 +1,21 @@
+
 model Subscription {
   id                   String       @id @default(cuid())
-  userId               String
+  userId               String       @unique
   planType             PlanType
-  dailyGenerations     Int        
-  toneStylesAllowed    Int        
-  publicFeedAccess     Boolean    
-  communitySharing     Boolean    
-  postInteraction      Boolean    
+  dailyGenerations     Int
+  toneStylesAllowed    Int
+  publicFeedAccess     Boolean
+  communitySharing     Boolean
+  postInteraction      Boolean
   createdAt            DateTime     @default(now())
   updatedAt            DateTime     @updatedAt
 
+  // Relations
   userProfile          UserProfile?
 
-  @@unique([userId]) // Ensures one subscription per user
+  @@map("subscriptions")
 }
-
 enum PlanType {
   FREE
   BOOSTED
