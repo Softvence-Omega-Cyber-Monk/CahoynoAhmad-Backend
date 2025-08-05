@@ -4,10 +4,10 @@ import { ValidationPipe } from '@nestjs/common';
 import * as bodyParser from 'body-parser';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true });
+  const app = await NestFactory.create(AppModule,{rawBody:true});
 
   // Middleware should be registered before setting global prefix
-  app.use('/api/payment/webhook', bodyParser.raw({ type: 'application/json' }));
+  app.use('/api/stripe/webhook', bodyParser.raw({ type: 'application/json' }));
 
   // Set global prefix after middleware
   app.setGlobalPrefix('api');

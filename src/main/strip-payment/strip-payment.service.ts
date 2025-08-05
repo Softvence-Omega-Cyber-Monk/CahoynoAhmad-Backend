@@ -1,57 +1,88 @@
 import { Injectable } from '@nestjs/common';
-import { CreateStripPaymentDto } from './dto/create-strip-payment.dto';
-import { UpdateStripPaymentDto } from './dto/update-strip-payment.dto';
-import Stripe from 'stripe';
+import Stripe from 'stripe'; // Ensure you import Stripe correctly
+import { ConfigService } from '@nestjs/config'; // Import ConfigService to access environment variables
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
-export class StripPaymentService {
-  private stripe: Stripe;
+export class StripeService {
+    private stripe: Stripe; // Declare a private stripe instance
 
-  constructor( private prisma: PrismaService) {
-    this.stripe = new Stripe(process.env.STRIPE_SECRET as string, {
-    })   }
+    constructor(private readonly configService: ConfigService,private prisma:PrismaService) {
+        const stripeSecretKey = this.configService.get<string>('STRIPE_SECRET_KEY');
+        if (!stripeSecretKey) {
+            throw new Error('STRIPE_SECRET_KEY is not defined in environment variables');
+        }
+        this.stripe = new Stripe(stripeSecretKey, {
+           
+        });
+    }
 
-  async createPaymentIntent(createStripPaymentDto: CreateStripPaymentDto) {
-    const paymentIntent = await this.stripe.paymentIntents.create({
-      amount: createStripPaymentDto.amount,
-      currency: 'usd',
-      payment_method_types: ['card'],
-    });
+    async create(createStripeDto: any) {
+        const plan = 'PREMIUM'; 
+        let priceId: string | undefined;
 
-    return {
-      clientSecret: paymentIntent.client_secret,
-      paymentIntentId: paymentIntent.id,
-      link:paymentIntent
-    };
-  }
+        // Determine the price ID based on the plan
+        if (plan === 'PREMIUM') {
+            priceId = 'price_1RsqclCiM0crZsfwUtOshc09';
+        } 
 
-  async handleSuccessfulPayment(paymentIntent: Stripe.PaymentIntent) {
-  // Example: save to DB
-  await this.prisma.payment.create({
-    data: {
-      stripePaymentId: paymentIntent.id,
-      amount: paymentIntent.amount,
-      currency: paymentIntent.currency,
-      status: paymentIntent.status,
-      email: paymentIntent.receipt_email,
-    },
-  });
-}
+        if (!priceId) {
+            throw new Error(`No priceId found for plan: ${plan}`);
+        }
 
-  findAll() {
-    return `This action returns all stripPayment`;
-  }
+        // Create a checkout session
+        const session = await this.stripe.checkout.sessions.create({
+            mode: 'subscription',
+            line_items: [
+                {
+                    price: priceId,
+                    quantity: 1,
+                },
+            ],
+            success_url: 'https://example.com/success?session_id={CHECKOUT_SESSION_ID}', 
+            cancel_url: 'https://example.com/cancel',
+        });
 
-  findOne(id: number) {
-    return `This action returns a #${id} stripPayment`;
-  }
+        return { message: 'Payment session created successfully', sessionId: session.id ,url:session.url };
+    }
 
-  update(id: number, updateStripPaymentDto: UpdateStripPaymentDto) {
-    return `This action updates a #${id} stripPayment`;
-  }
+    async findAll({ season_id }: { season_id: string }) {
+      
+     const result=await this.stripe.checkout.sessions.retrieve(season_id)
+        console.log(result); // Log the result for debugging
+        return { message: 'Payment session retrieved successfully', session: result };
+    }
 
-  remove(id: number) {
-    return `This action removes a #${id} stripPayment`;
-  }
+    async handleWebhook(req: any, body: any) {
+      console.log('form webhok',body)
+        const webhookSecret = this.configService.get<string>('WEBHOOK_SECRET');
+        if (!webhookSecret) {
+            throw new Error('STRIPE_WEBHOOK_SECRET is not defined in environment variables');
+        }
+        const event = this.stripe.webhooks.constructEvent(
+            body,
+            req.headers['stripe-signature'],
+            webhookSecret
+        );
+
+        // Process the event
+        switch (event.type) {
+            case 'checkout.session.completed':
+                // Handle successful checkout session completion
+                console.log('Checkout session completed:', event.data.object);
+                break;
+            default:
+                console.warn(`Unhandled event type ${event.type}`);
+        }
+
+        return { received: true };
+    }
+
+    findOne(id: number) {
+        return `This action returns a #${id} stripe`;
+    }
+
+    remove(id: number) {
+        return `This action removes a #${id} stripe`;
+    }
 }

@@ -24,7 +24,7 @@ export class SubscriptionController {
 
   @Post('create')
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.User)
+  @Roles(Role.Admin)
   async createSubscription(
     @Body() SubscriptionDto: CreateSubscriptionDto,
     @Request() req,
@@ -54,7 +54,7 @@ export class SubscriptionController {
 
   @Patch(':id')
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.Admin)
+  @Roles(Role.User)
   async update(
     @Param('id') id: string,
     @Body() updateSubscriptionDto: UpdateSubscriptionDto,
