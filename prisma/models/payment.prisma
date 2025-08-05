@@ -1,0 +1,17 @@
+model Payment {
+  id              String   @id @default(cuid())
+  stripePaymentId String   @unique
+  amount          Int      
+  currency        String
+  status          String   
+  email           String?  
+  description     String?  
+  userId          String? @unique
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Optional relation
+  user            Credential? @relation(fields: [userId], references: [id])
+
+  @@map("payments")
+}

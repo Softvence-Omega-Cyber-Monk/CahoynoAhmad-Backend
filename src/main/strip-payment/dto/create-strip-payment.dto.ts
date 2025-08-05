@@ -1,1 +1,5 @@
-export class CreateStripPaymentDto {}
+export class CreateStripPaymentDto {
+
+  amount: number;
+
+}

@@ -1,9 +1,7 @@
 import { IsBoolean, IsEnum, IsNumber, IsString } from 'class-validator';
 import { PlanType } from 'generated/prisma';
 
-
 export class CreateSubscriptionDto {
-
   @IsEnum(PlanType)
   planType: PlanType;
 

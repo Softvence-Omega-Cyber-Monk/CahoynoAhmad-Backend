@@ -12,8 +12,6 @@ import { StripPaymentModule } from './main/strip-payment/strip-payment.module';
 import { SubscriptionModule } from './main/subscription/subscription.module';
 import { PrismaModule } from './prisma/prisma.module';
 
-
-
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -25,7 +23,6 @@ import { PrismaModule } from './prisma/prisma.module';
     ContactModule,
     StripPaymentModule,
     SubscriptionModule,
- 
   ],
   controllers: [AppController],
   providers: [AppService],
