@@ -42,14 +42,11 @@ export class StripeService {
             success_url: 'https://example.com/success?session_id={CHECKOUT_SESSION_ID}', 
             cancel_url: 'https://example.com/cancel',
         });
-
         return { message: 'Payment session created successfully', sessionId: session.id ,url:session.url };
     }
 
-    async findAll({ season_id }: { season_id: string }) {
-      
+    async findAll({ season_id }: { season_id: string }) {  
      const result=await this.stripe.checkout.sessions.retrieve(season_id)
-        console.log(result); // Log the result for debugging
         return { message: 'Payment session retrieved successfully', session: result };
     }
 
