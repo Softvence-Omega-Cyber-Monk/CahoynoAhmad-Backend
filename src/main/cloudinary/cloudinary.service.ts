@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Global, Injectable } from '@nestjs/common';
 import { UploadApiResponse } from 'cloudinary';
 import cloudinary from './cloudinary.config';
 
+@Global()
 @Injectable()
 export class CloudinaryService {
   async uploadImage(file: Express.Multer.File): Promise<UploadApiResponse> {

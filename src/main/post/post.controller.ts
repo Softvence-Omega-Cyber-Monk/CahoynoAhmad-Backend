@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  HttpStatus,
   Post,
   Req,
   UploadedFile,
@@ -9,8 +10,9 @@ import {
 } from '@nestjs/common';
 import { PostService } from './post.service';
 import { JwtAuthGuard } from 'src/utils/jwt-auth.guard';
-import { CreateUserDto } from '../user/dto/create-user.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { CreatePostDTO } from './dtos/create-post.dto';
+// import { Request } from 'express';
 
 @Controller('post')
 export class PostController {
@@ -19,12 +21,29 @@ export class PostController {
   @UseGuards(JwtAuthGuard)
   @Post()
   @UseInterceptors(FileInterceptor('image'))
-  createPost(
-    @Body() postContent: CreateUserDto,
+  async createPost(
+    @Body() postContent: CreatePostDTO,
     @UploadedFile() file: Express.Multer.File,
     @Req() req: any,
   ) {
-    console.log('postContent========>', postContent);
-    console.log('ImageFile========>', file);
+    try {
+      const result = await this.postService.createPost(
+        postContent.content,
+        file,
+        req.user,
+      );
+      return {
+        statusCode: HttpStatus.CREATED,
+        success: true,
+        message: 'Post created successfully',
+        data: result,
+      };
+    } catch (error) {
+      return {
+        statusCode: error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+        success: false,
+        message: error.message || 'Internal Server Error',
+      };
+    }
   }
 }
