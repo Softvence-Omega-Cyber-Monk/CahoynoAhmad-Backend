@@ -11,6 +11,8 @@ import { ContactModule } from './main/contact/contact.module';
 import { StripPaymentModule } from './main/strip-payment/strip-payment.module';
 import { SubscriptionModule } from './main/subscription/subscription.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { CloudinaryService } from './main/cloudinary/cloudinary.service';
+import { PostModule } from './main/post/post.module';
 
 @Module({
   imports: [
@@ -23,8 +25,9 @@ import { PrismaModule } from './prisma/prisma.module';
     ContactModule,
     StripPaymentModule,
     SubscriptionModule,
+    PostModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, CloudinaryService],
 })
 export class AppModule {}
