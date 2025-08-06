@@ -4,7 +4,7 @@ import { ValidationPipe } from '@nestjs/common';
 import * as bodyParser from 'body-parser';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule,{rawBody:true});
+  const app = await NestFactory.create(AppModule, { rawBody: true });
 
   // Middleware should be registered before setting global prefix
   app.use('/api/stripe/webhook', bodyParser.raw({ type: 'application/json' }));
@@ -12,7 +12,13 @@ async function bootstrap() {
   // Set global prefix after middleware
   app.setGlobalPrefix('api');
 
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      forbidNonWhitelisted: true,
+      whitelist: true,
+      transform: true,
+    }),
+  );
 
   await app.listen(process.env.PORT ?? 5000);
 }
