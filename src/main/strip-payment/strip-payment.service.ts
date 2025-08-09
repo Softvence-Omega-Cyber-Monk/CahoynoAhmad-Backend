@@ -5,7 +5,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class StripeService {
-    private stripe: Stripe; // Declare a private stripe instance
+    private stripe: Stripe; 
 
     constructor(private readonly configService: ConfigService,private prisma:PrismaService) {
         const stripeSecretKey = this.configService.get<string>('STRIPE_SECRET_KEY');
@@ -39,8 +39,8 @@ export class StripeService {
                     quantity: 1,
                 },
             ],
-            success_url: 'https://example.com/success?session_id={CHECKOUT_SESSION_ID}', 
-            cancel_url: 'https://example.com/cancel',
+            success_url: `${this.configService.get<string>('CLIENT_URL')}/success?session_id={CHECKOUT_SESSION_ID}`, 
+            cancel_url: `${this.configService.get<string>('CLIENT_URL')}/cancel`,
         });
         return { message: 'Payment session created successfully', sessionId: session.id ,url:session.url };
     }
