@@ -5,81 +5,125 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class StripeService {
-    private stripe: Stripe; 
+  private stripe: Stripe;
 
-    constructor(private readonly configService: ConfigService,private prisma:PrismaService) {
-        const stripeSecretKey = this.configService.get<string>('STRIPE_SECRET_KEY');
-        if (!stripeSecretKey) {
-            throw new Error('STRIPE_SECRET_KEY is not defined in environment variables');
-        }
-        this.stripe = new Stripe(stripeSecretKey, {
-           
-        });
+  constructor(
+    private readonly configService: ConfigService,
+    private prisma: PrismaService,
+  ) {
+    const stripeSecretKey = this.configService.get<string>('STRIPE_SECRET_KEY');
+    if (!stripeSecretKey) {
+      throw new Error(
+        'STRIPE_SECRET_KEY is not defined in environment variables',
+      );
+    }
+    this.stripe = new Stripe(stripeSecretKey, {});
+  }
+
+  async create(createStripeDto: any) {
+    const plan = createStripeDto.plan;
+    const month: string = createStripeDto.month;
+
+    let priceId: string | undefined;
+
+    // Determine the price ID based on the plan
+    if (plan === 'PREMIUM') {
+      if (month === '1') {
+        priceId = this.configService.get<string>('PREMIUM_1_MONTH');
+      } else if (month === '3') {
+        priceId = this.configService.get<string>('PREMIUM_3_MONTH');
+      } else if (month === '6') {
+        priceId = this.configService.get<string>('PREMIUM_6_MONTH');
+      } else {
+        priceId = this.configService.get<string>('PREMIUM_12_MONTH');
+      }
+    } else if (plan === 'CORE PAID') {
+      if (month === '1') {
+        priceId = this.configService.get<string>('BASIC_1_MONTH');
+      } else if (month === '3') {
+        priceId = this.configService.get<string>('BASIC_3_MONTH');
+      } else if (month === '6') {
+        priceId = this.configService.get<string>('BASIC_6_MONTH');
+      } else {
+        priceId = this.configService.get<string>('BASIC_12_MONTH');
+      }
+    } else if (plan === 'SAVAGE MODE') {
+      if (month === '1') {
+        priceId = this.configService.get<string>('FREE_1_MONTH');
+      } else if (month === '3') {
+        priceId = this.configService.get<string>('FREE_3_MONTH');
+      } else if (month === '6') {
+        priceId = this.configService.get<string>('FREE_6_MONTH');
+      } else {
+        priceId = this.configService.get<string>('FREE_12_MONTH');
+      }
+    } else {
+      throw new Error(`Unsupported plan: ${plan}`);
     }
 
-    async create(createStripeDto: any) {
-        const plan = 'PREMIUM'; 
-        let priceId: string | undefined;
-
-        // Determine the price ID based on the plan
-        if (plan === 'PREMIUM') {
-            priceId = 'price_1RsqclCiM0crZsfwUtOshc09';
-        } 
-
-        if (!priceId) {
-            throw new Error(`No priceId found for plan: ${plan}`);
-        }
-
-        // Create a checkout session
-        const session = await this.stripe.checkout.sessions.create({
-            mode: 'subscription',
-            line_items: [
-                {
-                    price: priceId,
-                    quantity: 1,
-                },
-            ],
-            success_url: `${this.configService.get<string>('CLIENT_URL')}/success?session_id={CHECKOUT_SESSION_ID}`, 
-            cancel_url: `${this.configService.get<string>('CLIENT_URL')}/cancel`,
-        });
-        return { message: 'Payment session created successfully', sessionId: session.id ,url:session.url };
+    if (!priceId) {
+      throw new Error(`No priceId found for plan: ${plan}`);
     }
 
-    async findAll({ season_id }: { season_id: string }) {  
-     const result=await this.stripe.checkout.sessions.retrieve(season_id)
-        return { message: 'Payment session retrieved successfully', session: result };
+    // Create a checkout session
+    const session = await this.stripe.checkout.sessions.create({
+      mode: 'subscription',
+      line_items: [
+        {
+          price: priceId,
+          quantity: 1,
+        },
+      ],
+      success_url: `${this.configService.get<string>('CLIENT_URL')}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${this.configService.get<string>('CLIENT_URL')}/cancel`,
+    });
+    return {
+      message: 'Payment session created successfully',
+      sessionId: session.id,
+      url: session.url,
+    };
+  }
+
+  async findAll({ season_id }: { season_id: string }) {
+    const result = await this.stripe.checkout.sessions.retrieve(season_id);
+    return {
+      message: 'Payment session retrieved successfully',
+      session: result,
+    };
+  }
+
+  async handleWebhook(req: any, body: any) {
+    console.log('form webhok', body);
+    const webhookSecret = this.configService.get<string>('WEBHOOK_SECRET');
+    if (!webhookSecret) {
+      throw new Error(
+        'STRIPE_WEBHOOK_SECRET is not defined in environment variables',
+      );
+    }
+    const event = this.stripe.webhooks.constructEvent(
+      body,
+      req.headers['stripe-signature'],
+      webhookSecret,
+    );
+
+    // Process the event
+    switch (event.type) {
+      case 'checkout.session.completed':
+        // Handle successful checkout session completion
+        console.log('Checkout session completed:', event.data.object);
+        break;
+      default:
+        console.warn(`Unhandled event type ${event.type}`);
     }
 
-    async handleWebhook(req: any, body: any) {
-      console.log('form webhok',body)
-        const webhookSecret = this.configService.get<string>('WEBHOOK_SECRET');
-        if (!webhookSecret) {
-            throw new Error('STRIPE_WEBHOOK_SECRET is not defined in environment variables');
-        }
-        const event = this.stripe.webhooks.constructEvent(
-            body,
-            req.headers['stripe-signature'],
-            webhookSecret
-        );
+    return { received: true };
+  }
 
-        // Process the event
-        switch (event.type) {
-            case 'checkout.session.completed':
-                // Handle successful checkout session completion
-                console.log('Checkout session completed:', event.data.object);
-                break;
-            default:
-                console.warn(`Unhandled event type ${event.type}`);
-        }
+  findOne(id: number) {
+    return `This action returns a #${id} stripe`;
+  }
 
-        return { received: true };
-    }
-
-    findOne(id: number) {
-        return `This action returns a #${id} stripe`;
-    }
-
-    remove(id: number) {
-        return `This action removes a #${id} stripe`;
-    }
+  remove(id: number) {
+    return `This action removes a #${id} stripe`;
+  }
 }

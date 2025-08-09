@@ -1,7 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Request } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Request,
+} from '@nestjs/common';
 
 import { StripeService } from './strip-payment.service';
-
 
 @Controller('stripe')
 export class StripeController {
@@ -9,7 +17,6 @@ export class StripeController {
 
   @Post()
   async create(@Body() createStripeDto: any) {
-   
     return this.stripeService.create(createStripeDto);
   }
 
@@ -19,10 +26,10 @@ export class StripeController {
   }
 
   @Get('/success')
- async findAll(@Request() req) {
-  console.log('req.query.session_id', req.query.session_id);
-    return await this.stripeService.findAll(req.query.session_id as { season_id: string });
+  async findAll(@Request() req) {
+    console.log('req.query.session_id', req.query.session_id);
+    return await this.stripeService.findAll(
+      req.query.session_id as { season_id: string },
+    );
   }
-
-
 }
