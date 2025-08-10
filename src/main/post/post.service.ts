@@ -51,6 +51,7 @@ export class PostService {
             },
           },
         },
+        reaction: true,
       },
     });
     return result;
