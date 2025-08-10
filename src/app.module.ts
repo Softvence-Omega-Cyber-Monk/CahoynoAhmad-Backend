@@ -13,6 +13,7 @@ import { SubscriptionModule } from './main/subscription/subscription.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { CloudinaryService } from './main/cloudinary/cloudinary.service';
 import { PostModule } from './main/post/post.module';
+import { ReactionModule } from './main/reaction/reaction.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { PostModule } from './main/post/post.module';
     StripPaymentModule,
     SubscriptionModule,
     PostModule,
+    ReactionModule,
   ],
   controllers: [AppController],
   providers: [AppService, CloudinaryService],
