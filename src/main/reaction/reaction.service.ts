@@ -2,10 +2,13 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { CreateReactionDto } from './dtos/create-reaction.dto';
 import { TJwtPayload } from 'src/types/user';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { ReactionType } from 'generated/prisma';
 
 @Injectable()
 export class ReactionService {
   constructor(private readonly prisma: PrismaService) {}
+
+  //Create Reaction.
   async reactToPost(dto: CreateReactionDto, user: TJwtPayload) {
     //Check if post exist or not
     const isPostExit = await this.prisma.post.findUnique({
@@ -52,6 +55,21 @@ export class ReactionService {
         },
       });
     }
+    return result;
+  }
+
+  //Get Reaction conunts
+  async getReactionCounts(postId: string) {
+    const counts = await this.prisma.reaction.groupBy({
+      by: 'type',
+      where: { postId },
+      _count: { type: true },
+    });
+    const result = Object.values(ReactionType).reduce((acc, type) => {
+      acc[type] = 0;
+      return acc;
+    }, {});
+    counts.forEach((item) => (result[item.type] = item._count.type));
     return result;
   }
 }
