@@ -24,6 +24,25 @@ export class StripeService {
     const plan = createStripeDto.plan;
     const month: string = createStripeDto.month;
 
+    // Here i need to find the user according to give auth token then i can use userEmail
+    const {  userEmail } = createStripeDto;
+
+  // 1. Find or create a Stripe customer
+  let customerId: string;
+  const existingCustomers = await this.stripe.customers.list({ email: userEmail, limit: 1 });
+
+  if (existingCustomers.data.length > 0) {
+    // If a customer with this email already exists, use their ID
+    customerId = existingCustomers.data[0].id;
+  } else {
+    // If not, create a new customer
+    const newCustomer = await this.stripe.customers.create({
+      email: userEmail,
+      description: `Customer for ${userEmail}`,
+    });
+    customerId = newCustomer.id;
+  }
+
     let priceId: string | undefined;
 
     // Determine the price ID based on the plan
@@ -74,6 +93,7 @@ export class StripeService {
           quantity: 1,
         },
       ],
+      customer: customerId,
       success_url: `${this.configService.get<string>('CLIENT_URL')}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${this.configService.get<string>('CLIENT_URL')}/cancel`,
     });
@@ -92,6 +112,7 @@ export class StripeService {
     };
   }
 
+//   Handle webhook
   async handleWebhook(req: any, body: any) {
     console.log('form webhok', body);
     const webhookSecret = this.configService.get<string>('WEBHOOK_SECRET');

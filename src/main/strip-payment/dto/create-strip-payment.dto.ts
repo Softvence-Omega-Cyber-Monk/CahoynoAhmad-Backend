@@ -4,4 +4,6 @@ export class CreateStripPaymentDto {
   email: string;
   phone: string;
   token: string;
+  plan:string
+  month:string
 }
