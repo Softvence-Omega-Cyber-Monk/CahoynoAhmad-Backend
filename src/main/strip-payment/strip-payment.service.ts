@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import Stripe from 'stripe'; // Ensure you import Stripe correctly
-import { ConfigService } from '@nestjs/config'; // Import ConfigService to access environment variables
+import Stripe from 'stripe';
+import { ConfigService } from '@nestjs/config';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -13,138 +13,85 @@ export class StripeService {
   ) {
     const stripeSecretKey = this.configService.get<string>('STRIPE_SECRET_KEY');
     if (!stripeSecretKey) {
-      throw new Error(
-        'STRIPE_SECRET_KEY is not defined in environment variables',
-      );
+      throw new Error('STRIPE_SECRET_KEY is not defined in environment variables');
     }
-    this.stripe = new Stripe(stripeSecretKey, {});
-  }
-
-  async create(createStripeDto: any) {
-    const plan = createStripeDto.plan;
-    const month: string = createStripeDto.month;
-
-    // Here i need to find the user according to give auth token then i can use userEmail
-    const {  userEmail } = createStripeDto;
-
-  // 1. Find or create a Stripe customer
-  let customerId: string;
-  const existingCustomers = await this.stripe.customers.list({ email: userEmail, limit: 1 });
-
-  if (existingCustomers.data.length > 0) {
-    // If a customer with this email already exists, use their ID
-    customerId = existingCustomers.data[0].id;
-  } else {
-    // If not, create a new customer
-    const newCustomer = await this.stripe.customers.create({
-      email: userEmail,
-      description: `Customer for ${userEmail}`,
+    this.stripe = new Stripe(stripeSecretKey, {
+    
     });
-    customerId = newCustomer.id;
   }
 
-    let priceId: string | undefined;
 
-    // Determine the price ID based on the plan
-    if (plan === 'PREMIUM') {
-      if (month === '1') {
-        priceId = this.configService.get<string>('PREMIUM_1_MONTH');
-      } else if (month === '3') {
-        priceId = this.configService.get<string>('PREMIUM_3_MONTH');
-      } else if (month === '6') {
-        priceId = this.configService.get<string>('PREMIUM_6_MONTH');
-      } else {
-        priceId = this.configService.get<string>('PREMIUM_12_MONTH');
-      }
-    } else if (plan === 'CORE PAID') {
-      if (month === '1') {
-        priceId = this.configService.get<string>('BASIC_1_MONTH');
-      } else if (month === '3') {
-        priceId = this.configService.get<string>('BASIC_3_MONTH');
-      } else if (month === '6') {
-        priceId = this.configService.get<string>('BASIC_6_MONTH');
-      } else {
-        priceId = this.configService.get<string>('BASIC_12_MONTH');
-      }
-    } else if (plan === 'SAVAGE MODE') {
-      if (month === '1') {
-        priceId = this.configService.get<string>('FREE_1_MONTH');
-      } else if (month === '3') {
-        priceId = this.configService.get<string>('FREE_3_MONTH');
-      } else if (month === '6') {
-        priceId = this.configService.get<string>('FREE_6_MONTH');
-      } else {
-        priceId = this.configService.get<string>('FREE_12_MONTH');
-      }
-    } else {
-      throw new Error(`Unsupported plan: ${plan}`);
-    }
+async createSubscription(dto: { priceId: string; customerEmail: string; paymentMethodId: string }) {
+  const { priceId, customerEmail, paymentMethodId } = dto;
 
-    if (!priceId) {
-      throw new Error(`No priceId found for plan: ${plan}`);
-    }
+  // 1. Find or create customer
+  const existingCustomers = await this.stripe.customers.list({ email: customerEmail, limit: 1 });
+  const customerId = existingCustomers.data[0]?.id ?? (await this.stripe.customers.create({ email: customerEmail })).id;
 
-    // Create a checkout session
-    const session = await this.stripe.checkout.sessions.create({
-      mode: 'subscription',
-      line_items: [
-        {
-          price: priceId,
-          quantity: 1,
-        },
-      ],
-      customer: customerId,
-      success_url: `${this.configService.get<string>('CLIENT_URL')}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${this.configService.get<string>('CLIENT_URL')}/cancel`,
-    });
-    return {
-      message: 'Payment session created successfully',
-      sessionId: session.id,
-      url: session.url,
-    };
-  }
+  // 2. Attach payment method to customer
+  await this.stripe.paymentMethods.attach(paymentMethodId, { customer: customerId });
 
-  async findAll({ season_id }: { season_id: string }) {
-    const result = await this.stripe.checkout.sessions.retrieve(season_id);
-    return {
-      message: 'Payment session retrieved successfully',
-      session: result,
-    };
-  }
+  // 3. Set payment method as default for invoices
+  await this.stripe.customers.update(customerId, {
+    invoice_settings: { default_payment_method: paymentMethodId },
+  });
 
-//   Handle webhook
-  async handleWebhook(req: any, body: any) {
-    console.log('form webhok', body);
-    const webhookSecret = this.configService.get<string>('WEBHOOK_SECRET');
+  // 4. Create subscription with payment_behavior: 'error_if_incomplete'
+const subscription = await this.stripe.subscriptions.create({
+  customer: customerId,
+  items: [{ price: priceId }],
+  payment_behavior: 'error_if_incomplete',
+  expand: ['latest_invoice.payment_intent'],
+});
+
+const latestInvoice = subscription.latest_invoice as Stripe.Invoice & { payment_intent?: Stripe.PaymentIntent };
+
+const paymentIntent = latestInvoice.payment_intent;
+
+if (!paymentIntent) {
+  // No payment intent means payment is not needed now
+  return {
+    subscriptionId: subscription.id,
+    clientSecret: null,
+  };
+}
+
+return {
+  subscriptionId: subscription.id,
+  clientSecret: paymentIntent.client_secret,
+};
+}
+
+
+
+  // Handle webhook
+ async handleWebhook(req: any) {
+    const webhookSecret = 'whsec_dKFgPLzF18VwqXGhjKCPlmG8OWHYKIxf';
     if (!webhookSecret) {
-      throw new Error(
-        'STRIPE_WEBHOOK_SECRET is not defined in environment variables',
-      );
+      throw new Error('Stripe webhook secret not configured');
     }
-    const event = this.stripe.webhooks.constructEvent(
-      body,
-      req.headers['stripe-signature'],
-      webhookSecret,
-    );
 
-    // Process the event
+    // req.body must be raw buffer/string (configured in main.ts)
+    const signature = req.headers['stripe-signature'];
+    if (!signature) {
+      throw new Error('Missing stripe-signature header');
+    }
+
+    let event: Stripe.Event;
+    try {
+      event = this.stripe.webhooks.constructEvent(req.body, signature, webhookSecret);
+    } catch (err: any) {
+      throw new Error(`Webhook signature verification failed: ${err.message}`);
+    }
+
     switch (event.type) {
-      case 'checkout.session.completed':
-        // Handle successful checkout session completion
-        console.log('Checkout session completed:', event.data.object);
+      case 'invoice.payment_succeeded':
+        const invoice = event.data.object as Stripe.Invoice;
+        console.log('Invoice payment succeeded:', invoice);
+        // TODO: your business logic here
         break;
       default:
-        console.warn(`Unhandled event type ${event.type}`);
+        console.warn(`Unhandled event type: ${event.type}`);
     }
-
-    return { received: true };
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} stripe`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} stripe`;
   }
 }

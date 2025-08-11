@@ -5,7 +5,7 @@ import * as bodyParser from 'body-parser';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { rawBody: true });
+  const app = await NestFactory.create(AppModule,{cors:true}, );
 
   // Middleware for Stripe webhook (must come before prefix)
   app.use('/api/stripe/webhook', bodyParser.raw({ type: 'application/json' }));
