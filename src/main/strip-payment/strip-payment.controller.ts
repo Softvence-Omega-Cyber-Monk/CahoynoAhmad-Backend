@@ -7,6 +7,10 @@ import {
   Param,
   Delete,
   Request,
+  Res,
+  HttpCode,
+  Header,
+  Req,
 } from '@nestjs/common';
 
 import { StripeService } from './strip-payment.service';
@@ -15,21 +19,22 @@ import { StripeService } from './strip-payment.service';
 export class StripeController {
   constructor(private readonly stripeService: StripeService) {}
 
-  @Post()
+  @Post('create-subscription')
   async create(@Body() createStripeDto: any) {
-    return this.stripeService.create(createStripeDto);
+    return this.stripeService.createSubscription(createStripeDto);
   }
 
   @Post('webhook')
-  async handleWebhook(@Request() req, @Body() body: any) {
-    return this.stripeService.handleWebhook(req, body);
+  @HttpCode(200)
+  @Header('Content-Type', 'application/json')
+  async handleWebhook(@Req() req: Request, @Res() res: Response) {
+    try {
+      await this.stripeService.handleWebhook(req);
+      res.json();
+    } catch (err: any) {
+      console.error('Webhook handler error:', err.message);
+    
+    }
   }
 
-  @Get('/success')
-  async findAll(@Request() req) {
-    console.log('req.query.session_id', req.query.session_id);
-    return await this.stripeService.findAll(
-      req.query.session_id as { season_id: string },
-    );
-  }
 }

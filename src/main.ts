@@ -4,7 +4,7 @@ import { ValidationPipe } from '@nestjs/common';
 import * as bodyParser from 'body-parser';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { rawBody: true });
+  const app = await NestFactory.create(AppModule,{cors:true}, );
 
   // Middleware should be registered before setting global prefix
   app.use('/api/stripe/webhook', bodyParser.raw({ type: 'application/json' }));
