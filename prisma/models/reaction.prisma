@@ -1,14 +1,23 @@
 model Reaction {
   id String @id @default(cuid())
 
-  haha  Int @default(0)
-  angry Int @default(0)
-  care  Int @default(0)
-  love  Int @default(0)
+  type ReactionType
 
   postId String
   post   Post   @relation(fields: [postId], references: [id])
 
   userId String
   user   Credential @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([postId, userId])
+}
+
+enum ReactionType {
+  HAHA
+  ANGRY
+  CARE
+  LOVE
 }
