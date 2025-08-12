@@ -8,33 +8,26 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { CreateReactionDto } from './dtos/create-reaction.dto';
-import { JwtAuthGuard } from 'src/utils/jwt-auth.guard';
-import type { Request } from 'express';
-import { ReactionService } from './reaction.service';
+import { CommentService } from './comment.service';
 import { ApiBearerAuth } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/utils/jwt-auth.guard';
+import { CreateUserDto } from '../user/dto/create-user.dto';
+import type { Request } from 'express';
+import { CreateCommentDto } from './dtos/create-comment-dto';
 
-@Controller('reaction')
-export class ReactionController {
-  constructor(private readonly reactionService: ReactionService) {}
-
-  // Create Reaction
+@Controller('comment')
+export class CommentController {
+  constructor(private readonly commentService: CommentService) {}
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Post()
-  @ApiBearerAuth()
-  async createReaction(
-    @Body() createReactionDto: CreateReactionDto,
-    @Req() req: Request,
-  ) {
+  async createComment(@Body() dto: CreateCommentDto, @Req() req: Request) {
     try {
-      const result = await this.reactionService.reactToPost(
-        createReactionDto,
-        req.user,
-      );
+      const result = await this.commentService.createComment(req.user, dto);
       return {
-        statusCode: HttpStatus.OK,
+        statusCode: HttpStatus.CREATED,
         success: true,
-        message: 'Your reaction has been added successfully.',
+        message: 'Your comment has been added successfully.',
         data: result,
       };
     } catch (error) {
@@ -46,15 +39,14 @@ export class ReactionController {
     }
   }
 
-  //Get Reaction Count
   @Get(':postId')
-  async getReactionCounts(@Param('postId') postId: string) {
+  async getAllCommentsByPost(@Param('postId') postId: string) {
     try {
-      const result = await this.reactionService.getReactionCounts(postId);
+      const result = await this.commentService.getAllComments(postId);
       return {
         statusCode: HttpStatus.OK,
         success: true,
-        message: 'Fetch all reaction counts successfully.',
+        message: 'Fetch all comment successfully.',
         data: result,
       };
     } catch (error) {
