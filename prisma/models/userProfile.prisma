@@ -17,12 +17,11 @@ model UserProfile {
   isActive        Boolean       @default(true)
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
-
   // Relations
   user            Credential     @relation(fields: [userId], references: [id])
   subscriptionName String @default("FREE")
   subscriptionId  String?        
   subscription    Subscription?  @relation(fields: [subscriptionId], references: [id])
-
+  payment Payment[]
   @@map("user_profiles")
 }

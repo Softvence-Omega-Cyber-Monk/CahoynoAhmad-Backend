@@ -33,8 +33,6 @@ export class StripeController {
       res.json();
     } catch (err: any) {
       console.error('Webhook handler error:', err.message);
-    
     }
   }
-
 }
