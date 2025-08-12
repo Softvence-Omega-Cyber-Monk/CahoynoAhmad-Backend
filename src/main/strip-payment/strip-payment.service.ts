@@ -13,59 +13,76 @@ export class StripeService {
   ) {
     const stripeSecretKey = this.configService.get<string>('STRIPE_SECRET_KEY');
     if (!stripeSecretKey) {
-      throw new Error('STRIPE_SECRET_KEY is not defined in environment variables');
+      throw new Error(
+        'STRIPE_SECRET_KEY is not defined in environment variables',
+      );
     }
-    this.stripe = new Stripe(stripeSecretKey, {
-    
-    });
+    this.stripe = new Stripe(stripeSecretKey, {});
   }
 
+  async createSubscription(dto: {
+    priceId: string;
+    customerEmail: string;
+    paymentMethodId: string;
+  }) {
+    const { priceId, customerEmail, paymentMethodId } = dto;
 
-async createSubscription(dto: { priceId: string; customerEmail: string; paymentMethodId: string }) {
-  const { priceId, customerEmail, paymentMethodId } = dto;
+    // 1. Find or create customer
+    const existingCustomers = await this.stripe.customers.list({
+      email: customerEmail,
+      limit: 1,
+    });
+    const customerId =
+      existingCustomers.data[0]?.id ??
+      (await this.stripe.customers.create({ email: customerEmail })).id;
 
-  // 1. Find or create customer
-  const existingCustomers = await this.stripe.customers.list({ email: customerEmail, limit: 1 });
-  const customerId = existingCustomers.data[0]?.id ?? (await this.stripe.customers.create({ email: customerEmail })).id;
+    // 2. Attach payment method to customer
+    await this.stripe.paymentMethods.attach(paymentMethodId, {
+      customer: customerId,
+    });
 
-  // 2. Attach payment method to customer
-  await this.stripe.paymentMethods.attach(paymentMethodId, { customer: customerId });
+    // 3. Set payment method as default for invoices
+    await this.stripe.customers.update(customerId, {
+      invoice_settings: { default_payment_method: paymentMethodId },
+    });
 
-  // 3. Set payment method as default for invoices
-  await this.stripe.customers.update(customerId, {
-    invoice_settings: { default_payment_method: paymentMethodId },
-  });
+    // 4. Create subscription with payment_behavior: 'error_if_incomplete'
+    const subscription = await this.stripe.subscriptions.create({
+      customer: customerId,
+      items: [{ price: priceId }],
+      payment_behavior: 'error_if_incomplete',
+      expand: ['latest_invoice.payment_intent'],
+      metadata:{
+        userId:"cme7raknl0002v30gq5vvtjcf",
+        SubscriptionName:"PRO",
+        SubscriptionType:"Monthly",
+        SubscriptionPrice:"$99.00",
+        SubscriptionStatus:"Active",
+      }
+    });
 
-  // 4. Create subscription with payment_behavior: 'error_if_incomplete'
-const subscription = await this.stripe.subscriptions.create({
-  customer: customerId,
-  items: [{ price: priceId }],
-  payment_behavior: 'error_if_incomplete',
-  expand: ['latest_invoice.payment_intent'],
-});
+    const latestInvoice = subscription.latest_invoice as Stripe.Invoice & {
+      payment_intent?: Stripe.PaymentIntent;
+    };
 
-const latestInvoice = subscription.latest_invoice as Stripe.Invoice & { payment_intent?: Stripe.PaymentIntent };
+    const paymentIntent = latestInvoice.payment_intent;
 
-const paymentIntent = latestInvoice.payment_intent;
+    if (!paymentIntent) {
+      // No payment intent means payment is not needed now
+      return {
+        subscriptionId: subscription.id,
+        clientSecret: null,
+      };
+    }
 
-if (!paymentIntent) {
-  // No payment intent means payment is not needed now
-  return {
-    subscriptionId: subscription.id,
-    clientSecret: null,
-  };
-}
-
-return {
-  subscriptionId: subscription.id,
-  clientSecret: paymentIntent.client_secret,
-};
-}
-
-
+    return {
+      subscriptionId: subscription.id,
+      clientSecret: paymentIntent.client_secret,
+    };
+  }
 
   // Handle webhook
- async handleWebhook(req: any) {
+  async handleWebhook(req: any) {
     const webhookSecret = 'whsec_dKFgPLzF18VwqXGhjKCPlmG8OWHYKIxf';
     if (!webhookSecret) {
       throw new Error('Stripe webhook secret not configured');
@@ -79,16 +96,48 @@ return {
 
     let event: Stripe.Event;
     try {
-      event = this.stripe.webhooks.constructEvent(req.body, signature, webhookSecret);
+      event = this.stripe.webhooks.constructEvent(
+        req.body,
+        signature,
+        webhookSecret,
+      );
     } catch (err: any) {
       throw new Error(`Webhook signature verification failed: ${err.message}`);
     }
 
     switch (event.type) {
       case 'invoice.payment_succeeded':
+
+
+
         const invoice = event.data.object as Stripe.Invoice;
-        console.log('Invoice payment succeeded:', invoice);
-        // TODO: your business logic here
+        
+      const subscriptionId = invoice.parent?.subscription_details?.subscription;
+        const invoiceId = invoice.id;
+        const paymentData = {
+          stripePaymentId: invoiceId,
+          stripeInvoiceId: invoiceId,
+          amount: invoice.amount_paid,
+          currency: invoice.currency,
+
+          status: invoice.status,
+          email: invoice.customer_email,
+          description: invoice.description,
+          subscriptionId: 'Pro',
+          userId: 'cme7raknl0002v30gq5vvtjcf',
+          periodStart: invoice.period_start,
+          periodEnd: invoice.period_end,
+        };
+        console.log(paymentData);
+        // const result=await this.prisma.payment.create({
+        //   data:{
+        //     stripePaymentId:'1',
+        //     amount:invoice.amount_paid,
+        //     currency:invoice.currency,
+        //     status:'paid',
+        //   }
+        // })
+
         break;
       default:
         console.warn(`Unhandled event type: ${event.type}`);
