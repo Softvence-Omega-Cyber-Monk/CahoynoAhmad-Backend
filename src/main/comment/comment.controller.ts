@@ -4,6 +4,7 @@ import {
   Get,
   HttpStatus,
   Param,
+  Patch,
   Post,
   Query,
   Req,
@@ -14,6 +15,7 @@ import { ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/utils/jwt-auth.guard';
 import type { Request } from 'express';
 import { CreateCommentDto } from './dtos/create-comment-dto';
+import { UpdateCommentDto } from './dtos/update-comment-dto';
 
 @Controller('comment')
 export class CommentController {
@@ -67,6 +69,35 @@ export class CommentController {
         statusCode: HttpStatus.OK,
         success: true,
         message: 'Fetch all comment successfully.',
+        data: result,
+      };
+    } catch (error) {
+      return {
+        statusCode: error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+        success: false,
+        message: error.message || 'Internal Server Error',
+      };
+    }
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Patch(':commentId')
+  async updateComment(
+    @Param('commentId') commentId: string,
+    @Body() updateDto: UpdateCommentDto,
+    @Req() req: Request,
+  ) {
+    try {
+      const result = await this.commentService.updateComment(
+        commentId,
+        updateDto,
+        req.user,
+      );
+      return {
+        statusCode: HttpStatus.OK,
+        success: true,
+        message: 'Update comment successfully.',
         data: result,
       };
     } catch (error) {

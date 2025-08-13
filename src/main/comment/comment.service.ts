@@ -2,6 +2,7 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { TJwtPayload } from 'src/types/user';
 import { CreateCommentDto } from './dtos/create-comment-dto';
+import { UpdateCommentDto } from './dtos/update-comment-dto';
 
 @Injectable()
 export class CommentService {
@@ -98,5 +99,39 @@ export class CommentService {
       limit,
       comments: paginatedTopLevelComments,
     };
+  }
+
+  async updateComment(
+    commentId: string,
+    updatedData: UpdateCommentDto,
+    user: TJwtPayload,
+  ) {
+    // Check if comment exist
+    const comment = await this.prisma.comment.findUnique({
+      where: {
+        id: commentId,
+      },
+    });
+    if (!comment) {
+      throw new HttpException('Comment does not exist', 404);
+    }
+
+    // Check if user autharize to update this comment
+    if (user.userId !== comment.userId) {
+      throw new HttpException(
+        'You are not authorize to update this comment.',
+        403,
+      );
+    }
+
+    const updatedComment = await this.prisma.comment.update({
+      where: {
+        id: commentId,
+      },
+      data: {
+        content: updatedData.content,
+      },
+    });
+    return updatedComment;
   }
 }
