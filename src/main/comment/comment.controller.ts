@@ -5,13 +5,13 @@ import {
   HttpStatus,
   Param,
   Post,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
 import { CommentService } from './comment.service';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/utils/jwt-auth.guard';
-import { CreateUserDto } from '../user/dto/create-user.dto';
 import type { Request } from 'express';
 import { CreateCommentDto } from './dtos/create-comment-dto';
 
@@ -39,10 +39,30 @@ export class CommentController {
     }
   }
 
+  @ApiQuery({
+    name: 'page',
+    required: false,
+    type: Number,
+    description: 'Page number for pagination',
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    type: Number,
+    description: 'Number of items per page',
+  })
   @Get(':postId')
-  async getAllCommentsByPost(@Param('postId') postId: string) {
+  async getAllCommentsByPost(
+    @Param('postId') postId: string,
+    @Query('page') page?: number,
+    @Query('limit') limit?: number,
+  ) {
     try {
-      const result = await this.commentService.getAllComments(postId);
+      const result = await this.commentService.getAllComments(
+        postId,
+        page,
+        limit,
+      );
       return {
         statusCode: HttpStatus.OK,
         success: true,

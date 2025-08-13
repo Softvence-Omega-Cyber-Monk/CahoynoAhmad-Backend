@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { TJwtPayload } from 'src/types/user';
 import { CreateCommentDto } from './dtos/create-comment-dto';
@@ -35,7 +35,17 @@ export class CommentService {
   }
 
   //Get all Comments of a post
-  async getAllComments(postId: string) {
+  async getAllComments(postId: string, page: number = 1, limit: number = 6) {
+    // Check if post exist
+    const isPostExist = await this.prisma.post.findUnique({
+      where: {
+        id: postId,
+      },
+    });
+    if (!isPostExist) {
+      throw new HttpException('Post does not exist', 404);
+    }
+    // Fetch all comments
     const comments = await this.prisma.comment.findMany({
       where: { postId },
       include: {
@@ -54,6 +64,39 @@ export class CommentService {
       },
       orderBy: { createdAt: 'asc' },
     });
-    return comments;
+
+    // Organize the nested comments formates.
+    const commentMap = new Map<string, any>();
+
+    comments.forEach((comment: any) => {
+      comment.replies = [];
+      commentMap.set(comment.id, comment);
+    });
+
+    let nestedComments: any = [];
+    comments.forEach((comment) => {
+      if (comment.parentId) {
+        const parent = commentMap.get(comment.parentId);
+        if (parent) {
+          parent.replies.push(comment);
+        }
+      } else {
+        nestedComments.push(comment);
+      }
+    });
+
+    // Implement Pagination
+    const start = (page - 1) * limit;
+    const paginatedTopLevelComments = nestedComments.slice(
+      start,
+      start + limit,
+    );
+
+    return {
+      totalTopLevelComments: nestedComments.length,
+      page,
+      limit,
+      comments: paginatedTopLevelComments,
+    };
   }
 }
