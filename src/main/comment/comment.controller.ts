@@ -4,16 +4,18 @@ import {
   Get,
   HttpStatus,
   Param,
+  Patch,
   Post,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
 import { CommentService } from './comment.service';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/utils/jwt-auth.guard';
-import { CreateUserDto } from '../user/dto/create-user.dto';
 import type { Request } from 'express';
 import { CreateCommentDto } from './dtos/create-comment-dto';
+import { UpdateCommentDto } from './dtos/update-comment-dto';
 
 @Controller('comment')
 export class CommentController {
@@ -39,14 +41,63 @@ export class CommentController {
     }
   }
 
+  @ApiQuery({
+    name: 'page',
+    required: false,
+    type: Number,
+    description: 'Page number for pagination',
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    type: Number,
+    description: 'Number of items per page',
+  })
   @Get(':postId')
-  async getAllCommentsByPost(@Param('postId') postId: string) {
+  async getAllCommentsByPost(
+    @Param('postId') postId: string,
+    @Query('page') page?: number,
+    @Query('limit') limit?: number,
+  ) {
     try {
-      const result = await this.commentService.getAllComments(postId);
+      const result = await this.commentService.getAllComments(
+        postId,
+        page,
+        limit,
+      );
       return {
         statusCode: HttpStatus.OK,
         success: true,
         message: 'Fetch all comment successfully.',
+        data: result,
+      };
+    } catch (error) {
+      return {
+        statusCode: error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+        success: false,
+        message: error.message || 'Internal Server Error',
+      };
+    }
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Patch(':commentId')
+  async updateComment(
+    @Param('commentId') commentId: string,
+    @Body() updateDto: UpdateCommentDto,
+    @Req() req: Request,
+  ) {
+    try {
+      const result = await this.commentService.updateComment(
+        commentId,
+        updateDto,
+        req.user,
+      );
+      return {
+        statusCode: HttpStatus.OK,
+        success: true,
+        message: 'Update comment successfully.',
         data: result,
       };
     } catch (error) {
