@@ -12,6 +12,7 @@ import { CreateReactionDto } from './dtos/create-reaction.dto';
 import { JwtAuthGuard } from 'src/utils/jwt-auth.guard';
 import type { Request } from 'express';
 import { ReactionService } from './reaction.service';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('reaction')
 export class ReactionController {
@@ -20,6 +21,7 @@ export class ReactionController {
   // Create Reaction
   @UseGuards(JwtAuthGuard)
   @Post()
+  @ApiBearerAuth()
   async createReaction(
     @Body() createReactionDto: CreateReactionDto,
     @Req() req: Request,

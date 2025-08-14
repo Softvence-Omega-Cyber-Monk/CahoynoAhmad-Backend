@@ -34,11 +34,22 @@ export class ReactionService {
 
     //If reaction does not exist creact new one
     if (!reactionExist) {
-      result = await this.prisma.reaction.create({
-        data: {
-          ...dto,
-          userId: user.userId,
-        },
+      result = await this.prisma.$transaction(async (tx) => {
+        const newReaction = await tx.reaction.create({
+          data: {
+            ...dto,
+            userId: user.userId,
+          },
+        });
+        await tx.post.update({
+          where: {
+            id: dto.postId,
+          },
+          data: {
+            totalReaction: { increment: 1 },
+          },
+        });
+        return newReaction;
       });
 
       //If reaction exist update it.

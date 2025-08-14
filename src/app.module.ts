@@ -14,6 +14,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { CloudinaryService } from './main/cloudinary/cloudinary.service';
 import { PostModule } from './main/post/post.module';
 import { ReactionModule } from './main/reaction/reaction.module';
+import { CommentModule } from './main/comment/comment.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { ReactionModule } from './main/reaction/reaction.module';
     SubscriptionModule,
     PostModule,
     ReactionModule,
+    CommentModule,
   ],
   controllers: [AppController],
   providers: [AppService, CloudinaryService],

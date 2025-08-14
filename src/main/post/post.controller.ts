@@ -15,24 +15,23 @@ import { JwtAuthGuard } from 'src/utils/jwt-auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CreatePostDTO } from './dtos/create-post.dto';
 import express from 'express';
-import { ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiConsumes } from '@nestjs/swagger';
 
 @Controller('post')
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
-  // @ApiTags()
   @UseGuards(JwtAuthGuard)
   @Post()
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('image'))
+  @ApiBearerAuth()
   async createPost(
     @Body() postContent: CreatePostDTO,
     @UploadedFile() file: Express.Multer.File,
     @Req() req: express.Request,
   ) {
     try {
-      console.log(req.user);
       const result = await this.postService.createPost(
         postContent.content,
         file,
