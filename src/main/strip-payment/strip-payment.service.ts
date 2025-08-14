@@ -19,14 +19,13 @@ export class StripeService {
     }
     this.stripe = new Stripe(stripeSecretKey, {});
   }
-
   async createSubscription(dto: {
-    priceId: string;
+    planInfo: any;
     customerEmail: string;
     paymentMethodId: string;
   }) {
-    const { priceId, customerEmail, paymentMethodId } = dto;
-
+    const { planInfo, customerEmail, paymentMethodId } = dto;
+    console.log(planInfo)
     // 1. Find or create customer
     const existingCustomers = await this.stripe.customers.list({
       email: customerEmail,
@@ -45,6 +44,29 @@ export class StripeService {
     await this.stripe.customers.update(customerId, {
       invoice_settings: { default_payment_method: paymentMethodId },
     });
+  
+    let priceId
+    if(planInfo.plan==="HOT_MESS"||planInfo.blillingIntervel==="Monthly"){
+      priceId=this.configService.get<string>('BASIC_MONTHLY')
+    }else if(planInfo.plan==="HOT_MESS"||planInfo.blillingIntervel==="yearly"){
+      priceId=this.configService.get<string>('PRO_PRICE_ID')
+    }else if(planInfo.plan==="NO_FILTER"||planInfo.blillingIntervel==="Monthly"){
+      priceId=this.configService.get<string>('PREMIUM_PRICE_ID')
+    }else if(planInfo.plan==="NO_FILTER"||planInfo.blillingIntervel==="yearly"){
+      priceId=this.configService.get<string>('ENTERPRISE_PRICE_ID')
+    }else if(planInfo.plan==="SAVAGE_MODE"||planInfo.blillingIntervel==="Monthly"){
+      priceId=this.configService.get<string>('FREE_PRICE_ID')
+    }else if(planInfo.plan==="SAVAGE_MODE"||planInfo.blillingIntervel==="yearly"){
+      priceId=this.configService.get<string>('FREE_PRICE_ID')
+    }else if(planInfo.plan==="SIPTS_FOR_BRAND"||planInfo.blillingIntervel==="monthly"){
+      priceId=this.configService.get<string>('FREE_PRICE_ID')
+    }else if(planInfo.plan==="SIPTS_FOR_BRAND"||planInfo.blillingIntervel==="YEARLY"){
+      priceId=this.configService.get<string>('FREE_PRICE_ID')
+    }else if(planInfo.plan==="ONE_TIME-ROAST"||planInfo.blillingIntervel==="monthly"){
+      priceId=this.configService.get<string>('FREE_PRICE_ID')
+    }else if(planInfo.plan==="LIFE_TIME"||planInfo.blillingIntervel==="monthly"){
+      priceId=this.configService.get<string>('FREE_PRICE_ID')
+    }
 
     // 4. Create subscription with payment_behavior: 'error_if_incomplete'
     const subscription = await this.stripe.subscriptions.create({
