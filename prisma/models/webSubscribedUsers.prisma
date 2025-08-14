@@ -1,0 +1,7 @@
+model WebSubscribe{
+    id String @id @default(cuid())
+    userId String @unique
+    email String
+    user  Credential? @relation(fields: [userId], references: [id])
+    @@map("webSubscribedUsers")
+}

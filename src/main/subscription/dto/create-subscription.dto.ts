@@ -22,8 +22,8 @@
 // }
 
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsEnum, IsNumber } from 'class-validator';
-import { PlanType } from 'generated/prisma';
+import { IsBoolean, IsEnum, IsNumber, IsString } from 'class-validator';
+import { PlanType, BillingCycle } from 'generated/prisma';
 
 export class CreateSubscriptionDto {
   @ApiProperty({
@@ -68,4 +68,33 @@ export class CreateSubscriptionDto {
   })
   @IsBoolean()
   postInteraction: boolean;
+
+  @ApiProperty({
+    description: 'Billing cycle for the subscription',
+    enum: BillingCycle,
+    example: BillingCycle.MONTHLY,
+  })
+  @IsEnum(BillingCycle)
+  billingCycle: BillingCycle;
+
+  @ApiProperty({
+    description: 'Stripe Price ID',
+    example: 'price_1234567890',
+  })
+  @IsString()
+  priceId: string;
+
+  @ApiProperty({
+    description: 'Stripe Product ID',
+    example: 'prod_1234567890',
+  })
+  @IsString()
+  productId: string;
+
+  @ApiProperty({
+    description: 'Price amount in USD',
+    example: 9.99,
+  })
+  @IsNumber()
+  priceAmount: number;
 }
