@@ -3,7 +3,6 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   UseGuards,
@@ -21,37 +20,42 @@ export class SubscribeController {
   @Post()
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  async create(@Body() createSubscribeDto: CreateSubscribeDto, @Req() req: any) {
+  async create(
+    @Body() createSubscribeDto: CreateSubscribeDto,
+    @Req() req: any,
+  ) {
     const user = req.user;
-    const response=await this.subscribeService.create(createSubscribeDto, user);
+    const response = await this.subscribeService.create(
+      createSubscribeDto,
+      user,
+    );
     return {
       statusCode: 200,
-      success:true,
+      success: true,
       message: 'Subscribe successfully',
       data: response,
-    }
+    };
   }
 
   @Get()
-async  findAll() {
-    const response=await this.subscribeService.findAll();
+  async findAll() {
+    const response = await this.subscribeService.findAll();
     return {
       statusCode: 200,
-      success:true,
+      success: true,
       message: 'Subscribe list',
       data: response,
-    }
+    };
   }
 
-
   @Delete(':id')
-async  remove(@Param('id') id: string) {
-    const response=await this.subscribeService.remove(id);
+  async remove(@Param('id') id: string) {
+    const response = await this.subscribeService.remove(id);
     return {
       statusCode: 200,
-      success:true,
+      success: true,
       message: 'Subscribe delete successfully',
       data: response,
-    }
+    };
   }
 }
