@@ -65,9 +65,12 @@ export class AuthController {
   }
 
   @Post('reset-password')
-  async resetPassword(@Body() body: { token: string, password: string }) {
+  async resetPassword(@Body() body: { token: string; password: string }) {
     try {
-      const result = await this.authService.resetPassword(body.token, body.password);
+      const result = await this.authService.resetPassword(
+        body.token,
+        body.password,
+      );
       return {
         statusCode: HttpStatus.OK,
         success: true,

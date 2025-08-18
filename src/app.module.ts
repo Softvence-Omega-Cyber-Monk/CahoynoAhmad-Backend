@@ -18,7 +18,6 @@ import { CommentModule } from './main/comment/comment.module';
 import { SubscribeModule } from './main/subscribe/subscribe.module';
 import { AiModule } from './main/ai/ai.module';
 
-
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),

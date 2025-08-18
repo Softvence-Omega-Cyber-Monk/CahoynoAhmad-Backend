@@ -19,18 +19,21 @@ import { PrismaService } from 'src/prisma/prisma.service';
 @Controller('ai')
 @UseGuards(JwtAuthGuard)
 export class AiController {
-  constructor(private readonly aiService: AiService,private prisma:PrismaService) {}
+  constructor(
+    private readonly aiService: AiService,
+    private prisma: PrismaService,
+  ) {}
 
   @Post()
-  async create(@Body() createAiDto: CreateAiDto,@Request() req:any) {
-    const user=req.user;
-    const userProfile=await this.prisma.userProfile.findFirst({
-      where:{
-        userId:user.userId
-      }
-    })
-    createAiDto.session_id=user.userId;
-    createAiDto.user_plan=userProfile?.subscriptionName as string
+  async create(@Body() createAiDto: CreateAiDto, @Request() req: any) {
+    const user = req.user;
+    const userProfile = await this.prisma.userProfile.findFirst({
+      where: {
+        userId: user.userId,
+      },
+    });
+    createAiDto.session_id = user.userId;
+    createAiDto.user_plan = userProfile?.subscriptionName as string;
     const response = await this.aiService.create(createAiDto);
     return {
       statusCode: 200,
@@ -41,15 +44,14 @@ export class AiController {
   }
 
   @Post('history')
-  async getAllHistory(@Req() req:any) {
-
-    const response =await this.aiService.getAllHistory(req.user);
+  async getAllHistory(@Req() req: any) {
+    const response = await this.aiService.getAllHistory(req.user);
     return {
       statusCode: 200,
       success: true,
       message: 'History Retrive successfully',
       data: response,
-    }
+    };
   }
 
   @Get(':id')

@@ -10,11 +10,10 @@ export class CreateAiDto {
   session_id: string;
   @IsOptional()
   @IsString()
-  user_plan:string
+  user_plan: string;
 }
 
-export class history{
+export class history {
   @IsString()
-  session_id:string
+  session_id: string;
 }
-

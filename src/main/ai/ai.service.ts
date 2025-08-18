@@ -5,20 +5,20 @@ import { UpdateAiDto } from './dto/update-ai.dto';
 @Injectable()
 export class AiService {
   async create(createAiDto: CreateAiDto) {
-    const { text,tone,session_id,user_plan } = createAiDto;
+    const { text, tone, session_id, user_plan } = createAiDto;
     console.log(createAiDto);
-    
+
     try {
       const response = await fetch(`${process.env.AI_URL}/rewrite`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json'},
-        body: JSON.stringify({ tone, text, session_id,user_plan}),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tone, text, session_id, user_plan }),
       });
       console.log(response);
-      
+
       const data = await response.json();
       console.log(data);
-      
+
       return data;
     } catch (err) {
       throw new HttpException(err.message, 500);
@@ -26,16 +26,15 @@ export class AiService {
   }
 
   async getAllHistory(user) {
-    
-    try{
+    try {
       const response = fetch(`${process.env.AI_URL}/memory`, {
         method: 'POST',
-        headers:{'Content-Type': 'application/json'},
-        body:JSON.stringify({session_id:user.userId})
-      })
-      const data=await (await response).json();
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ session_id: user.userId }),
+      });
+      const data = await (await response).json();
       return data;
-    }catch(err){
+    } catch (err) {
       throw new HttpException(err.message, 500);
     }
   }

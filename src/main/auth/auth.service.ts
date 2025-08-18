@@ -13,7 +13,7 @@ export class AuthService {
   constructor(
     private prisma: PrismaService,
     private jwtService: JwtService,
-    private mailService:MailService
+    private mailService: MailService,
   ) {}
 
   // This function will create user
@@ -99,20 +99,20 @@ export class AuthService {
     if (!user) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
-     const token = randomBytes(32).toString('hex');
-await this.prisma.credential.update({
-      where:{email},
-      data:{resetToken:token}
-    })
+    const token = randomBytes(32).toString('hex');
+    await this.prisma.credential.update({
+      where: { email },
+      data: { resetToken: token },
+    });
     const resetUrl = `${process.env.BASE_URL}reset-password?token=${token}`;
 
- await this.mailService.sendMail({
-        to: email,
-        subject: 'Password Reset',
-        html: `<h1>Password Reset Request</h1><p>Click the link below to reset your password:</p><a href="${resetUrl}">Reset Password</a>`,
-        from: process.env.SMTP_USER as string,
+    await this.mailService.sendMail({
+      to: email,
+      subject: 'Password Reset',
+      html: `<h1>Password Reset Request</h1><p>Click the link below to reset your password:</p><a href="${resetUrl}">Reset Password</a>`,
+      from: process.env.SMTP_USER as string,
     });
-    
+
     return { message: 'Password reset email sent successfully' };
   }
 
@@ -122,7 +122,10 @@ await this.prisma.credential.update({
     });
 
     if (!user) {
-      throw new HttpException('Invalid or expired token', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        'Invalid or expired token',
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
