@@ -44,4 +44,23 @@ export class AuthController {
       };
     }
   }
+
+  @Post('forget-password')
+  async forgetPassword(@Body() body: { email: string }) {
+    try {
+      const result = await this.authService.forgetPassword(body.email);
+      return {
+        statusCode: HttpStatus.OK,
+        success: true,
+        message: 'Password reset link sent successfully',
+        data: result,
+      };
+    } catch (error) {
+      return {
+        statusCode: error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+        success: false,
+        message: error.message || 'Internal Server Error',
+      };
+    }
+  }
 }

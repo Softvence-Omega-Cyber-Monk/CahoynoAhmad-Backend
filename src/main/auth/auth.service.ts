@@ -5,12 +5,15 @@ import * as bcrypt from 'bcrypt';
 import { LoginDTO } from './dto/login.dto';
 
 import { JwtService } from '@nestjs/jwt';
+import { randomBytes } from 'crypto';
+import { MailService } from '../mail/mail.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private prisma: PrismaService,
     private jwtService: JwtService,
+    private mailService:MailService
   ) {}
 
   // This function will create user
@@ -85,5 +88,37 @@ export class AuthService {
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  }
+
+  async forgetPassword(email: string) {
+    const user = await this.prisma.credential.findUnique({
+      where: { email },
+    });
+
+    if (!user) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+     const token = randomBytes(32).toString('hex');
+    // const payload = {
+    //   userId: user.id,
+    //   email: user.email,
+    //   fullName: user.fullName,
+    //   userName: user.userName,
+    //   role: user.role,
+    // };
+await this.prisma.credential.update({
+      where:{email},
+      data:{resetToken:token}
+    })
+    const resetUrl = `${process.env.BASE_URL}reset-password?token=${token}`;
+
+    const result = await this.mailService.sendMail({
+        to: email,
+        subject: 'Password Reset',
+        html: `<h1>Password Reset Request</h1><p>Click the link below to reset your password:</p><a href="${resetUrl}">Reset Password</a>`,
+        from: process.env.SMTP_USER as string,
+    });
+    
+    return { message: 'Password reset email sent successfully' };
   }
 }
