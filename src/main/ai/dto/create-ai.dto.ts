@@ -1,12 +1,14 @@
-import { IsString } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
 export class CreateAiDto {
   @IsString()
-  promt: string;
+  text: string;
   @IsString()
-  mode: string;
+  tone: string;
   @IsString()
+  @IsOptional()
   session_id: string;
+  @IsOptional()
   @IsString()
   user_plan:string
 }
