@@ -47,52 +47,52 @@ export class StripeService {
 
     let priceId;
     if (
-      planInfo.plan === 'HOT_MESS' ||
+      planInfo.plan === 'HOT_MESS' &&
       planInfo.blillingIntervel === 'Monthly'
     ) {
       priceId = this.configService.get<string>('BASIC_MONTHLY');
     } else if (
-      planInfo.plan === 'HOT_MESS' ||
+      planInfo.plan === 'HOT_MESS' &&
       planInfo.blillingIntervel === 'yearly'
     ) {
       priceId = this.configService.get<string>('PRO_PRICE_ID');
     } else if (
-      planInfo.plan === 'NO_FILTER' ||
+      planInfo.plan === 'NO_FILTER' &&
       planInfo.blillingIntervel === 'Monthly'
     ) {
       priceId = this.configService.get<string>('PREMIUM_PRICE_ID');
     } else if (
-      planInfo.plan === 'NO_FILTER' ||
+      planInfo.plan === 'NO_FILTER' &&
       planInfo.blillingIntervel === 'yearly'
     ) {
       priceId = this.configService.get<string>('ENTERPRISE_PRICE_ID');
     } else if (
-      planInfo.plan === 'SAVAGE_MODE' ||
+      planInfo.plan === 'SAVAGE_MODE' &&
       planInfo.blillingIntervel === 'Monthly'
     ) {
       priceId = this.configService.get<string>('FREE_PRICE_ID');
     } else if (
-      planInfo.plan === 'SAVAGE_MODE' ||
+      planInfo.plan === 'SAVAGE_MODE' &&
       planInfo.blillingIntervel === 'yearly'
     ) {
       priceId = this.configService.get<string>('FREE_PRICE_ID');
     } else if (
-      planInfo.plan === 'SIPTS_FOR_BRAND' ||
+      planInfo.plan === 'SIPTS_FOR_BRAND' &&
       planInfo.blillingIntervel === 'monthly'
     ) {
       priceId = this.configService.get<string>('FREE_PRICE_ID');
     } else if (
-      planInfo.plan === 'SIPTS_FOR_BRAND' ||
+      planInfo.plan === 'SIPTS_FOR_BRAND' &&
       planInfo.blillingIntervel === 'YEARLY'
     ) {
       priceId = this.configService.get<string>('FREE_PRICE_ID');
     } else if (
-      planInfo.plan === 'ONE_TIME-ROAST' ||
+      planInfo.plan === 'ONE_TIME-ROAST' &&
       planInfo.blillingIntervel === 'monthly'
     ) {
       priceId = this.configService.get<string>('FREE_PRICE_ID');
     } else if (
-      planInfo.plan === 'LIFE_TIME' ||
+      planInfo.plan === 'LIFE_TIME' &&
       planInfo.blillingIntervel === 'monthly'
     ) {
       priceId = this.configService.get<string>('FREE_PRICE_ID');
