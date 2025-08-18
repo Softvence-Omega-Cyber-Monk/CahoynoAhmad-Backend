@@ -63,4 +63,23 @@ export class AuthController {
       };
     }
   }
+
+  @Post('reset-password')
+  async resetPassword(@Body() body: { token: string, password: string }) {
+    try {
+      const result = await this.authService.resetPassword(body.token, body.password);
+      return {
+        statusCode: HttpStatus.OK,
+        success: true,
+        message: 'Password reset successful',
+        data: result,
+      };
+    } catch (error) {
+      return {
+        statusCode: error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+        success: false,
+        message: error.message || 'Internal Server Error',
+      };
+    }
+  }
 }
