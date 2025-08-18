@@ -25,7 +25,7 @@ export class StripeService {
     paymentMethodId: string;
   }) {
     const { planInfo, customerEmail, paymentMethodId } = dto;
-    console.log(planInfo)
+    console.log(planInfo);
     // 1. Find or create customer
     const existingCustomers = await this.stripe.customers.list({
       email: customerEmail,
@@ -44,28 +44,58 @@ export class StripeService {
     await this.stripe.customers.update(customerId, {
       invoice_settings: { default_payment_method: paymentMethodId },
     });
-  
-    let priceId
-    if(planInfo.plan==="HOT_MESS"||planInfo.blillingIntervel==="Monthly"){
-      priceId=this.configService.get<string>('BASIC_MONTHLY')
-    }else if(planInfo.plan==="HOT_MESS"||planInfo.blillingIntervel==="yearly"){
-      priceId=this.configService.get<string>('PRO_PRICE_ID')
-    }else if(planInfo.plan==="NO_FILTER"||planInfo.blillingIntervel==="Monthly"){
-      priceId=this.configService.get<string>('PREMIUM_PRICE_ID')
-    }else if(planInfo.plan==="NO_FILTER"||planInfo.blillingIntervel==="yearly"){
-      priceId=this.configService.get<string>('ENTERPRISE_PRICE_ID')
-    }else if(planInfo.plan==="SAVAGE_MODE"||planInfo.blillingIntervel==="Monthly"){
-      priceId=this.configService.get<string>('FREE_PRICE_ID')
-    }else if(planInfo.plan==="SAVAGE_MODE"||planInfo.blillingIntervel==="yearly"){
-      priceId=this.configService.get<string>('FREE_PRICE_ID')
-    }else if(planInfo.plan==="SIPTS_FOR_BRAND"||planInfo.blillingIntervel==="monthly"){
-      priceId=this.configService.get<string>('FREE_PRICE_ID')
-    }else if(planInfo.plan==="SIPTS_FOR_BRAND"||planInfo.blillingIntervel==="YEARLY"){
-      priceId=this.configService.get<string>('FREE_PRICE_ID')
-    }else if(planInfo.plan==="ONE_TIME-ROAST"||planInfo.blillingIntervel==="monthly"){
-      priceId=this.configService.get<string>('FREE_PRICE_ID')
-    }else if(planInfo.plan==="LIFE_TIME"||planInfo.blillingIntervel==="monthly"){
-      priceId=this.configService.get<string>('FREE_PRICE_ID')
+
+    let priceId;
+    if (
+      planInfo.plan === 'HOT_MESS' ||
+      planInfo.blillingIntervel === 'Monthly'
+    ) {
+      priceId = this.configService.get<string>('BASIC_MONTHLY');
+    } else if (
+      planInfo.plan === 'HOT_MESS' ||
+      planInfo.blillingIntervel === 'yearly'
+    ) {
+      priceId = this.configService.get<string>('PRO_PRICE_ID');
+    } else if (
+      planInfo.plan === 'NO_FILTER' ||
+      planInfo.blillingIntervel === 'Monthly'
+    ) {
+      priceId = this.configService.get<string>('PREMIUM_PRICE_ID');
+    } else if (
+      planInfo.plan === 'NO_FILTER' ||
+      planInfo.blillingIntervel === 'yearly'
+    ) {
+      priceId = this.configService.get<string>('ENTERPRISE_PRICE_ID');
+    } else if (
+      planInfo.plan === 'SAVAGE_MODE' ||
+      planInfo.blillingIntervel === 'Monthly'
+    ) {
+      priceId = this.configService.get<string>('FREE_PRICE_ID');
+    } else if (
+      planInfo.plan === 'SAVAGE_MODE' ||
+      planInfo.blillingIntervel === 'yearly'
+    ) {
+      priceId = this.configService.get<string>('FREE_PRICE_ID');
+    } else if (
+      planInfo.plan === 'SIPTS_FOR_BRAND' ||
+      planInfo.blillingIntervel === 'monthly'
+    ) {
+      priceId = this.configService.get<string>('FREE_PRICE_ID');
+    } else if (
+      planInfo.plan === 'SIPTS_FOR_BRAND' ||
+      planInfo.blillingIntervel === 'YEARLY'
+    ) {
+      priceId = this.configService.get<string>('FREE_PRICE_ID');
+    } else if (
+      planInfo.plan === 'ONE_TIME-ROAST' ||
+      planInfo.blillingIntervel === 'monthly'
+    ) {
+      priceId = this.configService.get<string>('FREE_PRICE_ID');
+    } else if (
+      planInfo.plan === 'LIFE_TIME' ||
+      planInfo.blillingIntervel === 'monthly'
+    ) {
+      priceId = this.configService.get<string>('FREE_PRICE_ID');
     }
 
     // 4. Create subscription with payment_behavior: 'error_if_incomplete'
@@ -74,13 +104,13 @@ export class StripeService {
       items: [{ price: priceId }],
       payment_behavior: 'error_if_incomplete',
       expand: ['latest_invoice.payment_intent'],
-      metadata:{
-        userId:"cme7raknl0002v30gq5vvtjcf",
-        SubscriptionName:"PRO",
-        SubscriptionType:"Monthly",
-        SubscriptionPrice:"$99.00",
-        SubscriptionStatus:"Active",
-      }
+      metadata: {
+        userId: 'cme7raknl0002v30gq5vvtjcf',
+        SubscriptionName: 'PRO',
+        SubscriptionType: 'Monthly',
+        SubscriptionPrice: '$99.00',
+        SubscriptionStatus: 'Active',
+      },
     });
 
     const latestInvoice = subscription.latest_invoice as Stripe.Invoice & {
@@ -129,12 +159,10 @@ export class StripeService {
 
     switch (event.type) {
       case 'invoice.payment_succeeded':
-
-
-
         const invoice = event.data.object as Stripe.Invoice;
-        
-      const subscriptionId = invoice.parent?.subscription_details?.subscription;
+
+        const subscriptionId =
+          invoice.parent?.subscription_details?.subscription;
         const invoiceId = invoice.id;
         const paymentData = {
           stripePaymentId: invoiceId,

@@ -15,6 +15,8 @@ import { CloudinaryService } from './main/cloudinary/cloudinary.service';
 import { PostModule } from './main/post/post.module';
 import { ReactionModule } from './main/reaction/reaction.module';
 import { CommentModule } from './main/comment/comment.module';
+import { SubscribeModule } from './main/subscribe/subscribe.module';
+import { AiModule } from './main/ai/ai.module';
 
 @Module({
   imports: [
@@ -30,6 +32,8 @@ import { CommentModule } from './main/comment/comment.module';
     PostModule,
     ReactionModule,
     CommentModule,
+    SubscribeModule,
+    AiModule,
   ],
   controllers: [AppController],
   providers: [AppService, CloudinaryService],
