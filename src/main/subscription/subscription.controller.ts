@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Controller,
   Get,
@@ -24,10 +26,10 @@ export class SubscriptionController {
 
   @Post('create')
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.Admin)
+  @Roles(Role.User)
   async createSubscription(
     @Body() SubscriptionDto: CreateSubscriptionDto,
-    @Request() req,
+    @Request() req
   ) {
     const subscription =
       await this.subscriptionService.createSubscription(SubscriptionDto);

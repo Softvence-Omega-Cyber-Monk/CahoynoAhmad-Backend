@@ -1,0 +1,13 @@
+Price ID,Product ID,Product Name,Product Statement Descriptor,Product Tax Code,Description,Created (UTC),Amount,Currency,Interval,Interval Count,Usage Type,Aggregate Usage,Billing Scheme,Trial Period Days,Tax Behavior
+price_1Rw0iYR3DPi9NN8muoJDILo9,prod_SrkC4FPd3LeMJU,Lifetime SiPTer – Savage Mode™ (Founding Roaster Special),,,,2025-08-14 12:57,449.00,usd,,,,,per_unit,,unspecified
+price_1Rw0fJR3DPi9NN8mVtrkpDp7,prod_Srk9ZQZk5ouwo6,Lifetime SiPTer – No Filter (Founding Roaster Special),,,,2025-08-14 12:53,279.00,usd,,,,,per_unit,,unspecified
+price_1RvzrNR3DPi9NN8mzVEoyIkv,prod_SrjKfE19iW6TLU,One-Time Roast,,,,2025-08-14 12:02,0.99,usd,,,,,per_unit,,unspecified
+price_1RvzpVR3DPi9NN8marQ74M2O,prod_SrjIHtV3qSdJ5I,SiPT for Brands (Yearly),,,,2025-08-14 12:00,299.00,usd,year,1,licensed,,per_unit,,unspecified
+price_1RvznjR3DPi9NN8mDDpXbU0M,prod_SrjGv3T9Ntdqkb,SiPT for Brands (Monthly),,,,2025-08-14 11:58,29.00,usd,month,1,licensed,,per_unit,,unspecified
+price_1Rvzn9R3DPi9NN8mSJsybLgn,prod_SrjFShR8Bp1AZT,Savage Mode™ (Yearly),,,,2025-08-14 11:57,119.00,usd,month,1,licensed,,per_unit,,unspecified
+price_1RvzmYR3DPi9NN8ml0vVjAWP,prod_SrjF6PqCq9EsMp,Savage Mode™ (Monthly),,,,2025-08-14 11:57,12.99,usd,month,1,licensed,,per_unit,,unspecified
+price_1RvzkJR3DPi9NN8mbGTm77vO,prod_SrjCEdK65mS4zI,No Filter (Yearly),,,,2025-08-14 11:55,79.00,usd,year,1,licensed,,per_unit,,unspecified
+price_1RvzjvR3DPi9NN8mKMFfw1AH,prod_SrjCnw6cTsADd8,No Filter (Monthly),,,,2025-08-14 11:54,7.99,usd,month,1,licensed,,per_unit,,unspecified
+price_1Rvzg6R3DPi9NN8miO0g6zlQ,prod_Srj8wTBgjiw1QJ,Hot Mess Express (Yearly),,,,2025-08-14 11:50,39.00,usd,year,1,licensed,,per_unit,,unspecified
+price_1RvzfKR3DPi9NN8mnmmVJ3dS,prod_Srj72HKRqMwi1t,Hot Mess Express (Monthly),,,,2025-08-14 11:49,3.99,usd,month,1,licensed,,per_unit,,unspecified
+  
