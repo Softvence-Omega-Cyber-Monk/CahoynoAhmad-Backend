@@ -32,7 +32,7 @@ export class StripeService {
     const planKey = `${plan}_${billingInterval.toUpperCase()}`;
     
     const priceMapping = {
-      'HOT_MESS_MONTHLY':"price_1RuIseCiM0crZsfwqv3vZZGj",
+      'HOT_MESS_MONTHLY':this.configService.get<string>('HOT_MESS_MONTHLY'),
       'HOT_MESS_YEARLY': this.configService.get<string>('HOT_MESS_YEARLY'),
       'NO_FILTER_MONTHLY': this.configService.get<string>('NO_FILTER_MONTHLY'),
       'NO_FILTER_YEARLY': this.configService.get<string>('NO_FILTER_YEARLY'),
