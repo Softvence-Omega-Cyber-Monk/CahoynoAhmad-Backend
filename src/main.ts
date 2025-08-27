@@ -5,11 +5,16 @@ import * as bodyParser from 'body-parser';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true });
+  const app = await NestFactory.create(AppModule, {
+    cors: true,
+    rawBody: true,
+  });
 
   // Middleware for Stripe webhook (must come before prefix)
-  app.use('/api/stripe/webhook', bodyParser.raw({ type: 'application/json' }));
-
+  app.enableCors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+  });
   // Global prefix
   app.setGlobalPrefix('api');
 
@@ -36,7 +41,7 @@ async function bootstrap() {
       persistAuthorization: true, // Keeps token after page refresh
     },
   });
-
+  app.use('/api/stripe/webhook', bodyParser.raw({ type: 'application/json' }));
   await app.listen(process.env.PORT ?? 5000);
 }
 bootstrap();

@@ -2,14 +2,18 @@ import {
   Controller,
   Post,
   Body,
-  Request,
   Res,
   HttpCode,
   Header,
   Req,
+  Headers,
+  RawBodyRequest,
 } from '@nestjs/common';
 
 import { StripeService } from './strip-payment.service';
+import type { Request } from 'express';
+import { ApiBody } from '@nestjs/swagger';
+import { CreateStripePaymentDto } from './dto/create-strip-payment.dto';
 
 @Controller('stripe')
 export class StripeController {
@@ -17,16 +21,18 @@ export class StripeController {
 
   @Post('create-subscription')
   async create(@Body() createStripeDto: any) {
+    console.log(createStripeDto);
     return this.stripeService.createSubscription(createStripeDto);
   }
 
   @Post('webhook')
-  @HttpCode(200)
-  @Header('Content-Type', 'application/json')
-  async handleWebhook(@Req() req: Request, @Res() res: Response) {
+  async handleWebhook(
+    @Headers('stripe-signature') signature: string,
+    @Req() req: any,
+  ) {
     try {
+      console.log('webhook received');
       await this.stripeService.handleWebhook(req);
-      res.json();
     } catch (err: any) {
       console.error('Webhook handler error:', err.message);
     }

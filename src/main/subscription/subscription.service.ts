@@ -18,7 +18,8 @@ export class SubscriptionService {
       });
       return subscription;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error occurred';
       throw new HttpException(errorMessage, 500);
     }
   }
@@ -28,12 +29,16 @@ export class SubscriptionService {
       const result = await this.prisma.subscription.findMany();
       return result;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error occurred';
       throw new HttpException(errorMessage, 500);
     }
   }
 
-  async updateSubscription(id: string, updateSubscriptionDto: UpdateSubscriptionDto) {
+  async updateSubscription(
+    id: string,
+    updateSubscriptionDto: UpdateSubscriptionDto,
+  ) {
     try {
       const result = await this.prisma.subscription.update({
         where: {
@@ -45,7 +50,8 @@ export class SubscriptionService {
       });
       return result;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error occurred';
       throw new HttpException(errorMessage, 500);
     }
   }
@@ -59,7 +65,8 @@ export class SubscriptionService {
       });
       return result;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error occurred';
       throw new HttpException(errorMessage, 500);
     }
   }
