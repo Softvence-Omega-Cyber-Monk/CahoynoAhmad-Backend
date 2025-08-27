@@ -8,7 +8,6 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { CreateAiDto } from './dto/create-ai.dto';
 import { UpdateAiDto } from './dto/update-ai.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-
 @Injectable()
 export class AiService {
   constructor(private prisma: PrismaService) {}
@@ -55,10 +54,13 @@ export class AiService {
     }
   }
 
-  private async checkDailyLimit(userId: string, userPlan: string): Promise<void> {
+  private async checkDailyLimit(
+    userId: string,
+    userPlan: string,
+  ): Promise<void> {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    
+
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
 
@@ -73,7 +75,8 @@ export class AiService {
       },
     });
 
-    const dailyLimit = this.DAILY_LIMITS[userPlan as keyof typeof this.DAILY_LIMITS] || 0;
+    const dailyLimit =
+      this.DAILY_LIMITS[userPlan as keyof typeof this.DAILY_LIMITS] || 0;
 
     if (todayCount >= dailyLimit) {
       throw new HttpException(
@@ -83,7 +86,10 @@ export class AiService {
     }
   }
 
-  private async trackGeneration(userId: string, userPlan: string): Promise<void> {
+  private async trackGeneration(
+    userId: string,
+    userPlan: string,
+  ): Promise<void> {
     await this.prisma.aiGeneration.create({
       data: {
         userId,
@@ -93,10 +99,13 @@ export class AiService {
     });
   }
 
-  async getRemainingGenerations(userId: string, userPlan: string): Promise<number> {
+  async getRemainingGenerations(
+    userId: string,
+    userPlan: string,
+  ): Promise<number> {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    
+
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
 
@@ -110,7 +119,8 @@ export class AiService {
       },
     });
 
-    const dailyLimit = this.DAILY_LIMITS[userPlan as keyof typeof this.DAILY_LIMITS] || 0;
+    const dailyLimit =
+      this.DAILY_LIMITS[userPlan as keyof typeof this.DAILY_LIMITS] || 0;
     return Math.max(0, dailyLimit - todayCount);
   }
 
@@ -122,7 +132,7 @@ export class AiService {
   }> {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    
+
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
 
@@ -133,7 +143,7 @@ export class AiService {
     });
 
     const userPlan = userProfile?.subscription?.planType || 'FREE';
-    
+
     const todayCount = await this.prisma.aiGeneration.count({
       where: {
         userId,
@@ -144,7 +154,8 @@ export class AiService {
       },
     });
 
-    const dailyLimit = this.DAILY_LIMITS[userPlan as keyof typeof this.DAILY_LIMITS] || 0;
+    const dailyLimit =
+      this.DAILY_LIMITS[userPlan as keyof typeof this.DAILY_LIMITS] || 0;
 
     return {
       todayCount,

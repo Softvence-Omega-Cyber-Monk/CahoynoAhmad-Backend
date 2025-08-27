@@ -5,10 +5,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable prettier/prettier */
-import { Injectable } from '@nestjs/common';
+import { Injectable, RawBodyRequest } from '@nestjs/common';
 import Stripe from 'stripe';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Request } from 'express';
 
 @Injectable()
 export class StripeService {
@@ -30,19 +31,27 @@ export class StripeService {
   // Plan mapping helper
   private getPriceId(plan: string, billingInterval: string): string {
     const planKey = `${plan}_${billingInterval.toUpperCase()}`;
-    
+
     const priceMapping = {
-      'HOT_MESS_MONTHLY':this.configService.get<string>('HOT_MESS_MONTHLY'),
-      'HOT_MESS_YEARLY': this.configService.get<string>('HOT_MESS_YEARLY'),
-      'NO_FILTER_MONTHLY': this.configService.get<string>('NO_FILTER_MONTHLY'),
-      'NO_FILTER_YEARLY': this.configService.get<string>('NO_FILTER_YEARLY'),
-      'SAVAGE_MODE_MONTHLY': this.configService.get<string>('SAVAGE_MODE_MONTHLY'),
-      'SAVAGE_MODE_YEARLY': this.configService.get<string>('SAVAGE_MODE_YEARLY'),
-      'SIPTS_FOR_BRAND_MONTHLY': this.configService.get<string>('SIPTS_FOR_BRAND_MONTHLY'),
-      'SIPTS_FOR_BRAND_YEARLY': this.configService.get<string>('SIPTS_FOR_BRAND_YEARLY'),
-      'ONE_TIME_ROAST': this.configService.get<string>('ONE_TIME_ROAST'),
-      'LIFETIME_NO_FILTER': this.configService.get<string>('LIFETIME_NO_FILTER'),
-      'LIFETIME_SAVAGE_MODE': this.configService.get<string>('LIFETIME_SAVAGE_MODE'),
+      HOT_MESS_MONTHLY: this.configService.get<string>('HOT_MESS_MONTHLY'),
+      HOT_MESS_YEARLY: this.configService.get<string>('HOT_MESS_YEARLY'),
+      NO_FILTER_MONTHLY: this.configService.get<string>('NO_FILTER_MONTHLY'),
+      NO_FILTER_YEARLY: this.configService.get<string>('NO_FILTER_YEARLY'),
+      SAVAGE_MODE_MONTHLY: this.configService.get<string>(
+        'SAVAGE_MODE_MONTHLY',
+      ),
+      SAVAGE_MODE_YEARLY: this.configService.get<string>('SAVAGE_MODE_YEARLY'),
+      SIPTS_FOR_BRAND_MONTHLY: this.configService.get<string>(
+        'SIPTS_FOR_BRAND_MONTHLY',
+      ),
+      SIPTS_FOR_BRAND_YEARLY: this.configService.get<string>(
+        'SIPTS_FOR_BRAND_YEARLY',
+      ),
+      ONE_TIME_ROAST: this.configService.get<string>('ONE_TIME_ROAST'),
+      LIFETIME_NO_FILTER: this.configService.get<string>('LIFETIME_NO_FILTER'),
+      LIFETIME_SAVAGE_MODE: this.configService.get<string>(
+        'LIFETIME_SAVAGE_MODE',
+      ),
     };
 
     return priceMapping[planKey] || null;
@@ -77,9 +86,11 @@ export class StripeService {
 
     // 4. Get the correct price ID
     const priceId = this.getPriceId(planInfo.plan, planInfo.billingInterval);
-    
+
     if (!priceId) {
-      throw new Error(`Invalid plan configuration: ${planInfo.plan} - ${planInfo.billingInterval}`);
+      throw new Error(
+        `Invalid plan configuration: ${planInfo.plan} - ${planInfo.billingInterval}`,
+      );
     }
 
     // 5. Create subscription with correct price ID
@@ -94,7 +105,7 @@ export class StripeService {
         billingInterval: planInfo.billingInterval,
       },
     });
-
+    console.log(subscription);
     const latestInvoice = subscription.latest_invoice as Stripe.Invoice & {
       payment_intent?: Stripe.PaymentIntent;
     };
@@ -116,8 +127,9 @@ export class StripeService {
   }
 
   // Handle webhook
-  async handleWebhook(req: any) {
-    const webhookSecret = this.configService.get<string>('STRIPE_WEBHOOK_SECRET');
+  async handleWebhook(req: RawBodyRequest<Request>) {
+    console.log(req.body);
+    const webhookSecret = 'whsec_xCqIv09l79FgqbcoMRXjJwdDBNngRfON';
     if (!webhookSecret) {
       throw new Error('Stripe webhook secret not configured');
     }
@@ -143,13 +155,19 @@ export class StripeService {
         await this.handlePaymentSucceeded(event.data.object as Stripe.Invoice);
         break;
       case 'customer.subscription.created':
-        await this.handleSubscriptionCreated(event.data.object as Stripe.Subscription);
+        await this.handleSubscriptionCreated(
+          event.data.object as Stripe.Subscription,
+        );
         break;
       case 'customer.subscription.updated':
-        await this.handleSubscriptionUpdated(event.data.object as Stripe.Subscription);
+        await this.handleSubscriptionUpdated(
+          event.data.object as Stripe.Subscription,
+        );
         break;
       case 'customer.subscription.deleted':
-        await this.handleSubscriptionCanceled(event.data.object as Stripe.Subscription);
+        await this.handleSubscriptionCanceled(
+          event.data.object as Stripe.Subscription,
+        );
         break;
       default:
         console.warn(`Unhandled event type: ${event.type}`);
@@ -159,8 +177,11 @@ export class StripeService {
   private async handlePaymentSucceeded(invoice: Stripe.Invoice) {
     try {
       // Check if this is a subscription-related payment
-      const subscriptionId = typeof (invoice as any).subscription === 'string' ? (invoice as any).subscription : null;
-      
+      const subscriptionId =
+        typeof (invoice as any).subscription === 'string'
+          ? (invoice as any).subscription
+          : null;
+
       // Save payment record
       const paymentData = {
         stripePaymentId: invoice.id || '',
@@ -168,9 +189,10 @@ export class StripeService {
         amount: invoice.amount_paid / 100, // Convert from cents
         currency: invoice.currency.toUpperCase(),
         status: invoice.status || 'unknown',
+        // userId:userId,
         email: invoice.customer_email || '',
         description: invoice.description || '',
-        subscriptionId: subscriptionId,
+        // subscriptionId: subscriptionId,
         periodStart: new Date((invoice.period_start || invoice.created) * 1000),
         periodEnd: new Date((invoice.period_end || invoice.created) * 1000),
       };
@@ -181,7 +203,8 @@ export class StripeService {
       // If it's a subscription payment, get subscription details
       if (subscriptionId) {
         try {
-          const subscription = await this.stripe.subscriptions.retrieve(subscriptionId);
+          const subscription =
+            await this.stripe.subscriptions.retrieve(subscriptionId);
           userId = subscription.metadata?.userId || null;
           planType = subscription.metadata?.planType || null;
         } catch (error) {
@@ -192,7 +215,9 @@ export class StripeService {
       // For one-time payments or if no subscription found, try to get userId from customer
       if (!userId && invoice.customer) {
         try {
-          const customer = await this.stripe.customers.retrieve(invoice.customer as string);
+          const customer = await this.stripe.customers.retrieve(
+            invoice.customer as string,
+          );
           if (customer && !customer.deleted && customer.metadata?.userId) {
             userId = customer.metadata.userId;
             planType = 'ONE_TIME_ROAST'; // Default for one-time payments
@@ -207,18 +232,18 @@ export class StripeService {
         if (planType && subscriptionId) {
           await this.updateUserSubscription(userId, subscriptionId, planType);
         }
-        
+
         // Save payment with userId
         await this.prisma.payment.create({
           data: {
             ...paymentData,
             userId: userId,
-          }
+          },
         });
       } else {
         // Save payment without userId if we can't determine it
         await this.prisma.payment.create({
-          data: paymentData
+          data: paymentData,
         });
         console.warn('Could not determine userId for payment:', invoice.id);
       }
@@ -259,15 +284,14 @@ export class StripeService {
   private async updateUserSubscription(
     userId: string,
     stripeSubscriptionId: string | null,
-    planType: string
+    planType: string,
   ) {
     try {
       let subscriptionRecord: any = null;
       if (stripeSubscriptionId && planType !== 'FREE') {
         subscriptionRecord = await this.prisma.subscription.upsert({
-          where: { 
-           
-            id: stripeSubscriptionId 
+          where: {
+            id: stripeSubscriptionId,
           },
           update: {
             planType: planType as any,
@@ -275,27 +299,34 @@ export class StripeService {
           create: {
             id: stripeSubscriptionId,
             planType: planType as any,
-            billingCycle: 'MONTHLY', 
+            billingCycle: 'MONTHLY',
             priceId: '',
-            productId: '', 
-            priceAmount: 0, 
+            productId: '',
+            priceAmount: 0,
             currency: 'USD',
             dailyGenerations: this.getDailyGenerations(planType),
             toneStylesAllowed: this.getToneStyles(planType),
             publicFeedAccess: this.getPublicFeedAccess(planType),
             communitySharing: this.getCommunitySharing(planType),
             postInteraction: this.getPostInteraction(planType),
-          }
+          },
         });
       }
+      const existingProfile = await this.prisma.userProfile.findFirst({
+        where: { userId },
+      });
 
+      if (!existingProfile) {
+        console.warn(`UserProfile not found for userId: ${userId}`);
+        return; // Or optionally create it
+      }
       // Update user profile
       await this.prisma.userProfile.update({
         where: { userId },
         data: {
           subscriptionName: planType,
           subscriptionId: subscriptionRecord?.id || null,
-        }
+        },
       });
 
       console.log(`Updated user ${userId} subscription to ${planType}`);
@@ -338,10 +369,21 @@ export class StripeService {
   }
 
   private getCommunitySharing(planType: string): boolean {
-    return ['NO_FILTER', 'SAVAGE_MODE', 'SIPTS_FOR_BRAND', 'LIFETIME_NO_FILTER', 'LIFETIME_SAVAGE_MODE'].includes(planType);
+    return [
+      'NO_FILTER',
+      'SAVAGE_MODE',
+      'SIPTS_FOR_BRAND',
+      'LIFETIME_NO_FILTER',
+      'LIFETIME_SAVAGE_MODE',
+    ].includes(planType);
   }
 
   private getPostInteraction(planType: string): boolean {
-    return ['SAVAGE_MODE', 'SIPTS_FOR_BRAND', 'LIFETIME_NO_FILTER', 'LIFETIME_SAVAGE_MODE'].includes(planType);
+    return [
+      'SAVAGE_MODE',
+      'SIPTS_FOR_BRAND',
+      'LIFETIME_NO_FILTER',
+      'LIFETIME_SAVAGE_MODE',
+    ].includes(planType);
   }
 }

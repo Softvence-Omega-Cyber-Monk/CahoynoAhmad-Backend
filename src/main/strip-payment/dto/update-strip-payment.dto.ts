@@ -1,4 +1,6 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { CreateStripPaymentDto } from './create-strip-payment.dto';
+import { CreateStripePaymentDto } from './create-strip-payment.dto';
 
-export class UpdateStripPaymentDto extends PartialType(CreateStripPaymentDto) {}
+export class UpdateStripPaymentDto extends PartialType(
+  CreateStripePaymentDto,
+) {}

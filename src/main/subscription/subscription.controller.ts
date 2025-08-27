@@ -29,7 +29,7 @@ export class SubscriptionController {
   @Roles(Role.User)
   async createSubscription(
     @Body() SubscriptionDto: CreateSubscriptionDto,
-    @Request() req
+    @Request() req,
   ) {
     const subscription =
       await this.subscriptionService.createSubscription(SubscriptionDto);
