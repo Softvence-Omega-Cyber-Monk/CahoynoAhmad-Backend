@@ -7,16 +7,9 @@ import { AuthModule } from './main/auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { UserModule } from './main/user/user.module';
 import { MailModule } from './main/mail/mail.module';
-import { ContactModule } from './main/contact/contact.module';
-import { StripPaymentModule } from './main/strip-payment/strip-payment.module';
-import { SubscriptionModule } from './main/subscription/subscription.module';
+
 import { PrismaModule } from './prisma/prisma.module';
 import { CloudinaryService } from './main/cloudinary/cloudinary.service';
-import { PostModule } from './main/post/post.module';
-import { ReactionModule } from './main/reaction/reaction.module';
-import { CommentModule } from './main/comment/comment.module';
-import { SubscribeModule } from './main/subscribe/subscribe.module';
-import { AiModule } from './main/ai/ai.module';
 
 @Module({
   imports: [
@@ -26,14 +19,7 @@ import { AiModule } from './main/ai/ai.module';
     AuthModule,
     UserModule,
     MailModule,
-    ContactModule,
-    StripPaymentModule,
-    SubscriptionModule,
-    PostModule,
-    ReactionModule,
-    CommentModule,
-    SubscribeModule,
-    AiModule,
+  
   ],
   controllers: [AppController],
   providers: [AppService, CloudinaryService],

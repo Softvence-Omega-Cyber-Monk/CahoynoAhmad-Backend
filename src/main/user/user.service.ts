@@ -10,21 +10,13 @@ export class UserService {
   // Retrieves the profile of the currently authenticated user.
   async getMe(user: Partial<TUser>) {
     try {
-      const profile = await this.prisma.userProfile.findUnique({
+      const profile = await this.prisma.credential.findUnique({
         where: {
-          userId: user.userId,
+          id: user.userId,
         },
-        include: {
-          user: true,
-        },
+       
       });
-      if (profile?.user) {
-        const { password, ...safeUser } = profile.user;
-        return {
-          ...profile,
-          user: safeUser,
-        };
-      }
+      
       return profile;
     } catch (error) {
       throw new HttpException(error.message, error.status);
@@ -34,24 +26,15 @@ export class UserService {
   // Updates the profile of the currently authenticated user.
   async updateProfile(user: Partial<TUser>, updateProfileDto: UpdateUserDto) {
     try {
-      const profile = await this.prisma.userProfile.update({
+      const profile = await this.prisma.credential.update({
         where: {
-          userId: user.userId,
+          id: user.userId,
         },
         data: {
           ...updateProfileDto,
         },
-        include: {
-          user: true,
-        },
+       
       });
-      if (profile?.user) {
-        const { password, ...safeUser } = profile.user;
-        return {
-          ...profile,
-          user: safeUser,
-        };
-      }
       return profile;
     } catch (error) {
       throw new HttpException(error.message, error.status);
