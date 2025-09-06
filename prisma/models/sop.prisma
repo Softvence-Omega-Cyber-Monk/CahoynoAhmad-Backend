@@ -1,0 +1,52 @@
+model SOP {
+  id                  String     @id @default(uuid())
+  title               String
+  jurisdiction        String[]
+  tags                String[]
+  overview            String
+  indications         String[]
+  contraindications   String[]
+  required_equipment  String[]
+  status              SOPStatus  @default(Procedure)
+  isDraft             Boolean    @default(true)
+  author              String?
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt
+  protocolSteps       ProtocolStep[]
+  medications         Medication[]
+  oxygen              Oxygen?
+}
+
+model ProtocolStep {
+  id          String @id @default(uuid())
+  stepNumber  Int
+  title       String
+  description String
+  duration    String?
+  sopId       String
+  sop         SOP    @relation(fields: [sopId], references: [id])
+}
+
+model Medication {
+  id        String  @id @default(uuid())
+  name      String
+  dose      String
+  route     String
+  repeat    String?
+  sopId     String
+  sop       SOP     @relation(fields: [sopId], references: [id])
+}
+
+model Oxygen {
+  id      String @id @default(uuid())
+  dose    String
+  route   String
+  repeat  String?
+  sopId   String @unique
+  sop     SOP    @relation(fields: [sopId], references: [id])
+}
+
+enum SOPStatus {
+Procedure
+Emergence
+}

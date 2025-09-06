@@ -106,7 +106,7 @@ async login(loginDto: LoginDTO) {
       data: { resetToken: token },
     });
     const resetUrl = `${process.env.BASE_URL}reset-password?token=${token}`;
-
+    console.log(resetUrl);
     await this.mailService.sendMail({
       to: email,
       subject: 'Password Reset',

@@ -1,0 +1,29 @@
+services:
+  app:
+    build: .
+    container_name: derma_backend_app
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      - derma_db
+    volumes:
+      - ./uploads:/app/uploads
+    restart: always
+
+  derma_db:
+    image: postgres:15
+    container_name: derma_db
+    environment:
+      POSTGRES_USER: derma_user
+      POSTGRES_PASSWORD: derma_pass
+      POSTGRES_DB: derma_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - derma_pgdata_new:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  derma_pgdata_new:
