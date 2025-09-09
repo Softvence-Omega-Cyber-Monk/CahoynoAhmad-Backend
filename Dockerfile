@@ -1,14 +1,12 @@
 # Use Node.js base image
-FROM node:18-alpine
+FROM node:18-alpine AS builder
 
 # Set working directory inside container
 WORKDIR /app
 
-# Copy package files first
+# Install dependencies (including dev, needed for build + prisma)
 COPY package*.json ./
-
-# Install dependencies
-RUN npm install --production
+RUN npm install
 
 # Copy the rest of the code
 COPY . .
@@ -16,10 +14,21 @@ COPY . .
 # Generate Prisma client
 RUN npx prisma generate
 
-# Build app (for NestJS/Next.js/React)
+# Build app
 RUN npm run build
 
-# Expose port (change if needed)
+# -------- Production image --------
+FROM node:18-alpine AS production
+
+WORKDIR /app
+
+# Copy only necessary files from builder
+COPY package*.json ./
+RUN npm install --production
+
+
+
+# Expose port
 EXPOSE 3000
 
 # Run migrations and start app
