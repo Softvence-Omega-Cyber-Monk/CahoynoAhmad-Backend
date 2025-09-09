@@ -23,20 +23,7 @@ export class LoginDTO {
   @IsString()
   email: string;
 
-  @ApiProperty({
-    description: 'phonbe',
-    example: '1223232323',
-  })
-  @IsNotEmpty()
-  @IsString()
-  phone: string;
-  @ApiProperty({
-    description: 'Password for the account',
-    example: 'StrongP@ssw0rd!',
-  })
   @IsNotEmpty()
   @IsString()
   password: string;
 }
-
-

@@ -12,6 +12,7 @@ import {
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { JwtAuthGuard } from 'src/utils/jwt-auth.guard';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('user')
 export class UserController {
@@ -19,6 +20,7 @@ export class UserController {
 
   @Get('get-me')
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   async getMe(@Request() req) {
     const user = req.user;
     try {
@@ -36,6 +38,7 @@ export class UserController {
 
   @Patch('update-profile')
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   async updateProfile(@Body() updateProfileDto: any, @Request() req) {
     const user = req.user;
     try {

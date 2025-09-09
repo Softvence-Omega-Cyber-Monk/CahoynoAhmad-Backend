@@ -27,69 +27,60 @@ export class AuthService {
       if (existingUser) {
         throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
       }
-       const { password } = createAuthDto;
-        const hasshedPassword = await bcrypt.hash(password, 10);
-         const credential = await this.prisma.credential.create({
-          data: {
-            email: createAuthDto.email,
-            password: hasshedPassword,
-            firstName: createAuthDto.firstName,
-            lastName:createAuthDto.lastName,
-            role: createAuthDto.role,
-            phone:createAuthDto.phone
-          },
-        });
-        return credential;
+      const { password } = createAuthDto;
+      const hasshedPassword = await bcrypt.hash(password, 10);
+      const credential = await this.prisma.credential.create({
+        data: {
+          email: createAuthDto.email,
+          password: hasshedPassword,
+          name: createAuthDto.name,
+        },
+      });
+      return credential;
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   // This function for login user
-async login(loginDto: LoginDTO) {
-  const { email, phone, password } = loginDto;
-  try {
-    // --- Find user by email OR phone ---
-    const user = await this.prisma.credential.findFirst({
-      where: {
-        OR: [
-          ...(email ? [{ email }] : []),
-          ...(phone ? [{ phone }] : []),
-        ],
-      },
-    });
+  async login(loginDto: LoginDTO) {
+    const { email, password } = loginDto;
+    try {
+      // --- Find user by email OR phone ---
+      const user = await this.prisma.credential.findFirst({
+        where: {
+          OR: [...(email ? [{ email }] : [])],
+        },
+      });
 
-    if (!user) {
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      if (!user) {
+        throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      }
+
+      // --- Check password ---
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+        throw new HttpException('Invalid password', HttpStatus.UNAUTHORIZED);
+      }
+
+      // --- Build JWT payload ---
+      const payload = {
+        userId: user.id,
+        email: user.email,
+        phone: user.phone,
+        name: user.name,
+      };
+
+      const accessToken = await this.jwtService.signAsync(payload);
+
+      return { accessToken };
+    } catch (error) {
+      throw new HttpException(
+        error.message || 'Login failed',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
-
-    // --- Check password ---
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-      throw new HttpException('Invalid password', HttpStatus.UNAUTHORIZED);
-    }
-
-    // --- Build JWT payload ---
-    const payload = {
-      userId: user.id,
-      email: user.email,
-      phone: user.phone,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      role: user.role,
-    };
-
-    const accessToken = await this.jwtService.signAsync(payload);
-
-    return { accessToken };
-  } catch (error) {
-    throw new HttpException(
-      error.message || 'Login failed',
-      HttpStatus.INTERNAL_SERVER_ERROR,
-    );
   }
-}
-
 
   //forget-password
   async forgetPassword(email: string) {

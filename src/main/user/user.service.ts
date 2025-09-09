@@ -14,9 +14,8 @@ export class UserService {
         where: {
           id: user.userId,
         },
-       
       });
-      
+
       return profile;
     } catch (error) {
       throw new HttpException(error.message, error.status);
@@ -33,7 +32,6 @@ export class UserService {
         data: {
           ...updateProfileDto,
         },
-       
       });
       return profile;
     } catch (error) {

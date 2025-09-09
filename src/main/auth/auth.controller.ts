@@ -47,11 +47,14 @@ export class AuthController {
   }
 
   @Post('forget-password')
-  @ApiBody({ type:Object,schema:{
-    properties: {
-      email: { type: 'string', example: 'user@gmail.com' },
+  @ApiBody({
+    type: Object,
+    schema: {
+      properties: {
+        email: { type: 'string', example: 'user@gmail.com' },
+      },
     },
-  } })
+  })
   async forgetPassword(@Body() body: { email: string }) {
     console.log(body);
     try {

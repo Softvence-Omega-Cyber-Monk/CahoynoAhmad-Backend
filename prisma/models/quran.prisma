@@ -1,0 +1,16 @@
+model Surah {
+  id       Int    @id @default(autoincrement())
+  number   Int    @unique
+  name     String @unique
+  meaning  String
+  ayahs    Ayah[]
+}
+
+model Ayah {
+  id          Int    @id @default(autoincrement())
+  number      Int
+  text        String
+  translation String
+  surahId     Int
+  surah       Surah  @relation(fields: [surahId], references: [id])
+}
