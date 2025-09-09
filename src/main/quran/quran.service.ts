@@ -5,15 +5,15 @@ import * as fs from 'fs';
 @Injectable()
 export class QuranService {
   constructor(private prisma: PrismaService) {}
-  private readonly defaultLimit = 20;
 
   async findAll(page: number, limit: number) {
     return this.prisma.surah.findMany({
       include: {},
     });
   }
+  // post all-quran to database one time just
   async seedQuran() {
-    const filePath = path.join(__dirname, '..', '..', '..', 'quran.json'); // adjust path
+    const filePath = path.join(__dirname, '..', '..', '..', 'quran.json');
     const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 
     for (const surah of data) {
@@ -43,6 +43,7 @@ export class QuranService {
     });
   }
 
+  // find surah by id
   async findBySurahAndVerse(surahId: number, verseNumber: number) {
     return this.prisma.ayah.findFirst({
       where: {
@@ -52,8 +53,8 @@ export class QuranService {
     });
   }
 
+  // search surah
   async search(keyword: string) {
-    // The search is case-insensitive for both Arabic and English text
     return this.prisma.ayah.findMany({
       where: {
         OR: [
@@ -64,6 +65,7 @@ export class QuranService {
     });
   }
 
+  // get surah by name
   async getSurahByName(name: string) {
     try {
       const res = await this.prisma.surah.findUnique({
