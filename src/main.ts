@@ -40,7 +40,7 @@ async function bootstrap() {
       persistAuthorization: true,
     },
   });
-  app.use('/api/stripe/webhook', bodyParser.raw({ type: 'application/json' }));
+  app.use('/api/payment/webhook', bodyParser.raw({ type: 'application/json' }));
   await app.listen(process.env.PORT ?? 5000);
 }
 bootstrap();

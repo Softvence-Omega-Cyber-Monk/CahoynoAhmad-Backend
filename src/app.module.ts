@@ -11,6 +11,8 @@ import { MailModule } from './main/mail/mail.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { CloudinaryService } from './main/cloudinary/cloudinary.service';
 import { QuranModule } from './main/quran/quran.module';
+import { PaymentModule } from './main/payment/payment.module';
+
 
 @Module({
   imports: [
@@ -21,6 +23,7 @@ import { QuranModule } from './main/quran/quran.module';
     UserModule,
     MailModule,
     QuranModule,
+    PaymentModule,
   ],
   controllers: [AppController],
   providers: [AppService, CloudinaryService],
