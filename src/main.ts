@@ -7,14 +7,17 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     cors: true,
-    rawBody: true,
   });
 
-  // Middleware for Stripe webhook (must come before prefix)
+  // Stripe webhook must use raw body
+  app.use('/api/payment/webhook', bodyParser.raw({ type: 'application/json' }));
+
+  // Enable CORS
   app.enableCors({
     origin: '*',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   });
+
   // Global prefix
   app.setGlobalPrefix('api');
 
@@ -27,6 +30,7 @@ async function bootstrap() {
     }),
   );
 
+  // Swagger
   const config = new DocumentBuilder()
     .setTitle('CahyonoAhmad API')
     .setDescription('API documentation for my NestJS project')
@@ -36,11 +40,9 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document, {
-    swaggerOptions: {
-      persistAuthorization: true,
-    },
+    swaggerOptions: { persistAuthorization: true },
   });
-  app.use('/api/payment/webhook', bodyParser.raw({ type: 'application/json' }));
+
   await app.listen(process.env.PORT ?? 5000);
 }
 bootstrap();

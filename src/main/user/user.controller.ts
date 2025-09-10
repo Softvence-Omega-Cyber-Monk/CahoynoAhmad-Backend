@@ -61,12 +61,15 @@ export class UserController {
   @Post('note')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
-  @ApiBody({type:CreateNoteDTO})
-  async createNote(@Body() createNoteDto:CreateNoteDTO, @Request() req) {
+  @ApiBody({ type: CreateNoteDTO })
+  async createNote(@Body() createNoteDto: CreateNoteDTO, @Request() req) {
     const user = req.user;
-    console.log(user)
+    console.log(user);
     try {
-      const result = await this.userService.createNote(user.userId,createNoteDto);
+      const result = await this.userService.createNote(
+        user.userId,
+        createNoteDto,
+      );
       return {
         statusCode: 200,
         success: true,
@@ -74,12 +77,12 @@ export class UserController {
         data: result,
       };
     } catch (error) {
-      return{
+      return {
         statusCode: error.status,
         success: false,
         message: error.message,
-        data: null
-      }
+        data: null,
+      };
     }
   }
 

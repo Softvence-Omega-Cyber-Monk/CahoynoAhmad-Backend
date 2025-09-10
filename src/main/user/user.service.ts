@@ -40,8 +40,8 @@ export class UserService {
     }
   }
 
-  async createNote(userId:string,noteData:CreateNoteDTO){
-    console.log(noteData)
+  async createNote(userId: string, noteData: CreateNoteDTO) {
+    console.log(noteData);
     try {
       const isUserExist = await this.prisma.credential.findUniqueOrThrow({
         where: {
@@ -49,34 +49,33 @@ export class UserService {
         },
       });
       if (!isUserExist) {
-        throw new HttpException("User not found", HttpStatus.NOT_FOUND);
+        throw new HttpException('User not found', HttpStatus.NOT_FOUND);
       }
       const note = await this.prisma.note.create({
         data: {
           ...noteData,
-          userId:userId
+          userId: userId,
         },
       });
       return note;
     } catch (error) {
       throw new HttpException(error.message, error.status);
-    
+    }
   }
-}
 
-async getNotes(userId:string){
-  try {
-    const notes = await this.prisma.note.findMany({
-      where: {
-        userId: userId,
-      },
-      include:{
-        user:true
-      }
-    });
-    return notes;
-  } catch (error) {
-    throw new HttpException(error.message, error.status);
+  async getNotes(userId: string) {
+    try {
+      const notes = await this.prisma.note.findMany({
+        where: {
+          userId: userId,
+        },
+        include: {
+          user: true,
+        },
+      });
+      return notes;
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
   }
-}
 }

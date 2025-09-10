@@ -13,7 +13,7 @@ import { ApiOperation, ApiParam } from '@nestjs/swagger';
 @Controller('quran')
 export class QuranController {
   constructor(private readonly quranService: QuranService) {}
-// post one time whole quran
+  // post one time whole quran
   @Post('seed')
   async seed() {
     try {
@@ -116,7 +116,7 @@ export class QuranController {
     }
   }
 
-  // get surah by name 
+  // get surah by name
   @Get('surah/:name')
   @ApiOperation({ summary: 'Get a surah by its name' })
   @ApiParam({

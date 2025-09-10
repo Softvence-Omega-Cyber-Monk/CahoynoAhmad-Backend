@@ -13,7 +13,6 @@ import { CloudinaryService } from './main/cloudinary/cloudinary.service';
 import { QuranModule } from './main/quran/quran.module';
 import { PaymentModule } from './main/payment/payment.module';
 
-
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
