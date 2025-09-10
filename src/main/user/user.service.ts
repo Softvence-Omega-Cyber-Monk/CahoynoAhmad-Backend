@@ -1,7 +1,8 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { TUser } from 'src/types/user';
+import { CreateNoteDTO } from './dto/create-note.dto';
 
 @Injectable()
 export class UserService {
@@ -38,4 +39,44 @@ export class UserService {
       throw new HttpException(error.message, error.status);
     }
   }
+
+  async createNote(userId:string,noteData:CreateNoteDTO){
+    console.log(noteData)
+    try {
+      const isUserExist = await this.prisma.credential.findUniqueOrThrow({
+        where: {
+          id: userId,
+        },
+      });
+      if (!isUserExist) {
+        throw new HttpException("User not found", HttpStatus.NOT_FOUND);
+      }
+      const note = await this.prisma.note.create({
+        data: {
+          ...noteData,
+          userId:userId
+        },
+      });
+      return note;
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    
+  }
+}
+
+async getNotes(userId:string){
+  try {
+    const notes = await this.prisma.note.findMany({
+      where: {
+        userId: userId,
+      },
+      include:{
+        user:true
+      }
+    });
+    return notes;
+  } catch (error) {
+    throw new HttpException(error.message, error.status);
+  }
+}
 }

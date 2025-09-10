@@ -31,7 +31,7 @@ export class QuranService {
           },
         },
       });
-      console.log(`Inserted Surah: ${surah.name}`);
+      // console.log(`Inserted Surah: ${surah.name}`);
     }
 
     return { message: 'Quran data inserted successfully!' };
