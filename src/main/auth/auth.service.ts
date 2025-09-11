@@ -27,13 +27,36 @@ export class AuthService {
       if (existingUser) {
         throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
       }
+      if(createAuthDto.referCode){
+        const refferUser = await this.prisma.credential.findFirst({
+          where:{
+            referCode:createAuthDto.referCode
+          }
+        });
+        if(refferUser){
+          await this.prisma.credential.update({
+            where:{
+              id:refferUser.id
+            },
+            data:{
+              totalAffiliate:{increment:1}
+            }
+          });
+        }
+        console.log(refferUser)
+      }
+      
       const { password } = createAuthDto;
       const hasshedPassword = await bcrypt.hash(password, 10);
+      const refferToken= randomBytes(16).toString('hex');
+      const affilateLink = `${process.env.SERVER_BASE_URL}/auth/link?token=${refferToken}`;
       const credential = await this.prisma.credential.create({
         data: {
           email: createAuthDto.email,
           password: hasshedPassword,
           name: createAuthDto.name,
+          affiliateLink: affilateLink,
+          referCode:refferToken
         },
       });
       return credential;
@@ -127,5 +150,18 @@ export class AuthService {
     });
 
     return { message: 'Password reset successful' };
+  }
+
+  async recordClick(referralToken: string): Promise<void> {
+    const referrer = await this.prisma.credential.findFirst({
+      where: { referCode: referralToken },
+    });
+
+    if (referrer) {
+      await this.prisma.credential.update({
+        where: { id: referrer.id },
+        data: { totalClick: { increment: 1 } }
+      });
+    }
   }
 }

@@ -4,16 +4,16 @@ import {
   Post,
   Body,
   Patch,
-  Param,
-  Delete,
   UseGuards,
   HttpException,
   Request,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { JwtAuthGuard } from 'src/utils/jwt-auth.guard';
-import { ApiBearerAuth, ApiBody, ApiSecurity } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiSecurity, ApiOperation } from '@nestjs/swagger';
 import { CreateNoteDTO } from './dto/create-note.dto';
+import { UpdateUserStatDto } from './dto/updateUserStat.dto';
+
 
 @Controller('user')
 export class UserController {
@@ -97,6 +97,43 @@ export class UserController {
         statusCode: 200,
         success: true,
         message: 'Notes retrieved successfully',
+        data: result,
+      };
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
+
+  @Get('payment')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  async getPayment(@Request() req) {
+    const user = req.user;
+    try {
+      const result = await this.userService.getPayment(user.userId);
+      return {
+        statusCode: 200,
+        success: true,
+        message: 'Payment retrieved successfully',
+        data: result,
+      };
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
+
+  @Patch('stats')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Update user statistics' })
+  async updateUserStats(@Body() updateUserStatDto: UpdateUserStatDto, @Request() req) {
+    const user = req.user;
+    try {
+      const result = await this.userService.updateUserStats(user.userId, updateUserStatDto);
+      return {
+        statusCode: 200,
+        success: true,
+        message: 'User stats updated successfully',
         data: result,
       };
     } catch (error) {

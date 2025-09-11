@@ -1,0 +1,284 @@
+{
+  "surahs": [
+    {
+      "number": 1,
+      "name": "Al-Fatihah",
+      "words": [
+        {
+          "arabic": "الْحَمْدُ",
+          "english": "Praise",
+          "options": ["Praise", "Book", "Mercy", "Day"]
+        },
+        {
+          "arabic": "اللَّهِ",
+          "english": "Allah",
+          "options": ["Allah", "Man", "Fire", "Guidance"]
+        },
+        {
+          "arabic": "الرَّحْمَٰنِ",
+          "english": "The Most Gracious",
+          "options": ["The Most Gracious", "The Most Merciful", "The Almighty", "The Wise"]
+        },
+        {
+          "arabic": "الرَّحِيمِ",
+          "english": "The Most Merciful",
+          "options": ["The Most Merciful", "Judgment", "Knowledge", "Book"]
+        },
+        {
+          "arabic": "مَالِكِ",
+          "english": "Master",
+          "options": ["Master", "Man", "Messenger", "Fire"]
+        },
+        {
+          "arabic": "يَوْمِ",
+          "english": "Day",
+          "options": ["Day", "Night", "Mercy", "Book"]
+        },
+        {
+          "arabic": "الدِّينِ",
+          "english": "Judgment",
+          "options": ["Judgment", "Prayer", "Guidance", "Success"]
+        },
+        {
+          "arabic": "إِيَّاكَ",
+          "english": "You Alone",
+          "options": ["You Alone", "We Worship", "Guidance", "Mercy"]
+        },
+        {
+          "arabic": "نَعْبُدُ",
+          "english": "We Worship",
+          "options": ["We Worship", "We Spend", "We Believe", "We Pray"]
+        },
+        {
+          "arabic": "مُسْتَقِيمٍ",
+          "english": "Straight (Path)",
+          "options": ["Straight (Path)", "Fire", "Mercy", "Knowledge"]
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "name": "Al-Baqarah",
+      "words": [
+        {
+          "arabic": "كِتَابٌ",
+          "english": "Book",
+          "options": ["Book", "Mercy", "Fire", "Day"]
+        },
+        {
+          "arabic": "لَا رَيْبَ",
+          "english": "No Doubt",
+          "options": ["No Doubt", "Prayer", "Guidance", "Unseen"]
+        },
+        {
+          "arabic": "هُدًى",
+          "english": "Guidance",
+          "options": ["Guidance", "Mercy", "Man", "Judgment"]
+        },
+        {
+          "arabic": "مُتَّقِينَ",
+          "english": "The God-conscious",
+          "options": ["The God-conscious", "The Successful", "The Believers", "The Unseen"]
+        },
+        {
+          "arabic": "يُؤْمِنُونَ",
+          "english": "They Believe",
+          "options": ["They Believe", "They Worship", "They Spend", "They Pray"]
+        },
+        {
+          "arabic": "غَيْبٍ",
+          "english": "Unseen",
+          "options": ["Unseen", "Day", "Mercy", "Book"]
+        },
+        {
+          "arabic": "يُقِيمُونَ",
+          "english": "They Establish",
+          "options": ["They Establish", "They Believe", "They Spend", "They Pray"]
+        },
+        {
+          "arabic": "الصَّلَاةَ",
+          "english": "Prayer",
+          "options": ["Prayer", "Guidance", "Judgment", "Mercy"]
+        },
+        {
+          "arabic": "يُنفِقُونَ",
+          "english": "They Spend",
+          "options": ["They Spend", "They Worship", "They Believe", "They Pray"]
+        },
+        {
+          "arabic": "مُفْلِحُونَ",
+          "english": "Successful",
+          "options": ["Successful", "Mercy", "Day", "Judgment"]
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "name": "Aal-E-Imran",
+      "words": [
+        {
+          "arabic": "اللَّهُ",
+          "english": "Allah",
+          "options": ["Allah", "Man", "Guidance", "Day"]
+        },
+        {
+          "arabic": "الْحَيُّ",
+          "english": "The Ever-Living",
+          "options": ["The Ever-Living", "The Wise", "The Almighty", "The Merciful"]
+        },
+        {
+          "arabic": "الْقَيُّومُ",
+          "english": "The Sustainer",
+          "options": ["The Sustainer", "The Judge", "The Fire", "The Merciful"]
+        },
+        {
+          "arabic": "الْكِتَابَ",
+          "english": "The Book",
+          "options": ["The Book", "The Fire", "The Path", "The People"]
+        },
+        {
+          "arabic": "التَّوْرَاةَ",
+          "english": "The Torah",
+          "options": ["The Torah", "The Gospel", "The Book", "The Guidance"]
+        },
+        {
+          "arabic": "الْإِنجِيلَ",
+          "english": "The Gospel",
+          "options": ["The Gospel", "The Torah", "The Book", "The Fire"]
+        },
+        {
+          "arabic": "هُدًى",
+          "english": "Guidance",
+          "options": ["Guidance", "Mercy", "Fire", "Judgment"]
+        },
+        {
+          "arabic": "النَّارِ",
+          "english": "The Fire",
+          "options": ["The Fire", "The Path", "The Book", "The Wise"]
+        },
+        {
+          "arabic": "الْعَزِيزُ",
+          "english": "The Almighty",
+          "options": ["The Almighty", "The Merciful", "The Wise", "The Book"]
+        },
+        {
+          "arabic": "الْحَكِيمُ",
+          "english": "The Wise",
+          "options": ["The Wise", "The Merciful", "The Sustainer", "The Gracious"]
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "name": "An-Nisa",
+      "words": [
+        {
+          "arabic": "النَّاسَ",
+          "english": "Mankind",
+          "options": ["Mankind", "Day", "Judgment", "Mercy"]
+        },
+        {
+          "arabic": "خَلَقَ",
+          "english": "Created",
+          "options": ["Created", "Guided", "Destroyed", "Judged"]
+        },
+        {
+          "arabic": "نَفْسٍ",
+          "english": "Soul",
+          "options": ["Soul", "Man", "Woman", "Mercy"]
+        },
+        {
+          "arabic": "زَوْجَهَا",
+          "english": "Its Mate",
+          "options": ["Its Mate", "Its Soul", "Its Path", "Its Day"]
+        },
+        {
+          "arabic": "بَثَّ",
+          "english": "Spread",
+          "options": ["Spread", "Created", "Destroyed", "Guided"]
+        },
+        {
+          "arabic": "رِجَالًا",
+          "english": "Men",
+          "options": ["Men", "Women", "Souls", "Books"]
+        },
+        {
+          "arabic": "نِسَاءً",
+          "english": "Women",
+          "options": ["Women", "Men", "Children", "Souls"]
+        },
+        {
+          "arabic": "تَسَاءَلُونَ",
+          "english": "Ask of One Another",
+          "options": ["Ask of One Another", "Guide One Another", "Fight One Another", "Worship Together"]
+        },
+        {
+          "arabic": "أَرْحَامَ",
+          "english": "Kinship",
+          "options": ["Kinship", "Friendship", "Guidance", "Mercy"]
+        },
+        {
+          "arabic": "رَقِيبًا",
+          "english": "Ever-Watchful",
+          "options": ["Ever-Watchful", "Merciful", "Wise", "Judge"]
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "name": "Al-Maidah",
+      "words": [
+        {
+          "arabic": "عُقُودَ",
+          "english": "Contracts",
+          "options": ["Contracts", "Mercy", "Judgment", "Guidance"]
+        },
+        {
+          "arabic": "بَهِيمَةِ",
+          "english": "Beasts",
+          "options": ["Beasts", "Cattle", "Birds", "Men"]
+        },
+        {
+          "arabic": "الْأَنْعَامِ",
+          "english": "Cattle",
+          "options": ["Cattle", "Beasts", "Birds", "Fish"]
+        },
+        {
+          "arabic": "حُرِّمَتْ",
+          "english": "Made Unlawful",
+          "options": ["Made Unlawful", "Made Lawful", "Made Easy", "Made Clear"]
+        },
+        {
+          "arabic": "الصَّيْدِ",
+          "english": "Game (Hunting)",
+          "options": ["Game (Hunting)", "Prayer", "Judgment", "Guidance"]
+        },
+        {
+          "arabic": "حُرُمٍ",
+          "english": "Sacred",
+          "options": ["Sacred", "Permissible", "Forbidden", "Clear"]
+        },
+        {
+          "arabic": "مُحِلِّي",
+          "english": "Permissible",
+          "options": ["Permissible", "Forbidden", "Sacred", "Judgment"]
+        },
+        {
+          "arabic": "الْبَيْتَ",
+          "english": "The House (Kaaba)",
+          "options": ["The House (Kaaba)", "The Mosque", "The Fire", "The Book"]
+        },
+        {
+          "arabic": "الْحَرَامَ",
+          "english": "Sacred",
+          "options": ["Sacred", "Permissible", "Forbidden", "Clear"]
+        },
+        {
+          "arabic": "يَعْلَمُ",
+          "english": "He Knows",
+          "options": ["He Knows", "He Judges", "He Creates", "He Destroys"]
+        }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateAuthDto {
   @ApiProperty({
@@ -27,4 +27,12 @@ export class CreateAuthDto {
   @IsNotEmpty()
   @IsString()
   name: string;
+
+  @ApiProperty({
+    description: 'Refer code',
+    example: '1234567890',
+  })
+  @IsOptional()
+  @IsString()
+  referCode:string
 }

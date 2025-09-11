@@ -4,7 +4,6 @@ import { AppService } from './app.service';
 
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './main/auth/auth.module';
-import { JwtModule } from '@nestjs/jwt';
 import { UserModule } from './main/user/user.module';
 import { MailModule } from './main/mail/mail.module';
 
@@ -12,6 +11,9 @@ import { PrismaModule } from './prisma/prisma.module';
 import { CloudinaryService } from './main/cloudinary/cloudinary.service';
 import { QuranModule } from './main/quran/quran.module';
 import { PaymentModule } from './main/payment/payment.module';
+import { GameModule } from './main/game/game.module';
+
+
 
 @Module({
   imports: [
@@ -23,6 +25,7 @@ import { PaymentModule } from './main/payment/payment.module';
     MailModule,
     QuranModule,
     PaymentModule,
+    GameModule,
   ],
   controllers: [AppController],
   providers: [AppService, CloudinaryService],

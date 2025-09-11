@@ -5,5 +5,5 @@ model Payment{
     createdAt  DateTime    @default(now())
     updatedAt  DateTime    @updatedAt
     userId     String
-    user       Credential        @relation(fields: [userId], references: [id])
+    user       Credential        @relation(fields: [userId], references: [id],onDelete: Cascade)
 }

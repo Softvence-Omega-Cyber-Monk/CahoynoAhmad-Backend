@@ -1,8 +1,9 @@
-import { Controller, Post, Body, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, HttpStatus, Get, Query, Res } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { LoginDTO } from './dto/login.dto';
 import { ApiBody } from '@nestjs/swagger';
+import { Response } from 'express';
 
 @Controller('auth')
 export class AuthController {
@@ -94,5 +95,17 @@ export class AuthController {
         message: error.message || 'Internal Server Error',
       };
     }
+  }
+
+   @Get('link')
+  async trackLink(
+    @Query('token') token: string,
+    @Res({ passthrough: false }) res:any
+  ) {
+    if (token) {
+      await this.authService.recordClick(token);
+    }
+
+    res.redirect(`${process.env.BASE_URL}/signUp?token=${token}`);
   }
 }
