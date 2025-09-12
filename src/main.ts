@@ -46,7 +46,7 @@ async function bootstrap() {
   });
 
   // app.useGlobalFilters(new GlobalExceptionFilter());
-  app.useGlobalFilters(new PrismaExceptionFilter());
+  // app.useGlobalFilters(new PrismaExceptionFilter());
   await app.listen(process.env.PORT ?? 5000);
 }
 bootstrap();
