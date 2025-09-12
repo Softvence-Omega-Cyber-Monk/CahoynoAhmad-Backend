@@ -122,7 +122,7 @@ export class QuranController {
   @ApiParam({
     name: 'name',
     description: 'The name of the surah (e.g., Al-Fatiha, Al-Baqarah)',
-    example: 'Al-Fatiha',
+    example: 'Al-Fatihah',
     type: String,
   })
   async getSurahByName(@Param('name') name: string) {

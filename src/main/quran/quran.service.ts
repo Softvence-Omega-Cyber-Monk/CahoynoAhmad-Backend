@@ -8,7 +8,8 @@ export class QuranService {
 
   async findAll(page: number, limit: number) {
     return this.prisma.surah.findMany({
-      include: {},
+      include: {
+      },
     });
   }
   // post all-quran to database one time just
