@@ -7,12 +7,18 @@ import {
   UseGuards,
   HttpException,
   Request,
+  UseInterceptors,
+  UploadedFile,
+  HttpStatus,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { JwtAuthGuard } from 'src/utils/jwt-auth.guard';
-import { ApiBearerAuth, ApiBody, ApiSecurity, ApiOperation } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiSecurity, ApiOperation, ApiConsumes } from '@nestjs/swagger';
 import { CreateNoteDTO } from './dto/create-note.dto';
 import { UpdateUserStatDto } from './dto/updateUserStat.dto';
+
+import { FileInterceptor } from '@nestjs/platform-express';
+import { UpdateUserDto } from './dto/updateProfile.dto';
 
 
 @Controller('user')
@@ -37,16 +43,37 @@ export class UserController {
     }
   }
 
-  @Patch('update-profile')
+ @Patch('update-profile')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
-  async updateProfile(@Body() updateProfileDto: any, @Request() req) {
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        name: { type: 'string' },
+        image: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
+  @UseInterceptors(FileInterceptor('image'))
+  async updateProfile(
+    @Body() updateProfileDto: UpdateUserDto, 
+    @UploadedFile() image: Express.Multer.File,
+    @Request() req,
+  ) {
     const user = req.user;
+ 
     try {
       const result = await this.userService.updateProfile(
         user,
         updateProfileDto,
+        image,
       );
+
       return {
         statusCode: 200,
         success: true,
@@ -54,7 +81,10 @@ export class UserController {
         data: result,
       };
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      throw new HttpException(
+        error.message,
+        error.status || HttpStatus.BAD_REQUEST,
+      );
     }
   }
 
@@ -138,6 +168,27 @@ export class UserController {
       };
     } catch (error) {
       throw new HttpException(error.message, error.status);
+    }
+  }
+
+  @Get('leaderboard')
+  async getLeaderboard(@Request() req) {
+    const user = req.user;
+    try {
+      const result = await this.userService.getLeaderboard();
+      return {
+        statusCode: 200,
+        success: true,
+        message: 'Leaderboard retrieved successfully',
+        data: result,
+      };
+    } catch (error) {
+      return{
+        statusCode: error.status,
+        success: false,
+        message: error.message,
+        data: null,
+      }
     }
   }
 }

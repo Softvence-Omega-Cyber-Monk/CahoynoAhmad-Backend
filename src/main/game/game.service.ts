@@ -1,26 +1,54 @@
-import { Injectable } from '@nestjs/common';
+// src/game/game.service.ts
+import { Injectable, NotFoundException } from '@nestjs/common';
+
 import { CreateGameDto } from './dto/create-game.dto';
 import { UpdateGameDto } from './dto/update-game.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class GameService {
-  create(createGameDto: CreateGameDto) {
-    return 'This action adds a new game';
+  constructor(private prisma: PrismaService) {}
+
+  async create(createGameDto: CreateGameDto) {
+    return this.prisma.gameData.create({
+      data: createGameDto,
+    });
   }
 
-  findAll() {
-    return `This action returns all game`;
+  async findAll() {
+    return this.prisma.gameData.findMany({
+      orderBy: { createdAt: 'desc' },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} game`;
+  async findOne(id: string) {
+    const game = await this.prisma.gameData.findUnique({
+      where: { id },
+    });
+    if (!game) {
+      throw new NotFoundException(`Game question with id ${id} not found`);
+    }
+    return game;
   }
 
-  update(id: number, updateGameDto: UpdateGameDto) {
-    return `This action updates a #${id} game`;
+  async update(id: string, updateGameDto: UpdateGameDto) {
+    const game = await this.prisma.gameData.findUnique({ where: { id } });
+    if (!game) {
+      throw new NotFoundException(`Game question with id ${id} not found`);
+    }
+    return this.prisma.gameData.update({
+      where: { id },
+      data: updateGameDto,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} game`;
+  async remove(id: string) {
+    const game = await this.prisma.gameData.findUnique({ where: { id } });
+    if (!game) {
+      throw new NotFoundException(`Game question with id ${id} not found`);
+    }
+    return this.prisma.gameData.delete({
+      where: { id },
+    });
   }
 }

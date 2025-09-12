@@ -2,8 +2,10 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { TUser } from 'src/types/user';
 import { CreateNoteDTO } from './dto/create-note.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import * as fs from 'fs/promises'; // Import the file system promises module
+import * as path from 'path';
 import { UpdateUserStatDto } from './dto/updateUserStat.dto';
+import { UpdateUserDto } from './dto/updateProfile.dto';
 
 @Injectable()
 export class UserService {
@@ -25,14 +27,28 @@ export class UserService {
   }
 
   // Updates the profile of the currently authenticated user.
-  async updateProfile(user: Partial<TUser>, updateProfileDto: UpdateUserDto) {
+  async updateProfile(user: Partial<TUser>, updateProfileDto: UpdateUserDto,image:any) {
     try {
+         let imagerURL:string|undefined
+         if(image){
+          const uploadDir=path.join(process.cwd(),'uploads')
+          await fs.mkdir(uploadDir,{recursive:true})
+            const filename = `${user.userId}-${Date.now()}${path.extname(
+            image.originalname,
+          )}`
+          const filepath = path.join(uploadDir, filename);
+          await fs.writeFile(filepath, image.buffer);
+          imagerURL=`${process.env.SERVER_BASE_URL}/uploads/${filename}`
+         }
+        console.log(imagerURL)
+          
       const profile = await this.prisma.credential.update({
         where: {
           id: user.userId,
         },
         data: {
           ...updateProfileDto,
+          image:imagerURL
         },
       });
       return profile;
@@ -239,4 +255,24 @@ async updateUserStats(userId: string, updateUserStatDto: UpdateUserStatDto) {
       throw new HttpException(error.message, error.status);
     }
   }
+
+  async getLeaderboard(){
+    try {
+      const res = await this.prisma.credential.findMany({
+        take:5,
+        select: {
+          id: true,
+          name: true,
+          totalXP: true,
+          image:true
+        },
+        orderBy: {
+          totalXP: 'desc',
+        },
+      });
+      return res;
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+  }
+}
 }

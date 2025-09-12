@@ -12,11 +12,15 @@ import { CloudinaryService } from './main/cloudinary/cloudinary.service';
 import { QuranModule } from './main/quran/quran.module';
 import { PaymentModule } from './main/payment/payment.module';
 import { GameModule } from './main/game/game.module';
-
-
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
+     ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'uploads'),
+      serveRoot: '/api/uploads', // URL prefix
+    }),
     ConfigModule.forRoot({ isGlobal: true }),
 
     PrismaModule,

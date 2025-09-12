@@ -1,0 +1,24 @@
+model GameData {
+    id String @id @default(uuid())
+    surahId Int?
+    ayahId Int?
+    arabicText String?
+    englishText String?
+    audioUrl String?
+    correct     String
+    options String[]
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    surah Surah? @relation(fields: [surahId], references: [id])
+    ayah Ayah? @relation(fields: [ayahId], references: [id])
+}
+
+model UserGameProgress {
+  id        String   @id @default(uuid())
+  userId    String
+  surahId   Int
+  completed Boolean  @default(false)
+  score     Int?
+  playedAt  DateTime @default(now())
+  user Credential @relation(fields: [userId], references: [id])
+}
