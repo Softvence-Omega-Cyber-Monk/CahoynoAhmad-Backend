@@ -11,28 +11,42 @@ export class CreateGameDto {
   @IsOptional()
   ayahId?: number;
 
-  @ApiProperty({ example: 'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ', description: 'Arabic text of ayah or word' })
+  @ApiProperty({ example: 'الْحَمْدُ', description: 'Arabic word' })
   @IsString()
   arabicText: string;
 
-  @ApiProperty({ example: 'All praise is due to Allah, Lord of the worlds', description: 'English translation or meaning' })
+  @ApiProperty({ example: 'Praise', description: 'English meaning of the word' })
   @IsString()
   englishText: string;
 
-  @ApiProperty({ example: 'https://example.com/audio/1-1.mp3', description: 'Optional audio link for ayah' })
+  @ApiProperty({ example: 'https://example.com/audio/1-1.mp3', description: 'Optional audio link for the word/ayah' })
   @IsOptional()
   @IsString()
   audioUrl?: string;
 
-  @ApiProperty({ example: 'Praise be to Allah', description: 'Correct answer' })
+  // ✅ English side
+  @ApiProperty({ example: 'Praise', description: 'Correct English meaning' })
   @IsString()
   correct: string;
 
   @ApiProperty({
-    example: ['Praise be to Allah', 'The Book', 'Mercy', 'Day of Judgment'],
-    description: 'Multiple choice options (including the correct one)',
+    example: ['Praise', 'Book', 'Mercy', 'Day'],
+    description: 'Multiple choice English options (including the correct one)',
     isArray: true,
   })
   @IsArray()
-  options: string[];
+  optionsEnglish: string[];
+
+  // ✅ Arabic side
+  @ApiProperty({ example: 'الْحَمْدُ', description: 'Correct Arabic word' })
+  @IsString()
+  correctArabic: string;
+
+  @ApiProperty({
+    example: ['الْحَمْدُ', 'كِتَاب', 'رَحْمَة', 'يَوْم'],
+    description: 'Multiple choice Arabic options (including the correct one)',
+    isArray: true,
+  })
+  @IsArray()
+  optionsArabic: string[];
 }

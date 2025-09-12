@@ -75,6 +75,7 @@ export class QuranService {
         },
         include: {
           ayahs: true,
+          gameData:true
         },
       });
       return res;

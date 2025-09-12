@@ -11,7 +11,17 @@ export class GameService {
 
   async create(createGameDto: CreateGameDto) {
     return this.prisma.gameData.create({
-      data: createGameDto,
+      data: {
+        surahId: createGameDto.surahId ?? null,
+        ayahId: createGameDto.ayahId ?? null,
+        arabicText: createGameDto.arabicText,
+        englishText: createGameDto.englishText,
+        audioUrl: createGameDto.audioUrl ?? null,
+        correct: createGameDto.correct,
+        options: createGameDto.optionsEnglish,
+        correctArabic: createGameDto.correctArabic,
+        optionsArabic: createGameDto.optionsArabic,
+      },
     });
   }
 
@@ -38,7 +48,17 @@ export class GameService {
     }
     return this.prisma.gameData.update({
       where: { id },
-      data: updateGameDto,
+      data: {
+        surahId: updateGameDto.surahId ?? null,
+        ayahId: updateGameDto.ayahId ?? null,
+        arabicText: updateGameDto.arabicText,
+        englishText: updateGameDto.englishText,
+        audioUrl: updateGameDto.audioUrl ?? null,
+        correct: updateGameDto.correct,
+        options: updateGameDto.optionsEnglish,
+        correctArabic: updateGameDto.correctArabic,
+        optionsArabic: updateGameDto.optionsArabic,
+      },
     });
   }
 
