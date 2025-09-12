@@ -3,6 +3,8 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import * as bodyParser from 'body-parser';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { GlobalExceptionFilter } from './utils/global.exception.filter';
+import { PrismaExceptionFilter } from './utils/prismaErrorHandle';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -43,6 +45,8 @@ async function bootstrap() {
     swaggerOptions: { persistAuthorization: true },
   });
 
+  // app.useGlobalFilters(new GlobalExceptionFilter());
+  app.useGlobalFilters(new PrismaExceptionFilter());
   await app.listen(process.env.PORT ?? 5000);
 }
 bootstrap();

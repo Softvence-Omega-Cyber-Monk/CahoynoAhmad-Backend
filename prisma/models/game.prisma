@@ -38,7 +38,7 @@ model UserAnswer {
   gameId     String
   answeredAt DateTime  @default(now())
   isCorrect  Boolean
-
+  totalAns Int?
   // Relations
   user Credential   @relation(fields: [userId], references: [id])
   game GameData     @relation(fields: [gameId], references: [id])
