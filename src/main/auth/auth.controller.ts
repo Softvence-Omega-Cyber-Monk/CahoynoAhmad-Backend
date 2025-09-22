@@ -29,6 +29,7 @@ export class AuthController {
   }
 
   @Post('login')
+  @ApiBody({ type: LoginDTO })
   async login(@Body() LoginDto: LoginDTO) {
     try {
       const result = await this.authService.login(LoginDto);
@@ -86,16 +87,14 @@ export class AuthController {
     schema: {
       properties: {
         email: { type: 'string', example: 'user@example.com' },
-        otp: { type: 'string', example: '1234' },
         newPassword: { type: 'string', example: 'newStrongPassword' },
       },
     },
   })
-  async resetPassword(@Body() body: { email: string, otp: string, newPassword: string }) {
+  async resetPassword(@Body() body: { email: string, newPassword: string }) {
     try {
       const result = await this.authService.verifyOtpAndResetPassword(
         body.email,
-        body.otp,
         body.newPassword,
       );
       return {
@@ -123,5 +122,31 @@ export class AuthController {
     }
 
     res.redirect(`${process.env.BASE_URL}/signUp?token=${token}`);
+  }
+
+  @Post('otp-verification')
+  @ApiBody({
+    schema: {
+      properties: {
+        otp: { type: 'string', example: '123456' },
+      },
+    },
+  })
+  async otpVerification(@Body() body: {otp: string }) {
+    try {
+      const result = await this.authService.verifyOtp(body.otp);
+      return {
+        statusCode: HttpStatus.OK,
+        success: true,
+        message: 'OTP verification successful',
+        data: result,
+      };
+    } catch (error) {
+      return {
+        statusCode: error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+        success: false,
+        message: error.message || 'Internal Server Error',
+      };
+    }
   }
 }

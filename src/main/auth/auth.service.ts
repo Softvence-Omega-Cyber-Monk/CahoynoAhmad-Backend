@@ -169,16 +169,13 @@ export class AuthService {
     }
   }
 
-  async verifyOtpAndResetPassword(email: string, otp: string, newPassword: string) {
+  async verifyOtpAndResetPassword(email: string, newPassword: string) {
   const user = await this.prisma.credential.findUnique({
     where: { email },
   });
 
   if (!user) {
     throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-  }
-  if (user.otp !== parseInt(otp)) {
-    throw new HttpException('Invalid or expired OTP', HttpStatus.BAD_REQUEST);
   }
 
   const hashedPassword = await bcrypt.hash(newPassword, 10);
@@ -192,5 +189,20 @@ export class AuthService {
   });
 
   return { message: 'Password reset successful' };
+}
+
+async verifyOtp( otp: string) {
+  const user = await this.prisma.credential.findFirst({
+    where: { otp:parseInt(otp) },
+  });
+
+  if (!user) {
+    throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+  }
+  if (user.otp !== parseInt(otp)) {
+    throw new HttpException('Invalid or expired OTP', HttpStatus.BAD_REQUEST);
+  }
+
+  return { message: 'OTP verification successful' };
 }
 }
