@@ -2,7 +2,7 @@ import { Controller, Post, Body, HttpStatus, Get, Query, Res } from '@nestjs/com
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { LoginDTO } from './dto/login.dto';
-import { ApiBody } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Response } from 'express';
 
 @Controller('auth')
@@ -48,16 +48,21 @@ export class AuthController {
   }
 
   @Post('forget-password')
+  @ApiOperation({ summary: 'Request a password reset via email' })
   @ApiBody({
-    type: Object,
     schema: {
+      type: 'object',
       properties: {
-        email: { type: 'string', example: 'user@gmail.com' },
+        email: {
+          type: 'string',
+          example: 'user@gmail.com',
+          description: 'The email address of the user who forgot their password.',
+        },
       },
+      required: ['email'],
     },
   })
   async forgetPassword(@Body() body: { email: string }) {
-    console.log(body);
     try {
       const result = await this.authService.forgetPassword(body.email);
       return {
@@ -74,13 +79,24 @@ export class AuthController {
       };
     }
   }
+  
 
-  @Post('reset-password')
-  async resetPassword(@Body() body: { token: string; password: string }) {
+@Post('reset-password')
+  @ApiBody({
+    schema: {
+      properties: {
+        email: { type: 'string', example: 'user@example.com' },
+        otp: { type: 'string', example: '1234' },
+        newPassword: { type: 'string', example: 'newStrongPassword' },
+      },
+    },
+  })
+  async resetPassword(@Body() body: { email: string, otp: string, newPassword: string }) {
     try {
-      const result = await this.authService.resetPassword(
-        body.token,
-        body.password,
+      const result = await this.authService.verifyOtpAndResetPassword(
+        body.email,
+        body.otp,
+        body.newPassword,
       );
       return {
         statusCode: HttpStatus.OK,

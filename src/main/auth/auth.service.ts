@@ -106,30 +106,34 @@ export class AuthService {
 
   //forget-password
   async forgetPassword(email: string) {
-    const user = await this.prisma.credential.findUnique({
-      where: { email },
-    });
+  const user = await this.prisma.credential.findUnique({
+    where: { email },
+  });
 
-    if (!user) {
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-    }
-    const token = randomBytes(32).toString('hex');
-    await this.prisma.credential.update({
-      where: { email },
-      data: { resetToken: token },
-    });
-    const resetUrl = `${process.env.BASE_URL}reset-password?token=${token}`;
-    console.log(resetUrl);
-    await this.mailService.sendMail({
-      to: email,
-      subject: 'Password Reset',
-      html: `<h1>Password Reset Request</h1><p>Click the link below to reset your password:</p><a href="${resetUrl}">Reset Password</a>`,
-      from: process.env.SMTP_USER as string,
-    });
-
-    return { message: 'Password reset email sent successfully' };
+  if (!user) {
+    throw new HttpException('User not found', HttpStatus.NOT_FOUND);
   }
+  const otp = Math.floor(1000 + Math.random() * 9000); 
+  
+  const otpExpiry = new Date(Date.now() + 10 * 60 * 1000);
 
+  await this.prisma.credential.update({
+    where: { email },
+    data: {
+      otp: otp,
+    },
+  });
+
+  // Send the OTP via email
+  await this.mailService.sendMail({
+    to: email,
+    subject: 'Password Reset OTP',
+    html: `<h1>Password Reset Request</h1><p>Your OTP is: <strong>${otp}</strong></p><p>This OTP is valid for 10 minutes.</p>`,
+    from: process.env.SMTP_USER as string,
+  });
+
+  return { message: 'Password reset OTP sent successfully' };
+}
   async resetPassword(token: string, newPassword: string) {
     const user = await this.prisma.credential.findFirst({
       where: { resetToken: token },
@@ -164,4 +168,29 @@ export class AuthService {
       });
     }
   }
+
+  async verifyOtpAndResetPassword(email: string, otp: string, newPassword: string) {
+  const user = await this.prisma.credential.findUnique({
+    where: { email },
+  });
+
+  if (!user) {
+    throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+  }
+  if (user.otp !== parseInt(otp)) {
+    throw new HttpException('Invalid or expired OTP', HttpStatus.BAD_REQUEST);
+  }
+
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+  await this.prisma.credential.update({
+    where: { id: user.id },
+    data: {
+      password: hashedPassword,
+      otp: null,
+    },
+  });
+
+  return { message: 'Password reset successful' };
+}
 }
