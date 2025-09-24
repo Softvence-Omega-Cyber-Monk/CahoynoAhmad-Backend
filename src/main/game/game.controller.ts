@@ -5,8 +5,10 @@ import { GameService } from './game.service';
 import { CreateGameDto } from './dto/create-game.dto';
 import { UpdateGameDto } from './dto/update-game.dto';
 import { JwtAuthGuard } from 'src/utils/jwt-auth.guard';
+import { QuestType } from 'generated/prisma';
 
-@ApiTags('Game') // Swagger group name
+
+@ApiTags('Game')
 @Controller('game')
 export class GameController {
   constructor(private readonly gameService: GameService) {}
@@ -29,7 +31,7 @@ export class GameController {
   @ApiOperation({ summary: 'Get a single game question by ID' })
   @ApiResponse({ status: 200, description: 'Game question found' })
   findOne(@Param('id') id: string) {
-    return this.gameService.findOne(id); // keep id as string (uuid)
+    return this.gameService.findOne(id);
   }
 
   @Patch(':id')
@@ -44,35 +46,77 @@ export class GameController {
     return this.gameService.remove(id);
   }
 
-
   @Post(':id/submit')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Submit an answer for a question' })
-  // @ApiQuery({ name: 'userId', description: 'ID of the user submitting the answer', type: String })
   @ApiQuery({ name: 'answer', description: 'The selected answer', type: String })
-async  submitAnswer(
+  async submitAnswer(
     @Param('id') gameId: string,
-    @Req() req:any,
+    @Req() req: any,
     @Query('answer') answer: string,
   ) {
-   try{
-     const user=req.user
-    const res=await this.gameService.submitAnswer(user.userId, gameId, answer);
-    return{
-      statusCode:HttpStatus.OK,
-      message:'Answer submitted successfully',
-      data:res
+    try {
+      const user = req.user;
+      const res = await this.gameService.submitAnswer(user.userId, gameId, answer);
+      return {
+        statusCode: HttpStatus.OK,
+        message: 'Answer submitted successfully',
+        data: res,
+      };
+    } catch (error) {
+      let Message = error?.message || 'Unexpected error';
+      if (Message.includes('\n')) {
+        Message = Message.split('\n').pop().trim();
+      }
+      return {
+        statusCode: error.status,
+        Message,
+      };
     }
-   }catch(error){
-     let Message = error?.message || 'Unexpected error';
-  if (Message.includes('\n')) {
-    Message = Message.split('\n').pop().trim();
   }
-  return{
-    statusCode:error.status,
-    Message
+
+  @Get('quests/daily')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get a user\'s daily quests for today' })
+  @ApiResponse({ status: 200, description: 'List of daily quests for the user' })
+  async getDailyQuests(@Req() req: any) {
+    const userId = req.user.userId;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const quests = await this.gameService['prisma'].userQuest.findMany({
+      where: {
+        userId,
+        quest: { type: QuestType.DAILY },
+        assignedAt: { gte: today },
+      },
+      include: { quest: true },
+    });
+    return quests;
   }
-   }
+
+  @Get('quests/weekly')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get a user\'s weekly quests for the current week' })
+  @ApiResponse({ status: 200, description: 'List of weekly quests for the user' })
+  async getWeeklyQuests(@Req() req: any) {
+    const userId = req.user.userId;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const startOfWeek = new Date(today.setDate(today.getDate() - today.getDay()));
+
+    const quests = await this.gameService['prisma'].userQuest.findMany({
+      where: {
+        userId,
+        quest: { type: QuestType.WEEKLY },
+        assignedAt: { gte: startOfWeek },
+      },
+      include: { quest: true },
+    });
+    return quests;
   }
 }

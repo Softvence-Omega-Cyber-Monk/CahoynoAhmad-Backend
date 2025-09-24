@@ -14,6 +14,9 @@ import { PaymentModule } from './main/payment/payment.module';
 import { GameModule } from './main/game/game.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { QuestModule } from './main/quest/quest.module';
+import { ScheduleModule } from '@nestjs/schedule';
+import { AppInitializerService } from './main/quest/appInitealizerService';
 
 @Module({
   imports: [
@@ -22,7 +25,7 @@ import { join } from 'path';
       serveRoot: '/api/uploads', // URL prefix
     }),
     ConfigModule.forRoot({ isGlobal: true }),
-
+     ScheduleModule.forRoot(),
     PrismaModule,
     AuthModule,
     UserModule,
@@ -30,8 +33,9 @@ import { join } from 'path';
     QuranModule,
     PaymentModule,
     GameModule,
+    QuestModule,
   ],
   controllers: [AppController],
-  providers: [AppService, CloudinaryService],
+  providers: [AppService, CloudinaryService,AppInitializerService],
 })
 export class AppModule {}

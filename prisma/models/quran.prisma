@@ -5,6 +5,9 @@ model Surah {
   meaning  String
   ayahs    Ayah[]
   gameData GameData[]
+  quest Quest[]
+  juzId Int?
+   juz           Juz?           @relation(fields: [juzId], references: [id])
 }
 
 model Ayah {
@@ -15,4 +18,9 @@ model Ayah {
   surahId     Int
   surah       Surah  @relation(fields: [surahId], references: [id])
   gameData    GameData[]
+  quest Quest[]
+}
+model Juz {
+  id     Int     @id @default(autoincrement())
+  surahs Surah[]
 }

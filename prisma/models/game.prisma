@@ -1,45 +1,87 @@
+// This is your core game data model, no changes needed here.
 model GameData {
-  id            String   @id @default(uuid())
-  surahId       Int?
-  ayahId        Int?
-  arabicText    String?
-  englishText   String?
-  audioUrl      String?
-  correct       String
-  options       String[]
-  correctArabic String
-  optionsArabic String[]
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-
-  // Relations
-  surah Surah? @relation(fields: [surahId], references: [id])
-  ayah  Ayah?  @relation(fields: [ayahId], references: [id])
-
-  // Back-relation
-  userAnswers UserAnswer[]
+  id              String       @id @default(uuid())
+  surahId         Int?
+  ayahId          Int?
+  arabicText      String?
+  englishText     String?
+  audioUrl        String?
+  correct         String
+  options         String[]
+  correctArabic   String
+  optionsArabic   String[]
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  surah           Surah?       @relation(fields: [surahId], references: [id])
+  ayah            Ayah?        @relation(fields: [ayahId], references: [id])
+  userAnswers     UserAnswer[]
 }
 
 model UserGameProgress {
-  id        String   @id @default(uuid())
-  userId    String
-  surahId   Int
-  completed Boolean  @default(false)
-  score     Int?
-  playedAt  DateTime @default(now())
-
-  // Relations
-  user Credential @relation(fields: [userId], references: [id])
+  id              String       @id @default(uuid())
+  userId          String
+  surahId         Int
+  completed       Boolean      @default(false)
+  score           Int?
+  playedAt        DateTime     @default(now())
+  user            Credential   @relation(fields: [userId], references: [id])
 }
 
 model UserAnswer {
-  id         String    @id @default(uuid())
-  userId     String
-  gameId     String
-  answeredAt DateTime  @default(now())
-  isCorrect  Boolean
-  totalAns Int?
+  id              String       @id @default(uuid())
+  userId          String
+  gameId          String
+  answeredAt      DateTime     @default(now())
+  isCorrect       Boolean
+  totalAns        Int?
+  user            Credential   @relation(fields: [userId], references: [id])
+  game            GameData     @relation(fields: [gameId], references: [id])
+}
+
+// Update the Quest model to link it to specific Quranic data.
+model Quest {
+  id              String       @id @default(uuid())
+  title           String
+  description     String
+  xpReward        Int          @default(0)
+  type            QuestType    @default(DAILY)
+  
+  // Daily quest-specific fields
+  surahId         Int?
+  ayahId          Int?
+  
+  // Weekly quest-specific fields
+  targetCount     Int?  // e.g., number of correct answers, number of surahs
+  targetSurah     Int?  // e.g., the specific surah to complete
+  targetJuz       Int?  // e.g., the specific Juz to answer questions from
+  
+  createdAt       DateTime     @default(now())
+  userQuests      UserQuest[]
+
   // Relations
-  user Credential   @relation(fields: [userId], references: [id])
-  game GameData     @relation(fields: [gameId], references: [id])
+  surah           Surah?       @relation(fields: [surahId], references: [id])
+  ayah            Ayah?        @relation(fields: [ayahId], references: [id])
+}
+
+model UserQuest {
+  id              String       @id @default(uuid())
+  userId          String
+  questId         String
+  status          QuestStatus  @default(IN_PROGRESS)
+  assignedAt      DateTime     @default(now())
+  completedAt     DateTime?
+  user            Credential   @relation(fields: [userId], references: [id])
+  quest           Quest        @relation(fields: [questId], references: [id])
+  
+  @@unique([userId, questId])
+}
+
+enum QuestType {
+  DAILY
+  WEEKLY
+}
+
+enum QuestStatus {
+  IN_PROGRESS
+  COMPLETED
 }
