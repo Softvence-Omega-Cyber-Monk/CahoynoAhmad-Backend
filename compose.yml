@@ -1,0 +1,35 @@
+services:
+
+  app:
+    build: .
+    image: imranwebstudio/cahynoahmad-backend:latest
+    platform: linux/amd64
+    container_name: cahynoahmad_app
+    restart: always
+    ports:
+      - "3000:3000"
+      - "5555:5555"
+    env_file:
+      - .env
+    depends_on:
+      - db
+    volumes:
+      - ./uploads:/uploads
+    command: sh -c "npx prisma studio --hostname 0.0.0.0 & npm run start"
+  db:
+    # Use the official PostgreSQL image.
+    image: postgres:latest
+    container_name: cahynoahmad_sql
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: cahynoahmad_db
+    volumes:
+      - root_pgdata:/var/lib/postgresql/data
+
+# Defines the named volumes used by the services.
+volumes:
+  root_pgdata:
