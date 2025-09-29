@@ -22,7 +22,7 @@ import { AppInitializerService } from './main/quest/appInitealizerService';
   imports: [
      ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'uploads'),
-      serveRoot: '/api/uploads', // URL prefix
+      serveRoot: '/api/uploads'
     }),
     ConfigModule.forRoot({ isGlobal: true }),
      ScheduleModule.forRoot(),

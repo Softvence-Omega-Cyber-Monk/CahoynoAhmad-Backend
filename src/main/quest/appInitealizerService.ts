@@ -10,7 +10,7 @@ export class AppInitializerService implements OnModuleInit {
   constructor(
     private readonly prisma: PrismaService,
     private readonly questService: QuestService,
-  ) {}
+  ) { }
 
   async onModuleInit() {
     this.logger.log('Application initialized. Assigning quests to all users...');
