@@ -39,7 +39,8 @@ export class AuthService {
               id:refferUser.id
             },
             data:{
-              totalAffiliate:{increment:1}
+              totalAffiliate:{increment:1},
+              total_earnings:{increment:50}
             }
           });
         }

@@ -17,6 +17,7 @@ import { join } from 'path';
 import { QuestModule } from './main/quest/quest.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { AppInitializerService } from './main/quest/appInitealizerService';
+import { XenditPaymentModule } from './main/xendit-payment/xendit-payment.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { AppInitializerService } from './main/quest/appInitealizerService';
     PaymentModule,
     GameModule,
     QuestModule,
+    XenditPaymentModule,
   ],
   controllers: [AppController],
   providers: [AppService, CloudinaryService,AppInitializerService],
