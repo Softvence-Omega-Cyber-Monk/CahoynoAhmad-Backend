@@ -170,6 +170,7 @@ export class AuthService {
     }
   }
 
+  // verify Otp For Reset Password
   async verifyOtpAndResetPassword(email: string, newPassword: string) {
   const user = await this.prisma.credential.findUnique({
     where: { email },
