@@ -207,7 +207,7 @@ async verifyOtp( otp: string) {
   return { message: 'OTP verification successful' };
 }
 
-// handle google login bussiness login
+// handle google login bussiness logic
 async googleLogin(name:string,email:string){
   try {
     const existingUser = await this.prisma.credential.findUnique({
