@@ -82,7 +82,7 @@ export class AuthService {
       }
 
       // --- Check password ---
-      const isPasswordValid = await bcrypt.compare(password, user.password);
+      const isPasswordValid = await bcrypt.compare(password, user.password||'');
       if (!isPasswordValid) {
         throw new HttpException('Invalid password', HttpStatus.UNAUTHORIZED);
       }
@@ -205,5 +205,47 @@ async verifyOtp( otp: string) {
   }
 
   return { message: 'OTP verification successful' };
+}
+
+// handle google login bussiness login
+async googleLogin(name:string,email:string){
+  try {
+    const existingUser = await this.prisma.credential.findUnique({
+      where: {
+        email: email,
+      },
+    });
+    if (existingUser) {
+      const payload = {
+        userId: existingUser.id,
+        email: existingUser.email,
+        name: existingUser.name,
+      };
+
+      const accessToken = await this.jwtService.signAsync(payload);
+
+      return { accessToken };
+    }else{
+      const refferToken= randomBytes(16).toString('hex');
+      const affilateLink = `${process.env.SERVER_BASE_URL}/auth/link?token=${refferToken}`;
+      const credential = await this.prisma.credential.create({
+        data: {
+          email: email,
+          name: name,
+          affiliateLink: affilateLink,
+          referCode:refferToken
+        },
+      });
+      const payload = {
+        userId: credential.id,
+        email: credential.email,
+        name: credential.name,
+      };
+      const accessToken = await this.jwtService.signAsync(payload);
+      return { accessToken };
+    }
+  } catch (error) {
+    throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+  }
 }
 }

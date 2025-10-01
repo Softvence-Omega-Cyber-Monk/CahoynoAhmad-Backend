@@ -149,4 +149,34 @@ export class AuthController {
       };
     }
   }
+
+  // use google login
+  @Post('google-login')
+  @ApiOperation({ summary: 'Google login' })
+  @ApiResponse({ status: 200, description: 'Google login successful' })
+  @ApiBody({
+    schema: {
+      properties: {
+        name: { type: 'string', example: 'John Doe' },
+        email: { type: 'string', example: 'john.doe@example.com' },
+      },
+    },
+  })
+  async googleLogin(@Body() body: { name:string,email:string }) {
+    try {
+      const result = await this.authService.googleLogin(body.email,body.name);
+      return {
+        statusCode: HttpStatus.OK,
+        success: true,
+        message: 'Google login successful',
+        data: result,
+      };
+    } catch (error) {
+      return {
+        statusCode: error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+        success: false,
+        message: error.message || 'Internal Server Error',
+      };
+    }
+  }
 }
