@@ -7,9 +7,16 @@ export class CreateAuthDto {
     example: 'user@gmail.com',
   })
   @IsEmail()
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   email: string;
+  @ApiProperty({
+    description: 'User phone',
+    example: '676767',
+  })
+  @IsOptional()
+  @IsString()
+  phone: string;
 
   @ApiProperty({
     description:

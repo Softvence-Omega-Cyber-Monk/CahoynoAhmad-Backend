@@ -24,8 +24,16 @@ export class AuthService {
           email: createAuthDto.email,
         },
       });
+      const IsExistPhone = await this.prisma.credential.findFirst({
+        where: {
+        phone: createAuthDto.phone,
+        },
+      });
       if (existingUser) {
         throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
+      }
+      if (IsExistPhone) {
+        throw new HttpException('Phone already exists', HttpStatus.BAD_REQUEST);
       }
       if(createAuthDto.referCode){
         const refferUser = await this.prisma.credential.findFirst({
@@ -56,6 +64,7 @@ export class AuthService {
           email: createAuthDto.email,
           password: hasshedPassword,
           name: createAuthDto.name,
+          phone: createAuthDto.phone,
           affiliateLink: affilateLink,
           referCode:refferToken
         },
@@ -68,12 +77,12 @@ export class AuthService {
 
   // This function for login user
   async login(loginDto: LoginDTO) {
-    const { email, password } = loginDto;
+    const {phone, email, password } = loginDto;
     try {
       // --- Find user by email OR phone ---
       const user = await this.prisma.credential.findFirst({
         where: {
-          OR: [...(email ? [{ email }] : [])],
+           OR: [...(email ? [{ email }] : []), ...(phone ? [{ phone }] : [])],
         },
       });
 
