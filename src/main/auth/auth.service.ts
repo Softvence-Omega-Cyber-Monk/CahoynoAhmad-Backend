@@ -19,7 +19,7 @@ export class AuthService {
   // This function will create user
   async create(createAuthDto: CreateAuthDto) {
     try {
-      const existingUser = await this.prisma.credential.findUnique({
+      const existingUser = await this.prisma.credential.findFirst({
         where: {
           email: createAuthDto.email,
         },
@@ -116,7 +116,7 @@ export class AuthService {
 
   //forget-password
   async forgetPassword(email: string) {
-  const user = await this.prisma.credential.findUnique({
+  const user = await this.prisma.credential.findFirst({
     where: { email },
   });
 
@@ -128,7 +128,7 @@ export class AuthService {
   const otpExpiry = new Date(Date.now() + 10 * 60 * 1000);
 
   await this.prisma.credential.update({
-    where: { email },
+    where: { id: user.id },
     data: {
       otp: otp,
     },
@@ -181,7 +181,7 @@ export class AuthService {
 
   // verify Otp For Reset Password
   async verifyOtpAndResetPassword(email: string, newPassword: string) {
-  const user = await this.prisma.credential.findUnique({
+  const user = await this.prisma.credential.findFirst({
     where: { email },
   });
 
@@ -220,7 +220,7 @@ async verifyOtp( otp: string) {
 // handle google login bussiness logic
 async googleLogin(name:string,email:string){
   try {
-    const existingUser = await this.prisma.credential.findUnique({
+    const existingUser = await this.prisma.credential.findFirst({
       where: {
         email: email,
       },
@@ -242,6 +242,7 @@ async googleLogin(name:string,email:string){
         data: {
           email: email,
           name: name,
+          password: '',
           affiliateLink: affilateLink,
           referCode:refferToken
         },

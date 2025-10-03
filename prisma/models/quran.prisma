@@ -1,25 +1,26 @@
 model Surah {
-  id       Int    @id @default(autoincrement())
-  number   Int    @unique
-  name     String @unique
+  id       Int        @id @default(autoincrement())
+  number   Int        @unique
+  name     String     @unique
   meaning  String
+  juzId    Int?
   ayahs    Ayah[]
   gameData GameData[]
-  quest Quest[]
-  juzId Int?
-   juz           Juz?           @relation(fields: [juzId], references: [id])
+  quest    Quest[]
+  juz      Juz?       @relation(fields: [juzId], references: [id])
 }
 
 model Ayah {
-  id          Int    @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   number      Int
   text        String
   translation String
   surahId     Int
-  surah       Surah  @relation(fields: [surahId], references: [id])
+  surah       Surah      @relation(fields: [surahId], references: [id])
   gameData    GameData[]
-  quest Quest[]
+  quest       Quest[]
 }
+
 model Juz {
   id     Int     @id @default(autoincrement())
   surahs Surah[]

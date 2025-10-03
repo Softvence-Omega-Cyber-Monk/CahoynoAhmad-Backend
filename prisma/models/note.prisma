@@ -1,9 +1,9 @@
-model Note{
-    id  String   @id @default(uuid())
-    title String
-    description String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-    user Credential @relation(fields: [userId], references: [id],onDelete: Cascade)
-    userId String
+model Note {
+  id          String     @id @default(uuid())
+  title       String
+  description String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  userId      String
+  user        Credential @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

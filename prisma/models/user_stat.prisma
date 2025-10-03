@@ -1,10 +1,10 @@
 model User_Stat {
-  id           Int      @id @default(autoincrement())
-  user_id      String   @unique
-  user         Credential     @relation(fields: [user_id], references: [id])
-    ayahs_read     Int
-    minutes_read    Int
-    quest_complete Int
-  created_at   DateTime @default(now())
-  updated_at   DateTime @updatedAt
+  id             Int        @id @default(autoincrement())
+  user_id        String     @unique
+  ayahs_read     Int
+  minutes_read   Int
+  quest_complete Int
+  created_at     DateTime   @default(now())
+  updated_at     DateTime   @updatedAt
+  user           Credential @relation(fields: [user_id], references: [id])
 }
