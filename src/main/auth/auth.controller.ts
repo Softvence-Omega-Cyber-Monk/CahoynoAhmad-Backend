@@ -164,7 +164,7 @@ export class AuthController {
   })
   async googleLogin(@Body() body: { name:string,email:string }) {
     try {
-      const result = await this.authService.googleLogin(body.email,body.name);
+      const result = await this.authService.googleLogin(body.name,body.email);
       return {
         statusCode: HttpStatus.OK,
         success: true,
