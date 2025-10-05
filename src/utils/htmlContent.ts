@@ -229,7 +229,7 @@ export const htmlContent = `
             </div>
         </div>
         
-        <a href="http://31.97.51.143:3000/api/docs" class="cta-button">
+        <a href="/api/docs" class="cta-button">
             <div class="button-icon"></div>
             Go to API Documentation
         </a>
