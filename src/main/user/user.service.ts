@@ -280,4 +280,17 @@ export class UserService {
       throw new HttpException(error.message, error.status);
     }
   }
+
+  async deleteUser(userId: string) {
+    try {
+      const res = await this.prisma.credential.delete({
+        where: {
+          id: userId,
+        },
+      });
+      return res;
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
 }

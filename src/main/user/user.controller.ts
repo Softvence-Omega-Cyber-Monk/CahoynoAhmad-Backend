@@ -10,6 +10,8 @@ import {
   UseInterceptors,
   UploadedFile,
   HttpStatus,
+  Delete,
+  Param,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { JwtAuthGuard } from 'src/utils/jwt-auth.guard';
@@ -189,6 +191,23 @@ export class UserController {
         message: error.message,
         data: null,
       }
+    }
+  }
+
+  // delete user by id
+  @Delete(':id')
+  async deleteUser(@Param('id') id: string, @Request() req: any) {
+    const user = req.user;
+    try {
+      const result = await this.userService.deleteUser(user.userId);
+      return {
+        statusCode: 200,
+        success: true,
+        message: 'User deleted successfully',
+        data: result,
+      };
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
     }
   }
 }
