@@ -264,13 +264,6 @@ export class UserService {
   async getLeaderboard() {
     try {
       const res = await this.prisma.credential.findMany({
-        take: 5,
-        select: {
-          id: true,
-          name: true,
-          totalXP: true,
-          image: true
-        },
         orderBy: {
           totalXP: 'desc',
         },
