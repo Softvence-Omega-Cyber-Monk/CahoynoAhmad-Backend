@@ -18,6 +18,8 @@ import { QuestModule } from './main/quest/quest.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { AppInitializerService } from './main/quest/appInitealizerService';
 import { XenditPaymentModule } from './main/xendit-payment/xendit-payment.module';
+import { AdminModule } from './main/admin/admin.module';
+import { SeederService } from './main/seed/seeder.service';
 
 @Module({
   imports: [
@@ -36,8 +38,9 @@ import { XenditPaymentModule } from './main/xendit-payment/xendit-payment.module
     GameModule,
     QuestModule,
     XenditPaymentModule,
+    AdminModule,
   ],
   controllers: [AppController],
-  providers: [AppService, CloudinaryService,AppInitializerService],
+  providers: [AppService, CloudinaryService,AppInitializerService,SeederService],
 })
 export class AppModule {}
