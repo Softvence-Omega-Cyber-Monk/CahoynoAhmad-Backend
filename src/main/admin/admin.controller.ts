@@ -1,13 +1,39 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpStatus, HttpException, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpStatus, HttpException, Query, UseGuards } from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { UpdateAdminDto } from './dto/update-admin.dto';
 import { getUserDTO } from './dto/get_all_user';
-import { ApiOperation } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/utils/jwt-auth.guard';
+import { RolesGuard } from 'src/utils/authorization/roles.guard';
+import { Roles } from 'src/utils/authorization/roles.decorator';
+import { Role } from 'src/utils/authorization/role.enum';
 
 @Controller('admin')
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
+
+  // platform stat
+  @Get('dashboard')
+  @UseGuards(JwtAuthGuard,RolesGuard)
+  @ApiBearerAuth()
+  @Roles(Role.Admin)
+  @ApiOperation({summary:"all stat of this platfrom"})
+  async dashboard() {
+    try{
+      const res=await this.adminService.dashboard();
+      return{
+        status:HttpStatus.ACCEPTED,
+        message:"all user retrive success",
+        data:res
+      }
+    }catch(e){
+      throw new HttpException(e.message, HttpStatus.BAD_REQUEST)
+    }
+  }
+
+
+  // get all user by admin
   @Get('user')
   @ApiOperation({summary:"get all user and manage search"})
   async findAll(@Query() filterDto:getUserDTO) {

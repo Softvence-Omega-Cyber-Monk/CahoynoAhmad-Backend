@@ -7,6 +7,124 @@ import { getUserDTO } from './dto/get_all_user';
 export class AdminService {
   constructor(private prisma:PrismaService){}
 
+  async dashboard() {
+  // === TOTAL COUNTS ===
+  const totalUser = await this.prisma.credential.count();
+
+  const totalSubscribeUser = await this.prisma.credential.count({
+    where: { isSubscribe: true },
+  });
+
+  const totalUnSubscribeUser = totalUser - totalSubscribeUser;
+
+  const registerUserByAffiliate = await this.prisma.credential.aggregate({
+    _sum: { totalAffiliate: true },
+  });
+
+  const totalRevenue = await this.prisma.payment.aggregate({
+    _sum: { amount: true },
+  });
+
+  // === DATES ===
+  const now = new Date();
+  const firstDayThisMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+  const firstDayLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+  const lastDayLastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+
+  // === LAST MONTH'S COUNTS ===
+  const lastMonthUsers = await this.prisma.credential.count({
+    where: {
+      createdAt: {
+        gte: firstDayLastMonth,
+        lte: lastDayLastMonth,
+      },
+    },
+  });
+
+  const lastMonthSubscribers = await this.prisma.credential.count({
+    where: {
+      isSubscribe: true,
+      createdAt: {
+        gte: firstDayLastMonth,
+        lte: lastDayLastMonth,
+      },
+    },
+  });
+
+  const lastMonthRevenue = await this.prisma.payment.aggregate({
+    _sum: {
+      amount: true,
+    },
+    where: {
+      createdAt: {
+        gte: firstDayLastMonth,
+        lte: lastDayLastMonth,
+      },
+    },
+  });
+
+  // === THIS MONTH'S COUNTS (for growth) ===
+  const thisMonthUsers = await this.prisma.credential.count({
+    where: {
+      createdAt: {
+        gte: firstDayThisMonth,
+        lte: now,
+      },
+    },
+  });
+
+  const thisMonthSubscribers = await this.prisma.credential.count({
+    where: {
+      isSubscribe: true,
+      createdAt: {
+        gte: firstDayThisMonth,
+        lte: now,
+      },
+    },
+  });
+
+  const thisMonthRevenue = await this.prisma.payment.aggregate({
+    _sum: {
+      amount: true,
+    },
+    where: {
+      createdAt: {
+        gte: firstDayThisMonth,
+        lte: now,
+      },
+    },
+  });
+
+  // === CALCULATE GROWTH IN PERCENTAGE ===
+  const calcGrowth = (current: number, prev: number) => {
+    if (!prev || prev === 0) return current > 0 ? 100 : 0;
+    return ((current - prev) / prev) * 100;
+  };
+
+  const userGrowth = calcGrowth(thisMonthUsers, lastMonthUsers);
+  const subscriberGrowth = calcGrowth(thisMonthSubscribers, lastMonthSubscribers);
+  const revenueGrowth = calcGrowth(
+    thisMonthRevenue._sum.amount || 0,
+    lastMonthRevenue._sum.amount || 0
+  );
+
+  // === RETURN FINAL DASHBOARD DATA ===
+  return {
+    totals: {
+      totalUser,
+      totalSubscribeUser,
+      totalUnSubscribeUser,
+      totalAffiliate: registerUserByAffiliate._sum.totalAffiliate || 0,
+      totalRevenue: totalRevenue._sum.amount || 0,
+    },
+    growth: {
+      userGrowth: +userGrowth.toFixed(2),
+      subscriberGrowth: +subscriberGrowth.toFixed(2),
+      revenueGrowth: +revenueGrowth.toFixed(2),
+    },
+  };
+}
+
   // get all user and using filter
   async findAllUser(filterDto:getUserDTO) {
       const {page=1,limit=10}=filterDto
@@ -82,6 +200,7 @@ export class AdminService {
     return res
   }
 
+  
   // delete user
   async removeUser(id:string) {
     if(!id){
