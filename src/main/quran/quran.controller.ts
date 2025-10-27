@@ -6,18 +6,26 @@ import {
   NotFoundException,
   Post,
   HttpStatus,
+  UseInterceptors,
+  UploadedFile,
+  BadRequestException,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { extname, join } from 'path';
 import { QuranService } from './quran.service';
-import { ApiOperation, ApiParam } from '@nestjs/swagger';
+import { ApiOperation, ApiParam, ApiConsumes, ApiBody } from '@nestjs/swagger';
+import * as fs from 'fs';
 
 @Controller('quran')
 export class QuranController {
   constructor(private readonly quranService: QuranService) {}
-  // post one time whole quran
+
+  // Seed one time whole quran
   @Post('seed')
   async seed() {
     try {
-      const res = await this.quranService.seedQuran();
+      await this.quranService.seedQuran();
       return {
         status: HttpStatus.OK,
         message: 'Quran seeded successfully',
@@ -29,15 +37,60 @@ export class QuranController {
       };
     }
   }
+  
+@Post('upload')
+@ApiOperation({ summary: 'Upload Quran ZIP file for frontend download' })
+@ApiConsumes('multipart/form-data')
+@ApiBody({
+  schema: {
+    type: 'object',
+    properties: {
+      file: {
+        type: 'string',
+        format: 'binary',
+        description: 'The Quran ZIP file',
+      },
+    },
+  },
+})
+@UseInterceptors(
+  FileInterceptor('file', {
+    storage: diskStorage({
+      destination: './uploads/quran',
+      filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+        cb(null, `quran-${uniqueSuffix}${extname(file.originalname)}`);
+      },
+    }),
+    fileFilter: (req, file, cb) => {
+      if (!file.originalname.match(/\.(zip)$/)) {
+        return cb(new BadRequestException('Only .zip files are allowed!'), false);
+      }
+      cb(null, true);
+    },
+    limits: { fileSize: 50 * 1024 * 1024 },
+  }),
+)
+async uploadQuranZip(@UploadedFile() file: Express.Multer.File) {
+  if (!file) {
+    throw new BadRequestException('File not found or invalid format.');
+  }
+  return {
+    statusCode: HttpStatus.OK,
+    message: 'Quran ZIP uploaded successfully',
+    filePath: `/uploads/quran/${file.filename}`,
+  };
+}
 
-  // get all quran by page and limit
+
+  //  Get all Quran by page and limit
   @Get()
   async findAll(@Query('page') page = 1, @Query('limit') limit = 20) {
     try {
       const res = await this.quranService.findAll(+page, +limit);
       return {
         statusCode: HttpStatus.OK,
-        message: 'Quran Retrive successful',
+        message: 'Quran Retrieve successful',
         data: res,
       };
     } catch (error) {
@@ -48,7 +101,7 @@ export class QuranController {
     }
   }
 
-  // get one verse by id
+  //  Get one verse by ID
   @Get(':id')
   async findOne(@Param('id') id: string) {
     try {
@@ -57,8 +110,8 @@ export class QuranController {
         throw new NotFoundException(`Verse with ID ${id} not found`);
       }
       return {
-        statuscode: HttpStatus.OK,
-        message: 'Verse Retrive successful',
+        statusCode: HttpStatus.OK,
+        message: 'Verse Retrieve successful',
         data: verse,
       };
     } catch (error) {
@@ -69,17 +122,14 @@ export class QuranController {
     }
   }
 
-  // get one verse by surah and verse number
+  //  Get one verse by Surah & Verse number
   @Get('surah/:surahId/verse/:verseNumber')
   async findBySurahAndVerse(
     @Param('surahId') surahId: string,
     @Param('verseNumber') verseNumber: string,
   ) {
     try {
-      const verse = await this.quranService.findBySurahAndVerse(
-        +surahId,
-        +verseNumber,
-      );
+      const verse = await this.quranService.findBySurahAndVerse(+surahId, +verseNumber);
       if (!verse) {
         throw new NotFoundException(
           `Verse not found for Surah ${surahId}, Verse ${verseNumber}`,
@@ -87,7 +137,7 @@ export class QuranController {
       }
       return {
         statusCode: HttpStatus.OK,
-        message: 'Verse Retrive successful',
+        message: 'Verse Retrieve successful',
         data: verse,
       };
     } catch (error) {
@@ -98,7 +148,7 @@ export class QuranController {
     }
   }
 
-  // search verse by keyword
+  //  Search verse by keyword
   @Get('search/:keyword')
   async search(@Param('keyword') keyword: string) {
     try {
@@ -116,12 +166,12 @@ export class QuranController {
     }
   }
 
-  // get surah by name
+  //  Get Surah by name
   @Get('surah/:name')
-  @ApiOperation({ summary: 'Get a surah by its name' })
+  @ApiOperation({ summary: 'Get a Surah by its name' })
   @ApiParam({
     name: 'name',
-    description: 'The name of the surah (e.g., Al-Fatiha, Al-Baqarah)',
+    description: 'The name of the Surah (e.g., Al-Fatihah, Al-Baqarah)',
     example: 'Al-Fatihah',
     type: String,
   })
@@ -130,7 +180,7 @@ export class QuranController {
       const surah = await this.quranService.getSurahByName(name);
       return {
         statusCode: HttpStatus.OK,
-        message: 'Surah Retrive successful',
+        message: 'Surah Retrieve successful',
         data: surah,
       };
     } catch (error) {

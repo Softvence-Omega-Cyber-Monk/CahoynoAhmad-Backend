@@ -78,6 +78,7 @@ export class AuthService {
   // This function for login user
   async login(loginDto: LoginDTO) {
     const {phone, email, password } = loginDto;
+    console.log(loginDto);
     try {
       // --- Find user by email OR phone ---
       const user = await this.prisma.credential.findFirst({
@@ -101,6 +102,8 @@ export class AuthService {
         userId: user.id,
         email: user.email,
         name: user.name,
+        role:user.role,
+        phone:user.phone
       };
 
       const accessToken = await this.jwtService.signAsync(payload);

@@ -2,6 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { UpdateAdminDto } from './dto/update-admin.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { getUserDTO } from './dto/get_all_user';
+import { GetAllPaymentDto } from './dto/get.payment.dto';
 
 @Injectable()
 export class AdminService {
@@ -217,6 +218,21 @@ export class AdminService {
     const res=await this.prisma.credential.delete({
       where:{
         id
+      }
+    })
+    return res
+  }
+
+
+  async paymentHistory(filterDto:GetAllPaymentDto) {
+    const {page=1,limit=10}=filterDto
+    const skip=(page-1)*limit
+    const take=limit
+    const res=await this.prisma.payment.findMany({
+      skip,
+      take,
+      orderBy:{
+        createdAt:"desc"
       }
     })
     return res

@@ -1,5 +1,6 @@
-services:
+version: '3.9'
 
+services:
   app:
     build: .
     image: imranwebstudio/cahynoahmad-backend:latest
@@ -15,9 +16,9 @@ services:
       - db
     volumes:
       - ./uploads:/uploads
-    command: sh -c "npx prisma studio --hostname 0.0.0.0 & npm run start"
+    command: sh -c "npx prisma generate && npx prisma studio --hostname 0.0.0.0 & npm run start"
+
   db:
-    # Use the official PostgreSQL image.
     image: postgres:latest
     container_name: cahynoahmad_sql
     restart: always
@@ -27,9 +28,9 @@ services:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: cahynoahmad_db
+    # Mount the volume to /var/lib/postgresql (recommended for Postgres 18+)
     volumes:
-      - root_pgdata:/var/lib/postgresql/data
+      - root_pgdata:/var/lib/postgresql
 
-# Defines the named volumes used by the services.
 volumes:
   root_pgdata:

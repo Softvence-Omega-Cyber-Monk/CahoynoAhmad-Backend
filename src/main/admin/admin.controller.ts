@@ -7,6 +7,7 @@ import { JwtAuthGuard } from 'src/utils/jwt-auth.guard';
 import { RolesGuard } from 'src/utils/authorization/roles.guard';
 import { Roles } from 'src/utils/authorization/roles.decorator';
 import { Role } from 'src/utils/authorization/role.enum';
+import { GetAllPaymentDto } from './dto/get.payment.dto';
 
 @Controller('admin')
 export class AdminController {
@@ -32,7 +33,23 @@ export class AdminController {
     }
   }
 
-
+@UseGuards(JwtAuthGuard,RolesGuard)
+  @ApiBearerAuth()
+  @Roles(Role.Admin)
+  @Get('payment-history')
+  @ApiOperation({summary:"get all payment history"})
+  async paymentHistory(@Query() filterDto:GetAllPaymentDto) {
+    try{
+      const res=await this.adminService.paymentHistory(filterDto);
+      return{
+        status:HttpStatus.ACCEPTED,
+        message:"all payment history retrive success",
+        data:res
+      }
+    }catch(error){
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST)
+    }
+  }
   // get all user by admin
   @Get('user')
   @ApiOperation({summary:"get all user and manage search"})
@@ -93,4 +110,6 @@ export class AdminController {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST)
     }
   }
+
+
 }
