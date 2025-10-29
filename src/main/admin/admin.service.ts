@@ -237,4 +237,29 @@ export class AdminService {
     })
     return res
   }
+
+  
+// udpate user block or not by admin
+  async blockOrOpenUser(id:string) {
+    if(!id){
+      throw new BadRequestException("id is required")
+    }
+    const isExist=await this.prisma.credential.findFirst({
+      where:{
+        id
+      }
+    })
+    if(!isExist){
+      throw new BadRequestException("user not found")
+    }
+    const res=await this.prisma.credential.update({
+      where:{
+        id
+      },
+      data:{
+        isBlocked:!isExist.isBlocked
+      }
+    })
+    return res
+  }
 }

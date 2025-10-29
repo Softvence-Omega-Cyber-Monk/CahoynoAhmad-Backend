@@ -68,7 +68,7 @@ export class QuranController {
       }
       cb(null, true);
     },
-    limits: { fileSize: 50 * 1024 * 1024 },
+    limits: { fileSize: 500* 1024 * 1024 },
   }),
 )
 async uploadQuranZip(@UploadedFile() file: Express.Multer.File) {
