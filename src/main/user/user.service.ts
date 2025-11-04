@@ -275,6 +275,7 @@ export class UserService {
   }
 
   async deleteUser(userId: string) {
+    console.log(userId)
     try {
       const res = await this.prisma.credential.delete({
         where: {

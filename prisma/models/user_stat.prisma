@@ -6,5 +6,5 @@ model User_Stat {
   quest_complete Int
   created_at     DateTime   @default(now())
   updated_at     DateTime   @updatedAt
-  user           Credential @relation(fields: [user_id], references: [id])
+  user           Credential @relation(fields: [user_id], references: [id],onDelete: Cascade)
 }

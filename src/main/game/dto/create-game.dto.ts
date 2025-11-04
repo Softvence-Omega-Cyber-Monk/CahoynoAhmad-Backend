@@ -17,14 +17,14 @@ export class CreateGameDto {
 
   @ApiProperty({ example: 'Praise', description: 'English meaning of the word' })
   @IsString()
-  englishText: string;
+  indonesianText: string;
 
   @ApiProperty({ example: 'https://example.com/audio/1-1.mp3', description: 'Optional audio link for the word/ayah' })
   @IsOptional()
   @IsString()
   audioUrl?: string;
 
-  // ✅ English side
+  //  Indonehia side
   @ApiProperty({ example: 'Praise', description: 'Correct English meaning' })
   @IsString()
   correct: string;
@@ -35,9 +35,9 @@ export class CreateGameDto {
     isArray: true,
   })
   @IsArray()
-  optionsEnglish: string[];
+  optionsIndonesian: string[];
 
-  // ✅ Arabic side
+  //  Arabic side
   @ApiProperty({ example: 'الْحَمْدُ', description: 'Correct Arabic word' })
   @IsString()
   correctArabic: string;

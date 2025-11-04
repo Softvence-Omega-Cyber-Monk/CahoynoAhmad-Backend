@@ -197,9 +197,8 @@ export class UserController {
   // delete user by id
   @Delete(':id')
   async deleteUser(@Param('id') id: string, @Request() req: any) {
-    const user = req.user;
     try {
-      const result = await this.userService.deleteUser(user.userId);
+      const result = await this.userService.deleteUser(id);
       return {
         statusCode: 200,
         success: true,

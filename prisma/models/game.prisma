@@ -1,10 +1,10 @@
 model GameData {
   id            String       @id @default(uuid())
   arabicText    String?
-  englishText   String?
+  indonesianText   String?
   audioUrl      String?
   correct       String
-  options       String[]
+  optionsIndonesian      String[]
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
   surahId       Int?
@@ -23,7 +23,7 @@ model UserGameProgress {
   completed Boolean    @default(false)
   score     Int?
   playedAt  DateTime   @default(now())
-  user      Credential @relation(fields: [userId], references: [id])
+  user      Credential @relation(fields: [userId], references: [id],onDelete: Cascade)
 }
 
 model UserAnswer {
@@ -34,7 +34,7 @@ model UserAnswer {
   isCorrect  Boolean
   totalAns   Int?
   game       GameData   @relation(fields: [gameId], references: [id])
-  user       Credential @relation(fields: [userId], references: [id])
+  user       Credential @relation(fields: [userId], references: [id],onDelete: Cascade)
 }
 
 model Quest {
@@ -62,7 +62,7 @@ model UserQuest {
   assignedAt  DateTime    @default(now())
   completedAt DateTime?
   quest       Quest       @relation(fields: [questId], references: [id])
-  user        Credential  @relation(fields: [userId], references: [id])
+  user        Credential  @relation(fields: [userId], references: [id],onDelete: Cascade)
 
   @@unique([userId, questId])
 }
