@@ -1,3 +1,4 @@
+// src/main/xendit-payment/dto/create-xendit-payment.dto.ts
 
 import { 
   IsNotEmpty, 
@@ -24,7 +25,6 @@ export class CreateXenditPaymentDto {
   @IsNumber({}, { message: 'Amount must be a valid number.' })
   @IsPositive({ message: 'Amount must be a positive value.' })
   @Min(1000, { message: 'Minimum amount for this currency is 1000 (e.g., IDR 1,000).' }) 
-
   amount: number;
 
   @ApiProperty({
@@ -50,7 +50,6 @@ export class CreateXenditPaymentDto {
   })
   @IsOptional()
   @IsString({ message: 'Currency must be a string.' })
-
   currency?: string = 'IDR'; 
   
   @ApiPropertyOptional({
@@ -60,6 +59,5 @@ export class CreateXenditPaymentDto {
   })
   @IsOptional() 
   @IsString({ message: 'Custom metadata must be a string.' })
-
   metadata?: string; 
 }

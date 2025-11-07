@@ -4,7 +4,6 @@ import { ValidationPipe } from '@nestjs/common';
 import * as bodyParser from 'body-parser';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
-
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     cors: true,
@@ -12,7 +11,7 @@ async function bootstrap() {
 
   // Stripe webhook must use raw body
   app.use('/api/payment/webhook', bodyParser.raw({ type: 'application/json' }));
-
+  app.use('/api/xendit-payment/webhook', bodyParser.raw({ type: 'application/json' }));
   // Enable CORS
   app.enableCors({
     origin: '*',

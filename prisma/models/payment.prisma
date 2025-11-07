@@ -6,6 +6,7 @@ model Payment {
   updatedAt DateTime   @updatedAt
   planId String?
   planName String?
-  userId    String
-  user      Credential @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String?
+  userEmail String?
+  user      Credential? @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

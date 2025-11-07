@@ -1,3 +1,4 @@
+// src/main/xendit-payment/xendit-payment.service.ts
 
 import { 
   Injectable, 
@@ -8,7 +9,7 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { Xendit } from 'xendit-node';
 import { CreateXenditPaymentDto } from './dto/create-xendit-payment.dto';
-import { XenditInvoiceEvent } from './dto/event.interface';
+import { XenditInvoiceEvent } from './dto/event.interface'; 
 
 @Injectable()
 export class XenditPaymentService {
@@ -28,36 +29,41 @@ export class XenditPaymentService {
     this.xenditClient = new Xendit({ secretKey });
   }
 
-async createInvoice(dto: CreateXenditPaymentDto) {
-  const externalId = `ORD-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+  async createInvoice(dto: CreateXenditPaymentDto) {
+    const externalId = `ORD-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
-  const successUrl = this.configService.get('APP_BASE_URL') + '/payment/success';
-  const failureUrl = this.configService.get('APP_BASE_URL') + '/payment/failure';
+    const successUrl = this.configService.get('APP_BASE_URL') + '/payment/success';
+    const failureUrl = this.configService.get('APP_BASE_URL') + '/payment/failure';
 
-  try {
-    this.logger.log(`Creating Xendit invoice for ${dto.amount} with external_id: ${externalId}`);
-    const invoice = await this.xenditClient.Invoice.createInvoice({
-      externalId: externalId,
-      amount: dto.amount,
-      description: dto.description,
-      payerEmail: dto.email, 
-      successRedirectURL: successUrl,
-      failureRedirectURL: failureUrl,
-      currency: dto.currency,
-      ...(dto.metadata && { metadata: JSON.parse(dto.metadata) }), 
-    } as any);
-    this.logger.log(`Xendit Invoice created successfully. ID: ${invoice.id}`);
-    return {
-      success: true,
-      invoiceUrl: invoice.invoiceUrl,
-      externalId: invoice.externalId,
-      xenditId: invoice.id,
-    };
-  } catch (error) {
-    this.logger.error('Xendit API Error on Invoice Creation:', error.message, error.stack);
-    throw new InternalServerErrorException('Failed to create payment invoice.');
+    try {
+      this.logger.log(`Creating Xendit invoice for ${dto.amount} with external_id: ${externalId}`);
+      
+      // FIX applied in previous steps: wrapped parameters inside the 'data' property
+      const invoice = await this.xenditClient.Invoice.createInvoice({
+        data: { 
+          externalId: externalId,
+          amount: dto.amount,
+          description: dto.description,
+          payerEmail: dto.email, 
+          successRedirectUrl: successUrl,
+          failureRedirectUrl: failureUrl,
+          currency: dto.currency,
+          ...(dto.metadata && { metadata: JSON.parse(dto.metadata) }), 
+        }
+      });
+      
+      this.logger.log(`Xendit Invoice created successfully. ID: ${invoice.id}`);
+      return {
+        success: true,
+        invoiceUrl: invoice.invoiceUrl,
+        externalId: invoice.externalId,
+        xenditId: invoice.id,
+      };
+    } catch (error) {
+      this.logger.error('Xendit API Error on Invoice Creation:', error.message, error.stack);
+      throw new InternalServerErrorException('Failed to create payment invoice.');
+    }
   }
-}
 
   validateWebhookSignature(receivedToken: string): void {
     if (!receivedToken || receivedToken !== this.webhookToken) {
@@ -65,12 +71,15 @@ async createInvoice(dto: CreateXenditPaymentDto) {
     }
   }
 
-  async processWebhookEvent(event: XenditInvoiceEvent): Promise<void> {
-    const { external_id, status } = event.data;
+  async processWebhookEvent(event: any): Promise<void> {
+    // This is the correct way to destructure the data from the Xendit payload
+    const { external_id, status } = event; 
+    console.log(external_id)
     this.logger.debug(`Processing event ${event.event} for order ${external_id}. Status: ${status}`);
     switch (status) {
       case 'PAID':
         this.logger.log(`✅ Payment successful for Order: ${external_id}. Fulfilling order...`);
+        // Add your order fulfillment logic here
         break;
 
       case 'PENDING':
@@ -79,11 +88,11 @@ async createInvoice(dto: CreateXenditPaymentDto) {
 
       case 'EXPIRED':
         this.logger.warn(`❌ Payment expired for Order: ${external_id}.`);
+        // Add your expiration handling logic here
         break;
 
       default:
         this.logger.warn(`Unhandled Xendit status: ${status} for Order: ${external_id}`);
     }
   }
-
 }
