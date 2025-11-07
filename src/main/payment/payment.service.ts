@@ -99,7 +99,7 @@ export class PaymentService {
           console.warn(' Missing userId in metadata');
           return { received: true };
         }
-        
+
         const amount = session.amount_total ? session.amount_total / 100 : 0;
 
         // Create payment record
@@ -108,6 +108,8 @@ export class PaymentService {
             userId,
             amount,
             status: 'Complete',
+            planId:session.metadata?.planId,
+            planName:session.metadata?.planName
           },
         });
 
@@ -118,6 +120,7 @@ export class PaymentService {
           },
           data: {
             subscription: 'PREMIUM',
+            isSubscribe:true
           },
         });
 
