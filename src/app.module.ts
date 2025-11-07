@@ -20,6 +20,7 @@ import { AppInitializerService } from './main/quest/appInitealizerService';
 import { XenditPaymentModule } from './main/xendit-payment/xendit-payment.module';
 import { AdminModule } from './main/admin/admin.module';
 import { SeederService } from './main/seed/seeder.service';
+import { PlanModule } from './main/plan/plan.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { SeederService } from './main/seed/seeder.service';
     QuestModule,
     XenditPaymentModule,
     AdminModule,
+    PlanModule,
   ],
   controllers: [AppController],
   providers: [AppService, CloudinaryService,AppInitializerService,SeederService],

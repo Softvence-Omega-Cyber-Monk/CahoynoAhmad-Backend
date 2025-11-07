@@ -1,19 +1,17 @@
 import {
   Controller,
-  Get,
   Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
   UseGuards,
   HttpStatus,
   Req,
   Headers,
+  Body,
 } from '@nestjs/common';
 import { PaymentService } from './payment.service';
 import { JwtAuthGuard } from 'src/utils/jwt-auth.guard';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody } from '@nestjs/swagger';
+import { CreateAdminDto } from '../admin/dto/create-admin.dto';
+import { CreatePaymentDto } from './dto/create-payment.dto';
 
 @Controller('payment')
 export class PaymentController {
@@ -22,10 +20,11 @@ export class PaymentController {
   @Post()
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
-  async makePayment(@Req() req: any) {
+  @ApiBody({type:CreateAdminDto})
+  async makePayment(@Req() req: any,@Body() dto:CreatePaymentDto) {
     try {
       const user = req.user;
-      const res = await this.paymentService.makePayment(user);
+      const res = await this.paymentService.createCheckoutSession(user,dto);
       return {
         statusCode: HttpStatus.OK,
         message: 'Payment Successful',
