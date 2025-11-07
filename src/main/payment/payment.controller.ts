@@ -10,7 +10,7 @@ import {
 import { PaymentService } from './payment.service';
 import { JwtAuthGuard } from 'src/utils/jwt-auth.guard';
 import { ApiBearerAuth, ApiBody } from '@nestjs/swagger';
-import { CreateAdminDto } from '../admin/dto/create-admin.dto';
+// import { CreateAdminDto } from '../admin/dto/create-admin.dto';
 import { CreatePaymentDto } from './dto/create-payment.dto';
 
 @Controller('payment')
@@ -20,7 +20,7 @@ export class PaymentController {
   @Post()
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
-  @ApiBody({type:CreateAdminDto})
+  @ApiBody({type:CreatePaymentDto})
   async makePayment(@Req() req: any,@Body() dto:CreatePaymentDto) {
     try {
       const user = req.user;

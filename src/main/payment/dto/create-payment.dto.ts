@@ -3,19 +3,19 @@ import { IsString } from "class-validator"
 
 export class CreatePaymentDto {
     @ApiProperty({
-        example:"price_id084854rerer"
+        example:"price_1SQgZIER98NUaoU4hb9Trupz"
     })
     @IsString()
     priceId:string
 
     @ApiProperty({
-        example:"plan_id084854rerer"
+        example:"1"
     })
     @IsString()
     planId:string
 
     @ApiProperty({
-        example:"plan_name"
+        example:"Pro"
     })
     @IsString()
     planName:string
