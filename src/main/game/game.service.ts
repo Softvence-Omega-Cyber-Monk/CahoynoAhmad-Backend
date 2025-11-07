@@ -12,6 +12,23 @@ export class GameService {
   constructor(private prisma: PrismaService) {}
 
   async create(createGameDto: CreateGameDto) {
+
+    const isExistSurah=await this.prisma.surah.findFirst({
+      where:{
+        id:createGameDto.surahId
+      }
+    })
+      const isExistAyah=await this.prisma.surah.findFirst({
+      where:{
+        id:createGameDto.ayahId
+      }
+    })
+    if(!isExistSurah){
+      throw new ForbiddenException("Surah not found please check  you surah id or seed the quran in your data base and try again")
+    }
+    if(!isExistAyah){
+      throw new ForbiddenException("Ayah not found please check your ayah id seed your quran in your data and try again")
+    }
     return this.prisma.gameData.create({
       data: {
         surahId: createGameDto.surahId ?? null,
@@ -34,6 +51,15 @@ export class GameService {
   }
 
   async findOne(id: string) {
+    const gameWithId=await this.prisma.gameData.findFirst({
+      where:{
+        id:id
+      }
+    })
+    
+    if (!gameWithId) {
+      throw new NotFoundException(`Game question with id ${id} not found`);
+    }
     const game = await this.prisma.gameData.findUnique({
       where: { id },
     });

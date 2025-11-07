@@ -1,5 +1,5 @@
 // src/game/game.controller.ts
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards, Req, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards, Req, HttpStatus, HttpException } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
 import { GameService } from './game.service';
 import { CreateGameDto } from './dto/create-game.dto';
@@ -17,7 +17,11 @@ export class GameController {
   @ApiOperation({ summary: 'Create a new game question' })
   @ApiResponse({ status: 201, description: 'Game question created successfully' })
   create(@Body() createGameDto: CreateGameDto) {
-    return this.gameService.create(createGameDto);
+    try{
+      return this.gameService.create(createGameDto);
+    }catch(err){
+      throw new HttpException(err.message, err.status)
+    }
   }
 
   @Get()
@@ -31,19 +35,32 @@ export class GameController {
   @ApiOperation({ summary: 'Get a single game question by ID' })
   @ApiResponse({ status: 200, description: 'Game question found' })
   findOne(@Param('id') id: string) {
-    return this.gameService.findOne(id);
+    try{
+      return this.gameService.findOne(id);
+    }catch(err){
+      throw new HttpException(err.message, err.status)
+    }
   }
 
   @Patch(':id')
   @ApiOperation({ summary: 'Update a game question by ID' })
   update(@Param('id') id: string, @Body() updateGameDto: UpdateGameDto) {
-    return this.gameService.update(id, updateGameDto);
+    try{
+      return this.gameService.update(id, updateGameDto);
+    }catch(err){
+      throw new HttpException(err.message, err.status)
+    
+    }
   }
 
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a game question by ID' })
   remove(@Param('id') id: string) {
-    return this.gameService.remove(id);
+    try{
+      return this.gameService.remove(id);
+    }catch(err){
+      throw new HttpException(err.message, err.status)
+    }
   }
 
   @Post(':id/submit')
