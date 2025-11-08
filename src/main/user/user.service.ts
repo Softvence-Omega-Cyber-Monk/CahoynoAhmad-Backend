@@ -277,12 +277,14 @@ export class UserService {
   async deleteUser(userId: string) {
     console.log(userId)
     try {
-      const res = await this.prisma.credential.delete({
+       await this.prisma.credential.delete({
         where: {
           id: userId,
         },
       });
-      return res;
+      return{
+        message:"User deleted successful"
+      }
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }

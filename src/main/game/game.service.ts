@@ -40,6 +40,8 @@ export class GameService {
         optionsIndonesian: createGameDto.optionsIndonesian,
         correctArabic: createGameDto.correctArabic,
         optionsArabic: createGameDto.optionsArabic,
+        correctEnglish: createGameDto.correctEnglish,
+        optionsEnglish: createGameDto.optionsEnglish,
       },
     });
   }
@@ -86,6 +88,8 @@ export class GameService {
         optionsIndonesian: updateGameDto.optionsIndonesian,
         correctArabic: updateGameDto.correctArabic,
         optionsArabic: updateGameDto.optionsArabic,
+        correctEnglish: updateGameDto.correctEnglish,
+        optionsEnglish: updateGameDto.optionsEnglish,
       },
     });
   }

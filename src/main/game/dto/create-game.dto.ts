@@ -15,23 +15,26 @@ export class CreateGameDto {
   @IsString()
   arabicText: string;
 
-  @ApiProperty({ example: 'Praise', description: 'English meaning of the word' })
+  @ApiProperty({ example: 'Praise', description: 'Indonesian meaning of the Arabic word' })
   @IsString()
   indonesianText: string;
 
-  @ApiProperty({ example: 'https://example.com/audio/1-1.mp3', description: 'Optional audio link for the word/ayah' })
+  @ApiProperty({
+    example: 'https://example.com/audio/1-1.mp3',
+    description: 'Optional audio link for the word/ayah',
+  })
   @IsOptional()
   @IsString()
   audioUrl?: string;
 
-  //  Indonehia side
-  @ApiProperty({ example: 'Praise', description: 'Correct English meaning' })
+  //  Indonesian side
+  @ApiProperty({ example: 'Praise', description: 'Correct Indonesian meaning' })
   @IsString()
   correct: string;
 
   @ApiProperty({
     example: ['Praise', 'Book', 'Mercy', 'Day'],
-    description: 'Multiple choice English options (including the correct one)',
+    description: 'Multiple choice Indonesian options (including the correct one)',
     isArray: true,
   })
   @IsArray()
@@ -49,4 +52,17 @@ export class CreateGameDto {
   })
   @IsArray()
   optionsArabic: string[];
+
+  //  English side
+  @ApiProperty({ example: 'Praise', description: 'Correct English translation' })
+  @IsString()
+  correctEnglish: string;
+
+  @ApiProperty({
+    example: ['Praise', 'Book', 'Mercy', 'Day'],
+    description: 'Multiple choice English options (including the correct one)',
+    isArray: true,
+  })
+  @IsArray()
+  optionsEnglish: string[];
 }
