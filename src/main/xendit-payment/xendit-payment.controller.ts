@@ -9,7 +9,8 @@ import {
   UsePipes, 
   ValidationPipe,
   Logger,
-  HttpStatus // Added HttpStatus for clean code
+  HttpStatus, // Added HttpStatus for clean code
+  HttpException
 } from '@nestjs/common';
 import { XenditPaymentService } from './xendit-payment.service';
 
@@ -26,9 +27,14 @@ export class XenditPaymentController {
   @Post('invoice')
   @HttpCode(HttpStatus.CREATED) // Use 201 for resource creation
   async createInvoice(@Body() createInvoiceDto: CreateXenditPaymentDto) {
-    this.logger.log(`Received request to create invoice for: ${createInvoiceDto.email}`);
-
-    return this.xenditPaymentService.createInvoice(createInvoiceDto);
+    try{
+         this.logger.log(`Received request to create invoice for: ${createInvoiceDto.email}`);
+      const invoice = await this.xenditPaymentService.createInvoice(createInvoiceDto);
+      return invoice
+    }catch(error){
+      // this.logger.error('Error creating invoice', error.stack);
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
   }
 
 
@@ -52,13 +58,6 @@ export class XenditPaymentController {
       return { received: true, message: 'Invalid JSON payload format.' }; 
     }
 
-    // Now 'event' is the object your code expects
-
-    // const externalId = event?.data?.external_id || 'unknown' 
-    // console.log(externalId)
-    // this.logger.log(`Received webhook for external_id: ${externalId}. Event: ${event?.event || 'N/A'}`);
-    
-    // 2. Validate Token (Same as before)
     try {
       this.xenditPaymentService.validateWebhookSignature(xCallbackToken);
     } catch (error) {

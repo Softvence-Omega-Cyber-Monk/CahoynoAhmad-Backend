@@ -3,6 +3,8 @@ import {
   InternalServerErrorException,
   UnauthorizedException,
   Logger,
+  NotFoundException,
+  HttpException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Xendit } from 'xendit-node';
@@ -36,6 +38,15 @@ export class XenditPaymentService {
     const failureUrl = this.configService.get('APP_BASE_URL') + '/payment/failure';
 
     try {
+
+      const isExistUser=await this.prisma.credential.findFirst({
+        where:{
+          email:dto.email
+        }
+      })
+      if(!isExistUser){
+        throw new NotFoundException('User with this email does not exist.');
+      }
       this.logger.log(`Creating Xendit invoice for ${dto.amount} with external_id: ${externalId}`);
 
       const invoice = await this.xenditClient.Invoice.createInvoice({
@@ -47,14 +58,14 @@ export class XenditPaymentService {
           successRedirectUrl: successUrl,
           failureRedirectUrl: failureUrl,
           currency: dto.currency,
-          metadata: {
-            planId: 'PLAN-001', // Example static planId
-            planName: 'Pro Plan',
-            // planId:dto.planId
-            // ...(dto.metadata ? JSON.parse(dto.metadata) : {}),
-            // ...(dto.planId && { planId: dto.planId }),
-            // ...(dto.planName && { planName: dto.planName }),
-          },
+          // metadata: {
+          //   planId: 'PLAN-001', // Example static planId
+          //   planName: 'Pro Plan',
+          //   // planId:dto.planId
+          //   // ...(dto.metadata ? JSON.parse(dto.metadata) : {}),
+          //   // ...(dto.planId && { planId: dto.planId }),
+          //   // ...(dto.planName && { planName: dto.planName }),
+          // },
         },
       });
 
@@ -66,8 +77,8 @@ export class XenditPaymentService {
         xenditId: invoice.id,
       };
     } catch (error) {
-      this.logger.error('Xendit API Error:', error.message, error.stack);
-      throw new InternalServerErrorException('Failed to create payment invoice.');
+      // this.logger.error('Xendit API Error:', error.message, error.stack);
+      throw new HttpException(error.message, error.statusCode || 500);
     }
   }
 
