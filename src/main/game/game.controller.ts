@@ -24,6 +24,19 @@ export class GameController {
     }
   }
 
+ @Post('bulk')
+  @ApiOperation({ summary: 'Create multiple game questions in bulk' })
+  @ApiResponse({ status: 201, description: 'Bulk game questions created successfully' })
+  async createBulk(createGameDtos: CreateGameDto[]) {
+    try{
+      return await this.gameService.createBulk();
+    }catch(err){
+      throw new HttpException(err.message,err.status)
+    }
+  }
+
+
+
   @Get()
   @ApiOperation({ summary: 'Get all game questions' })
   @ApiResponse({ status: 200, description: 'List of game questions' })
