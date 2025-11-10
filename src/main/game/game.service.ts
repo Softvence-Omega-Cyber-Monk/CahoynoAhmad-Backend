@@ -99,9 +99,12 @@ export class GameService {
     if (!game) {
       throw new NotFoundException(`Game question with id ${id} not found`);
     }
-    return this.prisma.gameData.delete({
+    await this.prisma.gameData.delete({
       where: { id },
     });
+    return{
+      message:`Game question with id ${id} has been deleted successfully`
+    }
   }
   
   async submitAnswer(userId: string, gameId: string, answer: string) {
