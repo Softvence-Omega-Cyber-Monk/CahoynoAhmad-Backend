@@ -150,7 +150,7 @@ export class GameService {
         scoreIncrement = 1;
       }
     } else {
-      // User has answered before. Check if they were previously incorrect.
+      // User has answered before. Check if they were previously incorrect. 
       if (!existingAnswer.isCorrect && isCorrect) {
         scoreIncrement = 1;
       }
