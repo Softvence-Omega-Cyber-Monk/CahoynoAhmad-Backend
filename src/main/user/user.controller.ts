@@ -195,14 +195,17 @@ export class UserController {
   }
 
   // delete user by id
-  @Delete(':id')
-  async deleteUser(@Param('id') id: string, @Request() req: any) {
+   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @Delete('delete-my-accout')
+  async deleteUser(@Request() req: any) {
     try {
-      const result = await this.userService.deleteUser(id);
+      const user=req.user
+      const result = await this.userService.deleteUser(user.userId);
       return {
         statusCode: 200,
         success: true,
-        message: 'User deleted successfully',
+        message: 'Account deleted successfully',
         data: result,
       };
     } catch (error) {

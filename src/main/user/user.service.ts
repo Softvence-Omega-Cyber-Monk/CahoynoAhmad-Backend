@@ -274,19 +274,27 @@ export class UserService {
     }
   }
 
-  async deleteUser(userId: string) {
-    console.log(userId)
-    try {
-       await this.prisma.credential.delete({
-        where: {
-          id: userId,
-        },
-      });
-      return{
-        message:"User deleted successful"
-      }
-    } catch (error) {
-      throw new HttpException(error.message, error.status);
-    }
+ async deleteUser(userId: string) {
+  if (!userId) {
+    throw new HttpException('User ID is required', HttpStatus.BAD_REQUEST);
   }
+
+  try {
+    const deletedCredential = await this.prisma.credential.delete({
+      where: {
+        id: userId,
+      },
+    });
+
+    return {
+      message: "Account deleted successfully"
+    };
+  } catch (error) {
+    throw new HttpException(
+      error?.message || 'Something went wrong',
+      error?.status || HttpStatus.INTERNAL_SERVER_ERROR,
+    );
+  }
+}
+
 }
