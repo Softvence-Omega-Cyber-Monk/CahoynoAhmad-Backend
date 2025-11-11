@@ -202,7 +202,6 @@ export class GameService {
         where: { id: updatedProgress.id },
         data: { completed: true },
       });
-
       // 🪙 Reward XP
       await this.prisma.credential.update({
         where: { id: userId },

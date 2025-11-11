@@ -24,14 +24,6 @@ export class CreateXenditPaymentDto {
   amount: number;
 
   @ApiProperty({
-    description: 'The email address of the payer. Used for sending payment instructions.',
-    example: 'customer@example.com',
-  })
-  @IsNotEmpty({ message: 'Customer email is required.' })
-  @IsEmail({}, { message: 'Must be a valid email address.' })
-  email: string;
-
-  @ApiProperty({
     description: 'A brief description for the invoice.',
     example: 'Pro Plan Subscription for 1 month',
   })

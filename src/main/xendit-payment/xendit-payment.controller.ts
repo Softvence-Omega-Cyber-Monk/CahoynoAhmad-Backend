@@ -10,12 +10,16 @@ import {
   ValidationPipe,
   Logger,
   HttpStatus, // Added HttpStatus for clean code
-  HttpException
+  HttpException,
+  UseGuards,
+  Req
 } from '@nestjs/common';
 import { XenditPaymentService } from './xendit-payment.service';
 
 import { CreateXenditPaymentDto } from './dto/create-xendit-payment.dto'; 
 import type { XenditInvoiceEvent } from './dto/event.interface';
+import { JwtAuthGuard } from 'src/utils/jwt-auth.guard';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('xendit-payment')
 @UsePipes(new ValidationPipe({ transform: true }))
@@ -23,16 +27,17 @@ export class XenditPaymentController {
   private readonly logger = new Logger(XenditPaymentController.name);
 
   constructor(private readonly xenditPaymentService: XenditPaymentService) {}
-
+    @UseGuards(JwtAuthGuard)
+    @ApiBearerAuth()
   @Post('invoice')
-  @HttpCode(HttpStatus.CREATED) // Use 201 for resource creation
-  async createInvoice(@Body() createInvoiceDto: CreateXenditPaymentDto) {
+  @HttpCode(HttpStatus.CREATED) 
+  async createInvoice(@Body() createInvoiceDto: CreateXenditPaymentDto,@Req() req:any) {
     try{
-         this.logger.log(`Received request to create invoice for: ${createInvoiceDto.email}`);
-      const invoice = await this.xenditPaymentService.createInvoice(createInvoiceDto);
+      const user=req.user
+         this.logger.log(`Received request to create invoice for: ${user.email}`);
+      const invoice = await this.xenditPaymentService.createInvoice(createInvoiceDto,user.email);
       return invoice
     }catch(error){
-      // this.logger.error('Error creating invoice', error.stack);
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }

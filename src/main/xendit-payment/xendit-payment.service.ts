@@ -32,7 +32,7 @@ export class XenditPaymentService {
     this.xenditClient = new Xendit({ secretKey });
   }
 
-  async createInvoice(dto: CreateXenditPaymentDto) {
+  async createInvoice(dto: CreateXenditPaymentDto,email:string) {
     const externalId = `ORD-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
     const successUrl = this.configService.get('APP_BASE_URL') + '/payment/success';
     const failureUrl = this.configService.get('APP_BASE_URL') + '/payment/failure';
@@ -41,7 +41,7 @@ export class XenditPaymentService {
 
       const isExistUser=await this.prisma.credential.findFirst({
         where:{
-          email:dto.email
+          email:email
         }
       })
       if(!isExistUser){
@@ -54,7 +54,7 @@ export class XenditPaymentService {
           externalId,
           amount: dto.amount,
           description: dto.description,
-          payerEmail: dto.email,
+          payerEmail: email,
           successRedirectUrl: successUrl,
           failureRedirectUrl: failureUrl,
           currency: dto.currency,
