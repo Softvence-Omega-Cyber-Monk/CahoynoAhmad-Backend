@@ -108,8 +108,8 @@ export class GameService {
     }
   }
   
- async submitAnswer(userId: string, gameId: string, answer: string) {
-  // 1️ Fetch the question with related Surah & Juz
+async submitAnswer(userId: string, gameId: string, answer: string) {
+  // 1️⃣ Fetch the question with related Surah & Juz
   const game = await this.prisma.gameData.findUnique({
     where: { id: gameId },
     include: {
@@ -165,7 +165,7 @@ export class GameService {
     });
   }
 
-  // 7️ Update or create progress
+  // 7️⃣ Update or create progress
   if (!progress) {
     progress = await this.prisma.userGameProgress.create({
       data: {
@@ -182,31 +182,38 @@ export class GameService {
     });
   }
 
-  // 8️ Count total questions in the Surah
+  // 8️⃣ Count total questions in the Surah
   const totalQuestions = await this.prisma.gameData.count({
     where: { surahId: game.surahId },
   });
 
-  // 9️ Check if Surah is completed
+  // 9️⃣ Check if Surah is completed
   let completedSurah = false;
 
   const updatedProgress = await this.prisma.userGameProgress.findUnique({
     where: { id: progress.id },
   });
 
+  // 🧩 If score >= totalQuestions → Surah completed
   if (updatedProgress && updatedProgress.score! >= totalQuestions) {
     if (!updatedProgress.completed) {
       completedSurah = true;
 
+      console.log('✅ Surah completed! Updating progress and rewarding XP...');
+
+      // 🏁 Mark as completed
       await this.prisma.userGameProgress.update({
         where: { id: updatedProgress.id },
         data: { completed: true },
       });
-      // 🪙 Reward XP
-      await this.prisma.credential.update({
+
+      // 🪙 Reward XP (increment once)
+      const updatedCredential = await this.prisma.credential.update({
         where: { id: userId },
         data: { totalXP: { increment: 20 } },
       });
+
+      console.log(`🎉 XP updated! New total XP: ${updatedCredential.totalXP}`);
 
       // 🏆 Complete daily quest
       await this.completeDailyQuest(userId, game.surahId!, game.ayahId!);
@@ -232,6 +239,7 @@ export class GameService {
     completed: completedSurah,
   };
 }
+
 
   
   async completeDailyQuest(userId: string, surahId: any, ayahId: number) {
@@ -419,4 +427,6 @@ async createBulk() {
       throw new InternalServerErrorException(err.message);
     }
   }
+
+  
 }
