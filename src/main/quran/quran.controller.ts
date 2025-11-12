@@ -80,7 +80,7 @@ async uploadQuranZip(@UploadedFile() file: Express.Multer.File) {
   return {
     statusCode: HttpStatus.OK,
     message: 'Quran ZIP uploaded successfully',
-    filePath: `http://localhost:5000/api/uploads/quran/${file.filename}`,
+    filePath: `https://api.deepquran.net/api/uploads/quran/${file.filename}`,
   };
 }
 
