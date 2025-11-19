@@ -13,6 +13,8 @@ model GameData {
   ayahId        Int?
   correctArabic String
   optionsArabic String[]
+  dataType String?
+  duaName String?
   ayah          Ayah?        @relation(fields: [ayahId], references: [id])
   surah         Surah?       @relation(fields: [surahId], references: [id])
   userAnswers   UserAnswer[]

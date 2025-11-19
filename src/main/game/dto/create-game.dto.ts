@@ -53,6 +53,19 @@ export class CreateGameDto {
   @IsArray()
   optionsArabic: string[];
 
+  @ApiProperty({
+    example: 'dua or surah',
+  })
+  @IsOptional()
+  @IsString()
+  dataType?:string
+
+    @ApiProperty({
+    example: 'subbah',
+  })
+  @IsOptional()
+  @IsString()
+  duaName?:string
   //  English side
   @ApiProperty({ example: 'Praise', description: 'Correct English translation' })
   @IsString()
