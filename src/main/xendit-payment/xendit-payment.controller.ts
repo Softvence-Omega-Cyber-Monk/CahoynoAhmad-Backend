@@ -9,12 +9,17 @@ import {
   UsePipes, 
   ValidationPipe,
   Logger,
-  HttpStatus // Added HttpStatus for clean code
+  HttpStatus, // Added HttpStatus for clean code
+  HttpException,
+  UseGuards,
+  Req
 } from '@nestjs/common';
 import { XenditPaymentService } from './xendit-payment.service';
 
 import { CreateXenditPaymentDto } from './dto/create-xendit-payment.dto'; 
 import type { XenditInvoiceEvent } from './dto/event.interface';
+import { JwtAuthGuard } from 'src/utils/jwt-auth.guard';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('xendit-payment')
 @UsePipes(new ValidationPipe({ transform: true }))
@@ -22,13 +27,19 @@ export class XenditPaymentController {
   private readonly logger = new Logger(XenditPaymentController.name);
 
   constructor(private readonly xenditPaymentService: XenditPaymentService) {}
-
+    @UseGuards(JwtAuthGuard)
+    @ApiBearerAuth()
   @Post('invoice')
-  @HttpCode(HttpStatus.CREATED) // Use 201 for resource creation
-  async createInvoice(@Body() createInvoiceDto: CreateXenditPaymentDto) {
-    this.logger.log(`Received request to create invoice for: ${createInvoiceDto.email}`);
-
-    return this.xenditPaymentService.createInvoice(createInvoiceDto);
+  @HttpCode(HttpStatus.CREATED) 
+  async createInvoice(@Body() createInvoiceDto: CreateXenditPaymentDto,@Req() req:any) {
+    try{
+      const user=req.user
+         this.logger.log(`Received request to create invoice for: ${user.email}`);
+      const invoice = await this.xenditPaymentService.createInvoice(createInvoiceDto,user.email);
+      return invoice
+    }catch(error){
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
   }
 
 
@@ -52,13 +63,6 @@ export class XenditPaymentController {
       return { received: true, message: 'Invalid JSON payload format.' }; 
     }
 
-    // Now 'event' is the object your code expects
-
-    // const externalId = event?.data?.external_id || 'unknown' 
-    // console.log(externalId)
-    // this.logger.log(`Received webhook for external_id: ${externalId}. Event: ${event?.event || 'N/A'}`);
-    
-    // 2. Validate Token (Same as before)
     try {
       this.xenditPaymentService.validateWebhookSignature(xCallbackToken);
     } catch (error) {

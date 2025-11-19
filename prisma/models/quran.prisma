@@ -20,6 +20,13 @@ model Ayah {
   gameData    GameData[]
   quest       Quest[]
 }
+model Dua {
+  id Int @id @default(autoincrement())
+  duaDisplayName String?
+  duaName String @unique
+  measing String?
+  gameData GameData[]
+}
 
 model Juz {
   id     Int     @id @default(autoincrement())

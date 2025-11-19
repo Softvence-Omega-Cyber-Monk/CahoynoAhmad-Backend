@@ -7,10 +7,12 @@ export class QuranService {
   constructor(private prisma: PrismaService) {}
 
   async findAll(page: number, limit: number) {
-    return this.prisma.surah.findMany({
+    const surah=await this.prisma.surah.findMany({
       include: {
       },
     });
+    const dua=await this.prisma.dua.findMany()
+    return {surah,dua};
   }
   // post all-quran to database one time just
   async seedQuran() {
@@ -82,5 +84,31 @@ export class QuranService {
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
+  }
+
+  async  uploadIcon(dto:any, file:any){
+    const findIconWithSurh=await this.prisma.surahIcon.findFirst({
+      where:{
+        surahNumber:parseInt(dto.surahNumber)
+      }
+    })
+    if(findIconWithSurh){
+      throw new HttpException('Icon for this Surah already exists',HttpStatus.BAD_REQUEST)
+    }
+    const {surahNumber}=dto
+    const imagerURL = `${process.env.SERVER_BASE_URL}/uploads/quran/${file.filename}`
+
+    const res=await this.prisma.surahIcon.create({
+      data:{
+        surahNumber:parseInt(surahNumber),
+        icon:imagerURL
+      }
+    })
+    return res
+  }
+
+  // get all surah icon
+  async getAllSurahIcons(){
+    return this.prisma.surahIcon.findMany()
   }
 }

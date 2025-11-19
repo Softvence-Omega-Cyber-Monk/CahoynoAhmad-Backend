@@ -1,0 +1,7 @@
+model surahIcon {
+    id String @id @default(uuid())
+    surahNumber Int
+    icon String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}

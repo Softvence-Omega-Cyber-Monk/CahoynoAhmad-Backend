@@ -9,6 +9,8 @@ import {
   UseInterceptors,
   UploadedFile,
   BadRequestException,
+  Body,
+  InternalServerErrorException,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -78,11 +80,27 @@ async uploadQuranZip(@UploadedFile() file: Express.Multer.File) {
   return {
     statusCode: HttpStatus.OK,
     message: 'Quran ZIP uploaded successfully',
-    filePath: `http://localhost:5000/api/uploads/quran/${file.filename}`,
+    filePath: `https://api.deepquran.net/api/uploads/quran/${file.filename}`,
   };
 }
 
-
+ @Get("get-icon")
+  async getAllSurahIcons(){
+    try{
+      const res=await this.quranService.getAllSurahIcons()
+      return {
+        statusCode: HttpStatus.OK,
+        message: 'Surah Icons Retrieve successful',
+        data: res,
+      };
+    }catch(error){
+      return {
+        statusCode: HttpStatus.BAD_REQUEST,
+        message: error.message,
+      };
+    }
+    
+  }
   //  Get all Quran by page and limit
   @Get()
   async findAll(@Query('page') page = 1, @Query('limit') limit = 20) {
@@ -190,4 +208,44 @@ async uploadQuranZip(@UploadedFile() file: Express.Multer.File) {
       };
     }
   }
+
+  @Post('post-surah-icon')
+  @ApiOperation({ summary: 'Upload Surah Icon Image' })
+  @ApiConsumes('multipart/form-data')
+   @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        surahNumber: { type: 'number' },
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
+  @UseInterceptors(
+  FileInterceptor('file', {
+    storage: diskStorage({
+      destination: './uploads/quran',
+      filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+        cb(null, `quran-${uniqueSuffix}${extname(file.originalname)}`);
+      },
+    }),
+    limits: { fileSize: 5* 1024 * 1024 },
+  }),
+)
+  async uploadIcon(@UploadedFile() file:any,@Body() dto:any){
+    try{
+      const res=await this.quranService.uploadIcon(dto,file)
+    return res
+    }catch(error){
+      throw new InternalServerErrorException(error.message,error.status)
+    }
+  }
+  
+
+ 
+
 }

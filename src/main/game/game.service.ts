@@ -1,10 +1,12 @@
 // src/game/game.service.ts
-import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import { ForbiddenException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CreateGameDto } from './dto/create-game.dto';
 import { UpdateGameDto } from './dto/update-game.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { QuestStatus, QuestType } from 'generated/prisma';
-
+import * as fs from 'fs';
+import * as path from 'path';
+import { DuaDto } from './dto/createDua.dto';
 
 
 @Injectable()
@@ -13,22 +15,22 @@ export class GameService {
 
   async create(createGameDto: CreateGameDto) {
 
-    const isExistSurah=await this.prisma.surah.findFirst({
-      where:{
-        id:createGameDto.surahId
-      }
-    })
-      const isExistAyah=await this.prisma.surah.findFirst({
-      where:{
-        id:createGameDto.ayahId
-      }
-    })
-    if(!isExistSurah){
-      throw new ForbiddenException("Surah not found please check  you surah id or seed the quran in your data base and try again")
-    }
-    if(!isExistAyah){
-      throw new ForbiddenException("Ayah not found please check your ayah id seed your quran in your data and try again")
-    }
+    // const isExistSurah=await this.prisma.surah.findFirst({
+    //   where:{
+    //     id:createGameDto.surahId
+    //   }
+    // })
+    //   const isExistAyah=await this.prisma.surah.findFirst({
+    //   where:{
+    //     id:createGameDto.ayahId
+    //   }
+    // })
+    // if(!isExistSurah){
+    //   throw new ForbiddenException("Surah not found please check  you surah id or seed the quran in your data base and try again")
+    // }
+    // if(!isExistAyah){
+    //   throw new ForbiddenException("Ayah not found please check your ayah id seed your quran in your data and try again")
+    // }
     return this.prisma.gameData.create({
       data: {
         surahId: createGameDto.surahId ?? null,
@@ -36,12 +38,14 @@ export class GameService {
         arabicText: createGameDto.arabicText,
         indonesianText: createGameDto.indonesianText,
         audioUrl: createGameDto.audioUrl ?? null,
-        correct: createGameDto.correct,
+        correctIndonesian: createGameDto.correct,
         optionsIndonesian: createGameDto.optionsIndonesian,
         correctArabic: createGameDto.correctArabic,
         optionsArabic: createGameDto.optionsArabic,
         correctEnglish: createGameDto.correctEnglish,
         optionsEnglish: createGameDto.optionsEnglish,
+        dataType:createGameDto.dataType,
+        duaName:createGameDto.duaName
       },
     });
   }
@@ -84,12 +88,14 @@ export class GameService {
         arabicText: updateGameDto.arabicText,
         indonesianText: updateGameDto.indonesianText,
         audioUrl: updateGameDto.audioUrl ?? null,
-        correct: updateGameDto.correct,
+        correctIndonesian: updateGameDto.correct,
         optionsIndonesian: updateGameDto.optionsIndonesian,
         correctArabic: updateGameDto.correctArabic,
         optionsArabic: updateGameDto.optionsArabic,
         correctEnglish: updateGameDto.correctEnglish,
         optionsEnglish: updateGameDto.optionsEnglish,
+        dataType:updateGameDto.dataType,
+        duaName:updateGameDto.duaName
       },
     });
   }
@@ -99,127 +105,171 @@ export class GameService {
     if (!game) {
       throw new NotFoundException(`Game question with id ${id} not found`);
     }
-    return this.prisma.gameData.delete({
+    await this.prisma.gameData.delete({
       where: { id },
     });
+    return{
+      message:`Game question with id ${id} has been deleted successfully`
+    }
   }
   
-  async submitAnswer(userId: string, gameId: string, answer: string) {
-    // 1. Fetch the question and related data (surah, juz)
-    const game = await this.prisma.gameData.findUnique({ 
-      where: { id: gameId },
-      include: { 
-        surah: {
-          include: { juz: true } 
-        } 
-      }
-    });
+async submitAnswer(userId: string, gameId: string, answer: string) {
+  // 1️⃣ Fetch the question with related Surah & Juz (if exists)
+  const game = await this.prisma.gameData.findUnique({
+    where: { id: gameId },
+    include: {
+      surah: { include: { juz: true } },
+    },
+  });
 
-    if (!game) {
-      throw new NotFoundException(`Question ${gameId} not found`);
-    }
-
-    // 2. Find the user's progress for this surah and check if it's already completed.
-    let progress = await this.prisma.userGameProgress.findFirst({
-      where: { userId, surahId: game.surahId! },
-    });
-
-    if (progress?.completed) {
-      throw new ForbiddenException('Surah already completed, cannot submit more answers.');
-    }
-
-    // 3. Normalize answers and check correctness.
-    const normalize = (s?: string) => (s ?? '').trim().toLowerCase();
-    const isCorrect = normalize(answer) === normalize(game.correct) ||
-      normalize(answer) === normalize(game.correctArabic);
-
-    // 4. Check for an existing answer for this question and user.
-    const existingAnswer = await this.prisma.userAnswer.findFirst({
-      where: { userId, gameId },
-    });
-
-    let scoreIncrement = 0;
-    
-    // 5. Determine if a score increment is warranted.
-    if (!existingAnswer) {
-      // First time answering this question.
-      if (isCorrect) {
-        scoreIncrement = 1;
-      }
-    } else {
-      // User has answered before. Check if they were previously incorrect.
-      if (!existingAnswer.isCorrect && isCorrect) {
-        scoreIncrement = 1;
-      }
-    }
-
-    // 6. Create or update the user's answer record.
-    if (existingAnswer) {
-      await this.prisma.userAnswer.update({
-        where: { id: existingAnswer.id },
-        data: { isCorrect, answeredAt: new Date() },
-      });
-    } else {
-      await this.prisma.userAnswer.create({
-        data: { userId, gameId, isCorrect },
-      });
-    }
-
-    // 7. Update the user's progress for this surah.
-    if (!progress) {
-      progress = await this.prisma.userGameProgress.create({
-        data: {
-          userId,
-          surahId: game.surahId!,
-          completed: false,
-          score: scoreIncrement,
-        },
-      });
-    } else {
-      await this.prisma.userGameProgress.update({
-        where: { id: progress.id },
-        data: { score: { increment: scoreIncrement } },
-      });
-      progress = await this.prisma.userGameProgress.findUnique({
-        where: { id: progress.id },
-      });
-    }
-
-    // 8. Count total questions in the surah.
-    const totalQuestions = await this.prisma.gameData.count({
-      where: { surahId: game.surahId },
-    });
-
-    let completedSurah = false;
-
-    // 9. Check if the user's score (correct answers) equals the total questions.
-    if (progress?.score === totalQuestions) {
-      if (!progress?.completed) {
-        completedSurah = true;
-        await this.prisma.userGameProgress.update({
-          where: { id: progress.id },
-          data: { completed: true },
-        });
-
-        // Reward XP for surah completion
-        await this.prisma.credential.update({
-          where: { id: userId },
-          data: { totalXP: { increment: 20 } },
-        });
-
-        // Check for quests related to surah completion
-        await this.completeDailyQuest(userId, game.surahId, game.ayahId!);
-      } else {
-        completedSurah = true;
-      }
-    }
-    
-    // Check for weekly quests
-    await this.checkAndCompleteWeeklyQuests(userId, isCorrect, completedSurah, game.surahId, game.surah?.juzId);
-    
-    // Return the result to the caller.
-    return { isCorrect, answeredCount: progress?.score, totalQuestions, completed: completedSurah };
+  if (!game) {
+    throw new NotFoundException(`Game question with ID ${gameId} not found`);
   }
+
+  //* Determine type: null = surah, 'dua' = dua
+  const type = game.dataType ?? 'surah';
+
+  //*  Normalize and check correctness
+  const normalize = (s?: string) => (s ?? '').trim().toLowerCase();
+  const isCorrect =
+    normalize(answer) === normalize(game.correctIndonesian) ||
+    normalize(answer) === normalize(game.correctArabic) ||
+    normalize(answer) === normalize(game.correctEnglish);
+
+  //  Find existing answer
+  const existingAnswer = await this.prisma.userAnswer.findFirst({
+    where: { userId, gameId },
+  });
+
+  let scoreIncrement = 0;
+
+  //  Calculate score increment
+  if (!existingAnswer) {
+    if (isCorrect) scoreIncrement = 1;
+  } else if (!existingAnswer.isCorrect && isCorrect) {
+    scoreIncrement = 1;
+  }
+
+  // Create or update user's answer
+  if (existingAnswer) {
+    await this.prisma.userAnswer.update({
+      where: { id: existingAnswer.id },
+      data: { isCorrect, answeredAt: new Date() },
+    });
+  } else {
+    await this.prisma.userAnswer.create({
+      data: { userId, gameId, isCorrect, answeredAt: new Date() },
+    });
+  }
+
+  //  Prepare progress query
+  const progressWhere: any = { userId, dataType: type };
+  if (type === 'surah') progressWhere.surahId = game.surahId!;
+  else if (type === 'dua') progressWhere.duaName = game.duaName!;
+
+  // Fetch or create progress
+  let progress = await this.prisma.userGameProgress.findFirst({
+    where: progressWhere,
+  });
+
+  if (progress?.completed) {
+    throw new ForbiddenException(
+      type === 'surah'
+        ? 'You have already completed this Surah.'
+        : 'You have already completed this Dua.'
+    );
+  }
+
+  if (!progress) {
+    progress = await this.prisma.userGameProgress.create({
+      data: {
+        userId,
+        dataType: type,
+        surahId: type === 'surah' ? game.surahId! : null,
+        duaName: type === 'dua' ? game.duaName! : null,
+        score: scoreIncrement,
+        completed: false,
+      },
+    });
+  } else if (scoreIncrement > 0) {
+    progress = await this.prisma.userGameProgress.update({
+      where: { id: progress.id },
+      data: { score: { increment: scoreIncrement } },
+    });
+  }
+
+  // 9️⃣ Count total questions for this item
+  const totalQuestions = await this.prisma.gameData.count({
+    where:
+      type === 'surah'
+        ? { surahId: game.surahId }
+        : { dataType: 'dua', duaName: game.duaName },
+  });
+
+  // 🔟 Check completion
+  let completed = false;
+  const updatedProgress = await this.prisma.userGameProgress.findUnique({
+    where: { id: progress.id },
+  });
+
+  if (updatedProgress && updatedProgress.score! >= totalQuestions && !updatedProgress.completed) {
+    completed = true;
+
+    // Mark as completed
+    await this.prisma.userGameProgress.update({
+      where: { id: updatedProgress.id },
+      data: { completed: true },
+    });
+
+    // Reward XP
+    const xpReward = type === 'surah' ? 20 : 10;
+    await this.prisma.credential.update({
+      where: { id: userId },
+      data: { totalXP: { increment: xpReward } },
+    });
+
+    // Daily quest only for Surah
+    if (type === 'surah') {
+      await this.completeDailyQuest(userId, game.surahId!, game.ayahId!);
+    }
+  } else if (updatedProgress?.completed) {
+    completed = true;
+  }
+
+  // 1️⃣1️⃣ Weekly quests for both types
+  await this.checkAndCompleteWeeklyQuests(
+    userId,
+    isCorrect,
+    completed,
+    type === 'surah' ? game.surahId : null,
+    game.surah?.juzId ?? null
+  );
+
+  // 1️⃣2️⃣ Update overall progress
+  const completedItems = await this.prisma.userGameProgress.count({
+    where: { userId, completed: true },
+  });
+  const totalItems = 114 + 18; // total surah + total dua
+  const progressPercent = (completedItems / totalItems) * 100;
+
+  await this.prisma.credential.update({
+    where: { id: userId },
+    data: { progress: progressPercent },
+  });
+
+  // 🔚 Return result
+  return {
+    isCorrect,
+    answeredCount: updatedProgress?.score ?? 0,
+    totalQuestions,
+    completed,
+    overallProgress: progressPercent.toFixed(2), // percentage
+  };
+}
+
+
+
+
   
   async completeDailyQuest(userId: string, surahId: any, ayahId: number) {
     const today = new Date();
@@ -335,4 +385,173 @@ export class GameService {
     }
     return null;
   }
+
+
+async createBulk() {
+  try {
+    //  Step 1: Locate and read the JSON file
+
+    const isExistGametable=await this.prisma.gameData.findFirst()
+    if(isExistGametable){
+      throw new ForbiddenException('Game table already exist you cant create again');
+    }
+    const filePath = path.join(process.cwd(), 'quests_merged.json');
+
+    if (!fs.existsSync(filePath)) {
+      throw new ForbiddenException('quests_merged.json file not found in project root');
+    }
+
+    const rawData = fs.readFileSync(filePath, 'utf-8');
+    const dataArray = JSON.parse(rawData);
+
+    if (!Array.isArray(dataArray) || dataArray.length === 0) {
+      throw new ForbiddenException('quests_merged.json is empty or not a valid array');
+    }
+
+    //  Step 2: Filter out undefined IDs for safe querying
+    const uniqueSurahIds = [
+      ...new Set(
+        dataArray.map((d) => d.surahId).filter((id): id is number => id !== undefined)
+      ),
+    ];
+    const uniqueAyahIds = [
+      ...new Set(
+        dataArray.map((d) => d.ayahId).filter((id): id is number => id !== undefined)
+      ),
+    ];
+
+    //  Step 3: Find existing Surahs and Ayahs (optional, can skip if you don't need validation)
+    const existingSurahs = await this.prisma.surah.findMany({
+      where: { id: { in: uniqueSurahIds } },
+      select: { id: true },
+    });
+
+    const existingAyahs = await this.prisma.ayah.findMany({
+      where: { id: { in: uniqueAyahIds } },
+      select: { id: true },
+    });
+
+    const foundSurahIds = existingSurahs.map((s) => s.id);
+    const foundAyahIds = existingAyahs.map((a) => a.id);
+
+    const missingSurahs = uniqueSurahIds.filter((id) => !foundSurahIds.includes(id));
+    const missingAyahs = uniqueAyahIds.filter((id) => !foundAyahIds.includes(id));
+
+    if (missingSurahs.length > 0) console.warn('⚠ Missing Surahs:', missingSurahs);
+    if (missingAyahs.length > 0) console.warn('⚠ Missing Ayahs:', missingAyahs);
+
+    //  Step 4: Prepare and insert data into gameData
+    const result = await this.prisma.gameData.createMany({
+      data: dataArray.map((d) => ({
+        surahId: d.surahId ?? null, // optional
+        ayahId: d.ayahId ?? null,   // optional
+        arabicText: d.arabicText,
+        indonesianText: d.indonesianText,
+        audioUrl: d.audioUrl ?? null,
+        correctArabic: d.correctArabic,
+        optionsArabic: d.optionsArabic,
+        correctEnglish: d.correctEnglish,
+        optionsEnglish: d.optionsEnglish,
+        correctIndonesian: d.correctIndonesian,
+        optionsIndonesian: d.optionsIndonesian,
+        dataType: d.dataType ?? null,
+        duaName: d.duaName ?? null,
+      })),
+      skipDuplicates: true,
+    });
+
+    //  Step 5: Return summary
+    return {
+      message: `✅ Successfully inserted ${result.count} records from quests_merged.json.`,
+    };
+  } catch (err) {
+    console.error('❌ Error during bulk insert:', err);
+    throw new InternalServerErrorException(err.message);
+  }
+}
+
+async deleteBulkGame(){
+  await this.prisma.gameData.deleteMany();
+  return{
+    message:"Deleted all game data"
+  }
+}
+  
+
+async getAllDua(){
+  const dua=await this.prisma.gameData.findMany({
+    where:{
+      dataType:"dua"
+    }
+  })
+  return dua
+}
+
+
+async postDua(dto:DuaDto){
+  const {duaDisplayName,duaReletionName}=dto
+  const isExist=await this.prisma.dua.findFirst({
+    where:{
+      duaDisplayName
+    }
+  })
+  if(isExist){
+    throw new ForbiddenException("Dua already exist please try another one")
+  }
+  const res=await this.prisma.dua.create({
+    data:{
+      duaDisplayName,
+      duaName:duaReletionName
+    }
+  })
+  return res
+}
+
+async getGameByDua(duaName:string){
+  const res=await this.prisma.gameData.findMany({
+    where:{
+      duaName:duaName
+    }
+  })
+  return res
+}
+
+
+async createAllDua(){
+  const isExist=await this.prisma.dua.findFirst()
+  if(isExist){
+    throw new ForbiddenException("Dua already exist please try another one")
+  }
+  await this.prisma.dua.createMany({
+  data: [
+    { duaName: "niyah", duaDisplayName: "Niyyah Subuh" },
+    { duaName: "iftia", duaDisplayName: "Doa Iftitah Part 1" },
+    { duaName: "iftia-2", duaDisplayName: "Doa Iftitah Part 2" },
+    { duaName: "iftia-3", duaDisplayName: "Doa Iftitah Part 3" },
+    { duaName: "ruku", duaDisplayName: "Ruku" },
+    { duaName: "itidal", duaDisplayName: "I‘tidal" },
+    { duaName: "sujud", duaDisplayName: "Sujud" },
+    { duaName: "duduk_antar_sujud", duaDisplayName: "Duduk Antara Sujud" },
+    { duaName: "tasyahhud_part_1", duaDisplayName: "Tasyahhud Akhir Part 1" },
+    { duaName: "tasyahhud_part_2", duaDisplayName: "Tasyahhud Akhir Part 2" },
+    { duaName: "tasyahhud_part_3", duaDisplayName: "Tasyahhud Akhir Part 3" },
+    { duaName: "qunut_part_1", duaDisplayName: "Doa Qunut Part 1" },
+    { duaName: "qunut_part_2", duaDisplayName: "Doa Qunut Part 2" },
+    { duaName: "qunut_part_3", duaDisplayName: "Doa Qunut Part 3" },
+    { duaName: "istighfar_part_1", duaDisplayName: "Sayyidul Istighfar Part 1" },
+    { duaName: "istighfar_part_2", duaDisplayName: "Sayyidul Istighfar Part 2" },
+    { duaName: "istighfar_part_3", duaDisplayName: "Sayyidul Istighfar Part 3" },
+    { duaName: "dua_selamat", duaDisplayName: "Doa Selamat" }
+  ],
+  skipDuplicates: true,
+});
+}
+
+
+async deleteDuaTable(){
+  await this.prisma.dua.deleteMany();
+  return{
+    message:"Deleted all dua data"
+  }
+}
 }

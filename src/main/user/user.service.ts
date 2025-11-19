@@ -274,19 +274,47 @@ export class UserService {
     }
   }
 
-  async deleteUser(userId: string) {
-    console.log(userId)
-    try {
-       await this.prisma.credential.delete({
-        where: {
-          id: userId,
-        },
-      });
-      return{
-        message:"User deleted successful"
-      }
-    } catch (error) {
-      throw new HttpException(error.message, error.status);
-    }
+ async deleteUser(userId: string) {
+  if (!userId) {
+    throw new HttpException('User ID is required', HttpStatus.BAD_REQUEST);
   }
+
+  try {
+    const deletedCredential = await this.prisma.credential.delete({
+      where: {
+        id: userId,
+      },
+    });
+
+    return {
+      message: "Account deleted successfully"
+    };
+  } catch (error) {
+    throw new HttpException(
+      error?.message || 'Something went wrong',
+      error?.status || HttpStatus.INTERNAL_SERVER_ERROR,
+    );
+  }
+}
+
+
+
+async updateUserProgress(userId: string) {
+  // Count completed Surah and Dua
+  const completedItems = await this.prisma.userGameProgress.count({
+    where: { userId, completed: true },
+  });
+
+  const totalItems = 114 + 18; // total surah + total dua
+  const progress = (completedItems / totalItems) * 100;
+
+  // Update in Credential
+  await this.prisma.credential.update({
+    where: { id: userId },
+    data: { progress: progress },
+  });
+
+  return progress;
+}
+
 }

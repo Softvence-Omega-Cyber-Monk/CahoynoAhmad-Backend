@@ -262,4 +262,24 @@ export class AdminService {
     })
     return res
   }
+
+
+  async updateAdminProfile(userId:string,dto:any,file:any){
+    let imagerURL
+      if(file){
+         imagerURL = `${process.env.SERVER_BASE_URL}/uploads/${file.filename}`
+      }
+      const res=await this.prisma.credential.update({
+        where:{
+          id:userId
+        },
+        data:{
+         name:dto.name,
+         image:imagerURL,
+         phone:dto.phone
+        }
+      })
+      return res;
+
+  }
 }
