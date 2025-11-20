@@ -16530,1399 +16530,1367 @@
     ]
   },
   {
-  "arabicText": "أُصَلِّي",
-  "indonesianText": "Aku berniat",
-  "audioUrl": null,
-  "correctIndonesian": "Aku berniat",
-  "optionsIndonesian": [
-    "Aku berniat",
-    "Shalat",
-    "Fardu",
-    "Karena Allah"
-  ],
-  "correctArabic": "أُصَلِّي",
-  "optionsArabic": [
-    "أُصَلِّي",
-    "صَلَاةَ",
-    "فَرْضَ",
-    "لِلَّهِ"
-  ],
-  "dataType": "dua",
-  "duaName": "niyah",
-  "correctEnglish": "I intend",
-  "optionsEnglish": [
-    "I intend",
-    "Prayer",
-    "Obligatory",
-    "For Allah"
-  ]
-},
-{
-  "arabicText": "صَلَاةَ",
-  "indonesianText": "shalat",
-  "audioUrl": null,
-  "correctIndonesian": "shalat",
-  "optionsIndonesian": [
-    "shalat",
-    "Aku berniat",
-    "Fardu",
-    "Karena Allah"
-  ],
-  "correctArabic": "صَلَاةَ",
-  "optionsArabic": [
-    "صَلَاةَ",
-    "أُصَلِّي",
-    "فَرْضَ",
-    "لِلَّهِ"
-  ],
-  "dataType": "dua",
-  "duaName": "niyah",
-  "correctEnglish": "prayer",
-  "optionsEnglish": [
-    "prayer",
-    "I intend",
-    "Obligatory",
-    "For Allah"
-  ]
-},
-{
-  "arabicText": "فَرْضَ",
-  "indonesianText": "fardu",
-  "audioUrl": null,
-  "correctIndonesian": "fardu",
-  "optionsIndonesian": [
-    "fardu",
-    "shalat",
-    "Dhuha",
-    "Karena Allah"
-  ],
-  "correctArabic": "فَرْضَ",
-  "optionsArabic": [
-    "فَرْضَ",
-    "صَلَاةَ",
-    "ضُحَى",
-    "لِلَّهِ"
-  ],
-  "dataType": "dua",
-  "duaName": "niyah",
-  "correctEnglish": "obligatory",
-  "optionsEnglish": [
-    "obligatory",
-    "prayer",
-    "Dhuha",
-    "For Allah"
-  ]
-},
-{
-  "arabicText": "ضُحَى",
-  "indonesianText": "Dhuha",
-  "audioUrl": null,
-  "correctIndonesian": "Dhuha",
-  "optionsIndonesian": [
-    "Dhuha",
-    "fardu",
-    "shalat",
-    "Karena Allah"
-  ],
-  "correctArabic": "ضُحَى",
-  "optionsArabic": [
-    "ضُحَى",
-    "فَرْضَ",
-    "صَلَاةَ",
-    "لِلَّهِ"
-  ],
-  "dataType": "dua",
-  "duaName": "niyah",
-  "correctEnglish": "Dhuha",
-  "optionsEnglish": [
-    "Dhuha",
-    "Obligatory",
-    "Prayer",
-    "For Allah"
-  ]
-},
-
-{
-  "arabicText": "لِلَّهِ",
-  "indonesianText": "karena Allah",
-  "audioUrl": null,
-  "correctIndonesian": "karena Allah",
-  "optionsIndonesian": [
-    "karena Allah",
-    "Aku berniat",
-    "shalat",
-    "Dhuha"
-  ],
-  "correctArabic": "لِلَّهِ",
-  "optionsArabic": [
-    "لِلَّهِ",
-    "أُصَلِّي",
-    "صَلَاةَ",
-    "ضُحَى"
-  ],
-  "dataType": "dua",
-  "duaName": "niyah",
-  "correctEnglish": "for Allah",
-  "optionsEnglish": [
-    "for Allah",
-    "I intend",
-    "Prayer",
-    "Dhuha"
-  ]
-},
-{
-  "arabicText": "اَللّٰهُ",
-  "indonesianText": "Allah",
-  "audioUrl": null,
-  "correctIndonesian": "Allah",
-  "optionsIndonesian": [
-    "Allah",
-    "Maha Besar",
-    "Segala puji",
-    "Pagi dan petang"
-  ],
-  "correctArabic": "اَللّٰهُ",
-  "optionsArabic": [
-    "اَللّٰهُ",
-    "أَكْبَرُ",
-    "وَالْحَمْدُ",
-    "بُكْرَةً"
-  ],
-  "dataType": "dua",
-  "duaName": "iftia",
-  "correctEnglish": "Allah",
-  "optionsEnglish": [
-    "Allah",
-    "Greatest",
-    "Praise",
-    "Morning and evening"
-  ]
-},
-{
-  "arabicText": "أَكْبَرُ",
-  "indonesianText": "Maha Besar",
-  "audioUrl": null,
-  "correctIndonesian": "Maha Besar",
-  "optionsIndonesian": [
-    "Maha Besar",
-    "Allah",
-    "Segala puji",
-    "Pagi dan petang"
-  ],
-  "correctArabic": "أَكْبَرُ",
-  "optionsArabic": [
-    "أَكْبَرُ",
-    "اَللّٰهُ",
-    "وَالْحَمْدُ",
-    "بُكْرَةً"
-  ],
-  "dataType": "dua",
-  "duaName": "iftia",
-  "correctEnglish": "Greatest",
-  "optionsEnglish": [
-    "Greatest",
-    "Allah",
-    "Praise",
-    "Morning and evening"
-  ]
-},
-{
-  "arabicText": "كَبِيرًا",
-  "indonesianText": "dengan sebesar-besarnya",
-  "audioUrl": null,
-  "correctIndonesian": "dengan sebesar-besarnya",
-  "optionsIndonesian": [
-    "dengan sebesar-besarnya",
-    "Maha Besar",
-    "Allah",
-    "Segala puji"
-  ],
-  "correctArabic": "كَبِيرًا",
-  "optionsArabic": [
-    "كَبِيرًا",
-    "أَكْبَرُ",
-    "اَللّٰهُ",
-    "وَالْحَمْدُ"
-  ],
-  "dataType": "dua",
-  "duaName": "iftia",
-  "correctEnglish": "with greatness",
-  "optionsEnglish": [
-    "with greatness",
-    "Greatest",
-    "Allah",
-    "Praise"
-  ]
-},
-{
-  "arabicText": "وَالْحَمْدُ",
-  "indonesianText": "dan segala puji",
-  "audioUrl": null,
-  "correctIndonesian": "dan segala puji",
-  "optionsIndonesian": [
-    "dan segala puji",
-    "Allah",
-    "Maha Besar",
-    "Pagi dan petang"
-  ],
-  "correctArabic": "وَالْحَمْدُ",
-  "optionsArabic": [
-    "وَالْحَمْدُ",
-    "اَللّٰهُ",
-    "أَكْبَرُ",
-    "بُكْرَةً"
-  ],
-  "dataType": "dua",
-  "duaName": "iftia",
-  "correctEnglish": "and all praise",
-  "optionsEnglish": [
-    "and all praise",
-    "Allah",
-    "Greatest",
-    "Morning and evening"
-  ]
-},
-{
-  "arabicText": "لِلّٰهِ",
-  "indonesianText": "bagi Allah",
-  "audioUrl": null,
-  "correctIndonesian": "bagi Allah",
-  "optionsIndonesian": [
-    "bagi Allah",
-    "dan segala puji",
-    "Maha Besar",
-    "Pagi dan petang"
-  ],
-  "correctArabic": "لِلّٰهِ",
-  "optionsArabic": [
-    "لِلّٰهِ",
-    "وَالْحَمْدُ",
-    "أَكْبَرُ",
-    "بُكْرَةً"
-  ],
-  "dataType": "dua",
-  "duaName": "iftia",
-  "correctEnglish": "for Allah",
-  "optionsEnglish": [
-    "for Allah",
-    "and all praise",
-    "Greatest",
-    "Morning and evening"
-  ]
-},
-
+    "arabicText": "أُصَلِّي",
+    "indonesianText": "Aku berniat shalat",
+    "audioUrl": null,
+    "correctArabic": "أُصَلِّي",
+    "optionsArabic": ["أُصَلِّي", "فَرْضَ", "الْقِبْلَةِ", "تَعَالَى"],
+    "correctEnglish": "I intend to pray",
+    "optionsEnglish": ["I intend to pray", "Obligatory", "The direction of Qibla", "The Most High"],
+    "correctIndonesian": "Aku berniat shalat",
+    "optionsIndonesian": ["Aku berniat shalat", "fardhu", "kiblat", "Yang Maha Tinggi"],
+    
+    "dataType": "dua",
+    "duaName": "niyah"
+  },
+  {
+    "arabicText": "فَرْضَ",
+    "indonesianText": "fardhu",
+    "audioUrl": null,
+    "correctArabic": "فَرْضَ",
+    "optionsArabic": ["فَرْضَ", "الصُّبْحِ", "أَدَاءً", "لِلَّهِ"],
+    "correctEnglish": "Obligatory",
+    "optionsEnglish": ["Obligatory", "Subuh", "As performance", "Because of Allah"],
+    "correctIndonesian": "fardhu",
+    "optionsIndonesian": ["fardhu", "Subuh", "sebagai pelaksanaan", "karena Allah"],
+    
+    
+    "dataType": "dua",
+    "duaName": "niyah"
+  },
+  {
+    "arabicText": "الصُّبْحِ",
+    "indonesianText": "Subuh",
+    "audioUrl": null,
+    "correctArabic": "الصُّبْحِ",
+    "optionsArabic": ["الصُّبْحِ", "رَكْعَتَيْنِ", "مُسْتَقْبِلَ", "تَعَالَى"],
+    "correctEnglish": "Subuh (Dawn Prayer)",
+    "optionsEnglish": ["Subuh (Dawn Prayer)", "Two rakaat", "Facing", "The Most High"],
+    "correctIndonesian": "Subuh",
+    "optionsIndonesian": ["Subuh", "dua rakaat", "menghadap", "Yang Maha Tinggi"],
+    
+    
+    "dataType": "dua",
+    "duaName": "niyah"
+  },
+  {
+    "arabicText": "مُسْتَقْبِلَ",
+    "indonesianText": "menghadap",
+    "audioUrl": null,
+    "correctArabic": "مُسْتَقْبِلَ",
+    "optionsArabic": ["مُسْتَقْبِلَ", "أُصَلِّي", "الْقِبْلَةِ", "لِلَّهِ"],
+    "correctEnglish": "Facing",
+    "optionsEnglish": ["Facing", "I intend to pray", "The direction of Qibla", "Because of Allah"],
+    "correctIndonesian": "menghadap",
+    "optionsIndonesian": ["menghadap", "Aku berniat shalat", "kiblat", "karena Allah"],
+    
+    
+    "dataType": "dua",
+    "duaName": "niyah"
+  },
+  {
+    "arabicText": "لِلَّهِ",
+    "indonesianText": "karena Allah",
+    "audioUrl": null,
+    "correctArabic": "لِلَّهِ",
+    "optionsArabic": ["لِلَّهِ", "تَعَالَى", "فَرْضَ", "رَكْعَتَيْنِ"],
+    "correctEnglish": "Because of Allah",
+    "optionsEnglish": ["Because of Allah", "The Most High", "Obligatory", "Two rakaat"],
+    "correctIndonesian": "karena Allah",
+    "optionsIndonesian": ["karena Allah", "Yang Maha Tinggi", "fardhu", "dua rakaat"],
+    
+    
+    "dataType": "dua",
+    "duaName": "niyah"
+  }
+,
+  {
+    "arabicText": "اَللّٰهُ",
+    "indonesianText": "Allah",
+    "audioUrl": null,
+    "correctArabic": "اَللّٰهُ",
+    "optionsArabic": ["اَللّٰهُ", "أَكْبَرُ", "كَثِيرًا", "بُكْرَةً"],
+    "correctEnglish": "Allah",
+    "optionsEnglish": ["Allah", "Maha Besar", "Abundantly", "In the morning"],
+    "correctIndonesian": "Allah",
+    "optionsIndonesian": ["Allah", "Maha Besar", "sebanyak-banyaknya", "pada waktu pagi"],
+    
+    
+    "dataType": "dua",
+    "duaName": "iftia"
+  },
+  {
+    "arabicText": "أَكْبَرُ",
+    "indonesianText": "Maha Besar",
+    "audioUrl": null,
+    "correctArabic": "أَكْبَرُ",
+    "optionsArabic": ["أَكْبَرُ", "كَبِيرًا", "وَالْحَمْدُ", "وَأَصِيلًا"],
+    "correctEnglish": "Is The Greatest",
+    "optionsEnglish": ["Is The Greatest", "With greatness", "And all praise", "And evening"],
+    "correctIndonesian": "Maha Besar",
+    "optionsIndonesian": ["Maha Besar", "dengan sebesar-besarnya", "dan segala puji", "dan petang"],
+    
+    
+    "dataType": "dua",
+    "duaName": "iftia"
+  },
+  {
+    "arabicText": "كَثِيرًا",
+    "indonesianText": "sebanyak-banyaknya",
+    "audioUrl": null,
+    "correctArabic": "كَثِيرًا",
+    "optionsArabic": ["كَثِيرًا", "لِلّٰهِ", "وَالْحَمْدُ", "اَللّٰهُ"],
+    "correctEnglish": "Abundantly/Much",
+    "optionsEnglish": ["Abundantly/Much", "For Allah", "And all praise", "Allah"],
+    "correctIndonesian": "sebanyak-banyaknya",
+    "optionsIndonesian": ["sebanyak-banyaknya", "bagi Allah", "dan segala puji", "Allah"],
+    
+    
+    "dataType": "dua",
+    "duaName": "iftia"
+  },
+  {
+    "arabicText": "وَسُبْحَانَ",
+    "indonesianText": "dan Mahasuci",
+    "audioUrl": null,
+    "correctArabic": "وَسُبْحَانَ",
+    "optionsArabic": ["وَسُبْحَانَ", "اللّٰهِ", "بُكْرَةً", "أَكْبَرُ"],
+    "correctEnglish": "And Glorified is",
+    "optionsEnglish": ["And Glorified is", "Allah", "In the morning", "Is The Greatest"],
+    "correctIndonesian": "dan Mahasuci",
+    "optionsIndonesian": ["dan Mahasuci", "Allah", "pada waktu pagi", "Maha Besar"],
+    
+    
+    "dataType": "dua",
+    "duaName": "iftia"
+  },
+  {
+    "arabicText": "وَأَصِيلًا",
+    "indonesianText": "dan petang",
+    "audioUrl": null,
+    "correctArabic": "وَأَصِيلًا",
+    "optionsArabic": ["وَأَصِيلًا", "بُكْرَةً", "كَثِيرًا", "وَسُبْحَانَ"],
+    "correctEnglish": "And evening",
+    "optionsEnglish": ["And evening", "In the morning", "Abundantly", "And Glorified is"],
+    "correctIndonesian": "dan petang",
+    "optionsIndonesian": ["dan petang", "pada waktu pagi", "sebanyak-banyaknya", "dan Mahasuci"],
+    
+    
+    "dataType": "dua",
+    "duaName": "iftia"
+  },
   {
     "arabicText": "إِنِّي",
     "indonesianText": "Sesungguhnya aku",
     "audioUrl": null,
-    "correctIndonesian": "Sesungguhnya aku",
-    "optionsIndonesian": ["Sesungguhnya aku", "menghadap", "wajahku", "orang-orang musyrik"],
     "correctArabic": "إِنِّي",
-    "optionsArabic": ["إِنِّي", "وَجَّهْتُ", "وَجْهِيَ", "الْمُشْرِكِينَ"],
+    "optionsArabic": ["إِنِّي", "وَجَّهْتُ", "الْمُشْرِكِينَ", "السَّمٰوَاتِ"],
+    "correctEnglish": "Verily I",
+    "optionsEnglish": ["Verily I", "I turn (my face)", "The idolaters", "The heavens"],
+    "correctIndonesian": "Sesungguhnya aku",
+    "optionsIndonesian": ["Sesungguhnya aku", "menghadapkan", "orang-orang musyrik", "langit"],
+    
+    
     "dataType": "dua",
-    "duaName": "iftia-2",
-    "correctEnglish": "Sesungguhnya aku",
-    "optionsEnglish": ["Sesungguhnya aku", "menghadap", "wajahku", "orang-orang musyrik"]
+    "duaName": "iftia-2"
   },
   {
     "arabicText": "وَجَّهْتُ",
-    "indonesianText": "menghadap",
+    "indonesianText": "menghadapkan",
     "audioUrl": null,
-    "correctIndonesian": "menghadap",
-    "optionsIndonesian": ["Sesungguhnya aku", "menghadap", "wajahku", "orang-orang musyrik"],
     "correctArabic": "وَجَّهْتُ",
-    "optionsArabic": ["إِنِّي", "وَجَّهْتُ", "وَجْهِيَ", "الْمُشْرِكِينَ"],
+    "optionsArabic": ["وَجَّهْتُ", "فَطَرَ", "وَمَا", "وَالْأَرْضَ"],
+    "correctEnglish": "I turn (my face)",
+    "optionsEnglish": ["I turn (my face)", "Created", "And not", "And the earth"],
+    "correctIndonesian": "menghadapkan",
+    "optionsIndonesian": ["menghadapkan", "menciptakan", "dan tidak", "dan bumi"],
+    
+    
     "dataType": "dua",
-    "duaName": "iftia-2",
-    "correctEnglish": "menghadap",
-    "optionsEnglish": ["Sesungguhnya aku", "menghadap", "wajahku", "orang-orang musyrik"]
+    "duaName": "iftia-2"
   },
   {
-    "arabicText": "وَجْهِيَ",
-    "indonesianText": "wajahku",
+    "arabicText": "السَّمٰوَاتِ",
+    "indonesianText": "langit",
     "audioUrl": null,
-    "correctIndonesian": "wajahku",
-    "optionsIndonesian": ["Sesungguhnya aku", "menghadap", "wajahku", "orang-orang musyrik"],
-    "correctArabic": "وَجْهِيَ",
-    "optionsArabic": ["إِنِّي", "وَجَّهْتُ", "وَجْهِيَ", "الْمُشْرِكِينَ"],
+    "correctArabic": "السَّمٰوَاتِ",
+    "optionsArabic": ["السَّمٰوَاتِ", "وَجْهِيَ", "وَالْأَرْضَ", "إِنِّي"],
+    "correctEnglish": "The heavens",
+    "optionsEnglish": ["The heavens", "My face", "And the earth", "Verily I"],
+    "correctIndonesian": "langit",
+    "optionsIndonesian": ["langit", "wajahku", "dan bumi", "Sesungguhnya aku"],
+    
+    
     "dataType": "dua",
-    "duaName": "iftia-2",
-    "correctEnglish": "wajahku",
-    "optionsEnglish": ["Sesungguhnya aku", "menghadap", "wajahku", "orang-orang musyrik"]
+    "duaName": "iftia-2"
   },
   {
-    "arabicText": "لِلَّذِي",
-    "indonesianText": "kepada yang",
+    "arabicText": "حَنِيفًا",
+    "indonesianText": "dengan lurus",
     "audioUrl": null,
-    "correctIndonesian": "kepada yang",
-    "optionsIndonesian": ["kepada yang", "menciptakan", "langit", "dan bumi"],
-    "correctArabic": "لِلَّذِي",
-    "optionsArabic": ["لِلَّذِي", "فَطَرَ", "السَّمٰوَاتِ", "وَالْأَرْضَ"],
+    "correctArabic": "حَنِيفًا",
+    "optionsArabic": ["حَنِيفًا", "أَنَا", "مِنَ", "فَطَرَ"],
+    "correctEnglish": "Uprightly/Sincerely",
+    "optionsEnglish": ["Uprightly/Sincerely", "I", "Included in", "Created"],
+    "correctIndonesian": "dengan lurus",
+    "optionsIndonesian": ["dengan lurus", "aku", "termasuk", "menciptakan"],
+    
+    
     "dataType": "dua",
-    "duaName": "iftia-2",
-    "correctEnglish": "kepada yang",
-    "optionsEnglish": ["kepada yang", "menciptakan", "langit", "dan bumi"]
+    "duaName": "iftia-2"
   },
   {
-    "arabicText": "فَطَرَ",
-    "indonesianText": "menciptakan",
+    "arabicText": "الْمُشْرِكِينَ",
+    "indonesianText": "orang-orang musyrik",
     "audioUrl": null,
-    "correctIndonesian": "menciptakan",
-    "optionsIndonesian": ["kepada yang", "menciptakan", "langit", "dan bumi"],
-    "correctArabic": "فَطَرَ",
-    "optionsArabic": ["لِلَّذِي", "فَطَرَ", "السَّمٰوَاتِ", "وَالْأَرْضَ"],
+    "correctArabic": "الْمُشْرِكِينَ",
+    "optionsArabic": ["الْمُشْرِكِينَ", "وَمَا", "أَنَا", "وَجْهِيَ"],
+    "correctEnglish": "The idolaters/polytheists",
+    "optionsEnglish": ["The idolaters/polytheists", "And not", "I", "My face"],
+    "correctIndonesian": "orang-orang musyrik",
+    "optionsIndonesian": ["orang-orang musyrik", "dan tidak", "aku", "wajahku"],
+    
+    
     "dataType": "dua",
-    "duaName": "iftia-2",
-    "correctEnglish": "menciptakan",
-    "optionsEnglish": ["kepada yang", "menciptakan", "langit", "dan bumi"]
+    "duaName": "iftia-2"
   },
-
   {
     "arabicText": "إِنَّ",
     "indonesianText": "Sesungguhnya",
     "audioUrl": null,
-    "correctIndonesian": "Sesungguhnya",
-    "optionsIndonesian": ["Sesungguhnya", "shalatku", "ibadahku", "hidupku"],
     "correctArabic": "إِنَّ",
-    "optionsArabic": ["إِنَّ", "صَلَاتِي", "وَنُسُكِي", "وَمَحْيَايَ"],
+    "optionsArabic": ["إِنَّ", "صَلَاتِي", "لِلّٰهِ", "رَبِّ"],
+    "correctEnglish": "Verily",
+    "optionsEnglish": ["Verily", "My prayer", "Only for Allah", "Lord"],
+    "correctIndonesian": "Sesungguhnya",
+    "optionsIndonesian": ["Sesungguhnya", "shalatku", "hanya untuk Allah", "Tuhan"],
+    
+    
     "dataType": "dua",
-    "duaName": "iftia-3",
-    "correctEnglish": "Sesungguhnya",
-    "optionsEnglish": ["Sesungguhnya", "shalatku", "ibadahku", "hidupku"]
-  },
-  {
-    "arabicText": "صَلَاتِي",
-    "indonesianText": "shalatku",
-    "audioUrl": null,
-    "correctIndonesian": "shalatku",
-    "optionsIndonesian": ["Sesungguhnya", "shalatku", "ibadahku", "hidupku"],
-    "correctArabic": "صَلَاتِي",
-    "optionsArabic": ["إِنَّ", "صَلَاتِي", "وَنُسُكِي", "وَمَحْيَايَ"],
-    "dataType": "dua",
-    "duaName": "iftia-3",
-    "correctEnglish": "shalatku",
-    "optionsEnglish": ["Sesungguhnya", "shalatku", "ibadahku", "hidupku"]
+    "duaName": "iftia-3"
   },
   {
     "arabicText": "وَنُسُكِي",
     "indonesianText": "ibadahku",
     "audioUrl": null,
-    "correctIndonesian": "ibadahku",
-    "optionsIndonesian": ["Sesungguhnya", "shalatku", "ibadahku", "hidupku"],
     "correctArabic": "وَنُسُكِي",
-    "optionsArabic": ["إِنَّ", "صَلَاتِي", "وَنُسُكِي", "وَمَحْيَايَ"],
+    "optionsArabic": ["وَنُسُكِي", "وَمَحْيَايَ", "صَلَاتِي", "شَرِيكَ"],
+    "correctEnglish": "And my acts of worship",
+    "optionsEnglish": ["And my acts of worship", "And my life", "My prayer", "Partner"],
+    "correctIndonesian": "ibadahku",
+    "optionsIndonesian": ["ibadahku", "hidupku", "shalatku", "sekutu"],
+    
+    
     "dataType": "dua",
-    "duaName": "iftia-3",
-    "correctEnglish": "ibadahku",
-    "optionsEnglish": ["Sesungguhnya", "shalatku", "ibadahku", "hidupku"]
-  },
-  {
-    "arabicText": "وَمَحْيَايَ",
-    "indonesianText": "hidupku",
-    "audioUrl": null,
-    "correctIndonesian": "hidupku",
-    "optionsIndonesian": ["Sesungguhnya", "shalatku", "ibadahku", "hidupku"],
-    "correctArabic": "وَمَحْيَايَ",
-    "optionsArabic": ["إِنَّ", "صَلَاتِي", "وَنُسُكِي", "وَمَحْيَايَ"],
-    "dataType": "dua",
-    "duaName": "iftia-3",
-    "correctEnglish": "hidupku",
-    "optionsEnglish": ["Sesungguhnya", "shalatku", "ibadahku", "hidupku"]
+    "duaName": "iftia-3"
   },
   {
     "arabicText": "وَمَمَاتِي",
     "indonesianText": "matiku",
     "audioUrl": null,
-    "correctIndonesian": "matiku",
-    "optionsIndonesian": ["matiku", "hidupku", "shalatku", "ibadahku"],
     "correctArabic": "وَمَمَاتِي",
-    "optionsArabic": ["وَمَمَاتِي", "وَمَحْيَايَ", "صَلَاتِي", "وَنُسُكِي"],
+    "optionsArabic": ["وَمَمَاتِي", "وَمَحْيَايَ", "رَبِّ", "الْعَالَمِينَ"],
+    "correctEnglish": "And my death",
+    "optionsEnglish": ["And my death", "And my life", "Lord", "The worlds"],
+    "correctIndonesian": "matiku",
+    "optionsIndonesian": ["matiku", "hidupku", "Tuhan", "semesta alam"],
+    
+    
     "dataType": "dua",
-    "duaName": "iftia-3",
-    "correctEnglish": "matiku",
-    "optionsEnglish": ["matiku", "hidupku", "shalatku", "ibadahku"]
-  },
-
-  {
-    "arabicText": "سُبْحَانَ",
-    "indonesianText": "Mahasuci",
-    "audioUrl": null,
-    "correctIndonesian": "Mahasuci",
-    "optionsIndonesian": ["Mahasuci", "Tuhanku", "Yang Maha Agung", "dan segala puji"],
-    "correctArabic": "سُبْحَانَ",
-    "optionsArabic": ["سُبْحَانَ", "رَبِّيَ", "الْعَظِيمِ", "وَبِحَمْدِهِ"],
-    "dataType": "dua",
-    "duaName": "ruku",
-    "correctEnglish": "Mahasuci",
-    "optionsEnglish": ["Mahasuci", "Tuhanku", "Yang Maha Agung", "dan segala puji"]
+    "duaName": "iftia-3"
   },
   {
-    "arabicText": "رَبِّيَ",
-    "indonesianText": "Tuhanku",
+    "arabicText": "الْعَالَمِينَ",
+    "indonesianText": "semesta alam",
     "audioUrl": null,
-    "correctIndonesian": "Tuhanku",
-    "optionsIndonesian": ["Mahasuci", "Tuhanku", "Yang Maha Agung", "dan segala puji"],
-    "correctArabic": "رَبِّيَ",
-    "optionsArabic": ["سُبْحَانَ", "رَبِّيَ", "الْعَظِيمِ", "وَبِحَمْدِهِ"],
+    "correctArabic": "الْعَالَمِينَ",
+    "optionsArabic": ["الْعَالَمِينَ", "لِلّٰهِ", "شَرِيكَ", "أُمِرْتُ"],
+    "correctEnglish": "The worlds",
+    "optionsEnglish": ["The worlds", "Only for Allah", "Partner", "I am commanded"],
+    "correctIndonesian": "semesta alam",
+    "optionsIndonesian": ["semesta alam", "hanya untuk Allah", "sekutu", "aku diperintahkan"],
+    
+    
     "dataType": "dua",
-    "duaName": "ruku",
-    "correctEnglish": "Tuhanku",
-    "optionsEnglish": ["Mahasuci", "Tuhanku", "Yang Maha Agung", "dan segala puji"]
+    "duaName": "iftia-3"
   },
   {
-    "arabicText": "الْعَظِيمِ",
-    "indonesianText": "Yang Maha Agung",
+    "arabicText": "الْمُسْلِمِينَ",
+    "indonesianText": "orang-orang Muslim",
     "audioUrl": null,
-    "correctIndonesian": "Yang Maha Agung",
-    "optionsIndonesian": ["Mahasuci", "Tuhanku", "Yang Maha Agung", "dan segala puji"],
-    "correctArabic": "الْعَظِيمِ",
-    "optionsArabic": ["سُبْحَانَ", "رَبِّيَ", "الْعَظِيمِ", "وَبِحَمْدِهِ"],
+    "correctArabic": "الْمُسْلِمِينَ",
+    "optionsArabic": ["الْمُسْلِمِينَ", "وَأَنَا", "أُمِرْتُ", "وَنُسُكِي"],
+    "correctEnglish": "The Muslims",
+    "optionsEnglish": ["The Muslims", "And I am", "I am commanded", "And my acts of worship"],
+    "correctIndonesian": "orang-orang Muslim",
+    "optionsIndonesian": ["orang-orang Muslim", "dan aku", "aku diperintahkan", "ibadahku"],
+    
+    
     "dataType": "dua",
-    "duaName": "ruku",
-    "correctEnglish": "Yang Maha Agung",
-    "optionsEnglish": ["Mahasuci", "Tuhanku", "Yang Maha Agung", "dan segala puji"]
-  },
-  {
-    "arabicText": "وَبِحَمْدِهِ",
-    "indonesianText": "dan segala puji bagi-Nya",
-    "audioUrl": null,
-    "correctIndonesian": "dan segala puji bagi-Nya",
-    "optionsIndonesian": ["Mahasuci", "Tuhanku", "Yang Maha Agung", "dan segala puji bagi-Nya"],
-    "correctArabic": "وَبِحَمْدِهِ",
-    "optionsArabic": ["سُبْحَانَ", "رَبِّيَ", "الْعَظِيمِ", "وَبِحَمْدِهِ"],
-    "dataType": "dua",
-    "duaName": "ruku",
-    "correctEnglish": "dan segala puji bagi-Nya",
-    "optionsEnglish": ["Mahasuci", "Tuhanku", "Yang Maha Agung", "dan segala puji bagi-Nya"]
-  },
-
-  {
-    "arabicText": "سَمِعَ",
-    "indonesianText": "Allah mendengar",
-    "audioUrl": null,
-    "correctIndonesian": "Allah mendengar",
-    "optionsIndonesian": ["Allah mendengar", "Allah", "siapa saja yang", "memuji-Nya"],
-    "correctArabic": "سَمِعَ",
-    "optionsArabic": ["سَمِعَ", "اللّٰهُ", "لِمَنْ", "حَمِدَهُ"],
-    "dataType": "dua",
-    "duaName": "itidal",
-    "correctEnglish": "Allah mendengar",
-    "optionsEnglish": ["Allah mendengar", "Allah", "siapa saja yang", "memuji-Nya"]
-  },
-  {
-    "arabicText": "اللّٰهُ",
-    "indonesianText": "Allah",
-    "audioUrl": null,
-    "correctIndonesian": "Allah",
-    "optionsIndonesian": ["Allah mendengar", "Allah", "siapa saja yang", "memuji-Nya"],
-    "correctArabic": "اللّٰهُ",
-    "optionsArabic": ["سَمِعَ", "اللّٰهُ", "لِمَنْ", "حَمِدَهُ"],
-    "dataType": "dua",
-    "duaName": "itidal",
-    "correctEnglish": "Allah",
-    "optionsEnglish": ["Allah mendengar", "Allah", "siapa saja yang", "memuji-Nya"]
-  },
-  {
-    "arabicText": "لِمَنْ",
-    "indonesianText": "siapa saja yang",
-    "audioUrl": null,
-    "correctIndonesian": "siapa saja yang",
-    "optionsIndonesian": ["Allah mendengar", "Allah", "siapa saja yang", "memuji-Nya"],
-    "correctArabic": "لِمَنْ",
-    "optionsArabic": ["سَمِعَ", "اللّٰهُ", "لِمَنْ", "حَمِدَهُ"],
-    "dataType": "dua",
-    "duaName": "itidal",
-    "correctEnglish": "siapa saja yang",
-    "optionsEnglish": ["Allah mendengar", "Allah", "siapa saja yang", "memuji-Nya"]
-  },
-  {
-    "arabicText": "حَمِدَهُ",
-    "indonesianText": "memuji-Nya",
-    "audioUrl": null,
-    "correctIndonesian": "memuji-Nya",
-    "optionsIndonesian": ["Allah mendengar", "Allah", "siapa saja yang", "memuji-Nya"],
-    "correctArabic": "حَمِدَهُ",
-    "optionsArabic": ["سَمِعَ", "اللّٰهُ", "لِمَنْ", "حَمِدَهُ"],
-    "dataType": "dua",
-    "duaName": "itidal",
-    "correctEnglish": "memuji-Nya",
-    "optionsEnglish": ["Allah mendengar", "Allah", "siapa saja yang", "memuji-Nya"]
-  },
-  {
-    "arabicText": "رَبَّنَا",
-    "indonesianText": "Ya Tuhan kami",
-    "audioUrl": null,
-    "correctIndonesian": "Ya Tuhan kami",
-    "optionsIndonesian": ["Ya Tuhan kami", "bagi-Mu", "segala puji"],
-    "correctArabic": "رَبَّنَا",
-    "optionsArabic": ["رَبَّنَا", "لَكَ", "الْحَمْدُ"],
-    "dataType": "dua",
-    "duaName": "itidal",
-    "correctEnglish": "Ya Tuhan kami",
-    "optionsEnglish": ["Ya Tuhan kami", "bagi-Mu", "segala puji"]
+    "duaName": "iftia-3"
   }
 ,
   {
     "arabicText": "سُبْحَانَ",
     "indonesianText": "Mahasuci",
     "audioUrl": null,
-    "correctIndonesian": "Mahasuci",
-    "optionsIndonesian": ["Mahasuci", "Tuhanku", "Yang Maha Tinggi", "dan segala puji bagi-Nya"],
     "correctArabic": "سُبْحَانَ",
-    "optionsArabic": ["سُبْحَانَ", "رَبِّيَ", "الْأَعْلَى", "وَبِحَمْدِهِ"],
+    "optionsArabic": ["سُبْحَانَ", "رَبِّيَ", "الْعَظِيمِ", "وَبِحَمْدِهِ"],
+    "correctEnglish": "Glorified is",
+    "optionsEnglish": ["Glorified is", "My Lord", "The Magnificent", "And with His praise"],
+    "correctIndonesian": "Mahasuci",
+    "optionsIndonesian": ["Mahasuci", "Tuhanku", "Yang Maha Agung", "dan segala puji bagi-Nya"],
+    
+    
     "dataType": "dua",
-    "duaName": "sujud",
-    "correctEnglish": "Mahasuci",
-    "optionsEnglish": ["Mahasuci", "Tuhanku", "Yang Maha Tinggi", "dan segala puji bagi-Nya"]
+    "duaName": "ruku"
   },
   {
     "arabicText": "رَبِّيَ",
     "indonesianText": "Tuhanku",
     "audioUrl": null,
-    "correctIndonesian": "Tuhanku",
-    "optionsIndonesian": ["Mahasuci", "Tuhanku", "Yang Maha Tinggi", "dan segala puji bagi-Nya"],
     "correctArabic": "رَبِّيَ",
-    "optionsArabic": ["سُبْحَانَ", "رَبِّيَ", "الْأَعْلَى", "وَبِحَمْدِهِ"],
+    "optionsArabic": ["رَبِّيَ", "الْعَظِيمِ", "سُبْحَانَ", "وَبِحَمْدِهِ"],
+    "correctEnglish": "My Lord",
+    "optionsEnglish": ["My Lord", "The Magnificent", "Glorified is", "And with His praise"],
+    "correctIndonesian": "Tuhanku",
+    "optionsIndonesian": ["Tuhanku", "Yang Maha Agung", "Mahasuci", "dan segala puji bagi-Nya"],
+    
+    
     "dataType": "dua",
-    "duaName": "sujud",
-    "correctEnglish": "Tuhanku",
-    "optionsEnglish": ["Mahasuci", "Tuhanku", "Yang Maha Tinggi", "dan segala puji bagi-Nya"]
+    "duaName": "ruku"
   },
   {
-    "arabicText": "الْأَعْلَى",
-    "indonesianText": "Yang Maha Tinggi",
+    "arabicText": "الْعَظِيمِ",
+    "indonesianText": "Yang Maha Agung",
     "audioUrl": null,
-    "correctIndonesian": "Yang Maha Tinggi",
-    "optionsIndonesian": ["Mahasuci", "Tuhanku", "Yang Maha Tinggi", "dan segala puji bagi-Nya"],
-    "correctArabic": "الْأَعْلَى",
-    "optionsArabic": ["سُبْحَانَ", "رَبِّيَ", "الْأَعْلَى", "وَبِحَمْدِهِ"],
+    "correctArabic": "الْعَظِيمِ",
+    "optionsArabic": ["الْعَظِيمِ", "سُبْحَانَ", "رَبِّيَ", "وَبِحَمْدِهِ"],
+    "correctEnglish": "The Magnificent",
+    "optionsEnglish": ["The Magnificent", "Glorified is", "My Lord", "And with His praise"],
+    "correctIndonesian": "Yang Maha Agung",
+    "optionsIndonesian": ["Yang Maha Agung", "Mahasuci", "Tuhanku", "dan segala puji bagi-Nya"],
+    
+    
     "dataType": "dua",
-    "duaName": "sujud",
-    "correctEnglish": "Yang Maha Tinggi",
-    "optionsEnglish": ["Mahasuci", "Tuhanku", "Yang Maha Tinggi", "dan segala puji bagi-Nya"]
+    "duaName": "ruku"
   },
   {
     "arabicText": "وَبِحَمْدِهِ",
     "indonesianText": "dan segala puji bagi-Nya",
     "audioUrl": null,
-    "correctIndonesian": "dan segala puji bagi-Nya",
-    "optionsIndonesian": ["Mahasuci", "Tuhanku", "Yang Maha Tinggi", "dan segala puji bagi-Nya"],
     "correctArabic": "وَبِحَمْدِهِ",
-    "optionsArabic": ["سُبْحَانَ", "رَبِّيَ", "الْأَعْلَى", "وَبِحَمْدِهِ"],
+    "optionsArabic": ["وَبِحَمْدِهِ", "سُبْحَانَ", "رَبِّيَ", "الْعَظِيمِ"],
+    "correctEnglish": "And with His praise",
+    "optionsEnglish": ["And with His praise", "Glorified is", "My Lord", "The Magnificent"],
+    "correctIndonesian": "dan segala puji bagi-Nya",
+    "optionsIndonesian": ["dan segala puji bagi-Nya", "Mahasuci", "Tuhanku", "Yang Maha Agung"],
+    
+    
     "dataType": "dua",
-    "duaName": "sujud",
-    "correctEnglish": "dan segala puji bagi-Nya",
-    "optionsEnglish": ["Mahasuci", "Tuhanku", "Yang Maha Tinggi", "dan segala puji bagi-Nya"]
+    "duaName": "ruku"
   },
   {
-    "arabicText": "اللّٰهُ",
-    "indonesianText": "Allah",
+    "arabicText": "سُبْحَانَ",
+    "indonesianText": "Mahasuci",
     "audioUrl": null,
-    "correctIndonesian": "Allah",
-    "optionsIndonesian": ["Allah", "Mahasuci", "Tuhanku", "Yang Maha Tinggi"],
-    "correctArabic": "اللّٰهُ",
-    "optionsArabic": ["اللّٰهُ", "سُبْحَانَ", "رَبِّيَ", "الْأَعْلَى"],
+    "correctArabic": "سُبْحَانَ",
+    "optionsArabic": ["سُبْحَانَ", "الْعَظِيمِ", "رَبِّيَ", "وَبِحَمْدِهِ"],
+    "correctEnglish": "Glorified is",
+    "optionsEnglish": ["Glorified is", "The Magnificent", "My Lord", "And with His praise"],
+    "correctIndonesian": "Mahasuci",
+    "optionsIndonesian": ["Mahasuci", "Yang Maha Agung", "Tuhanku", "dan segala puji bagi-Nya"],
+    
+    
     "dataType": "dua",
-    "duaName": "sujud",
-    "correctEnglish": "Allah",
-    "optionsEnglish": ["Allah", "Mahasuci", "Tuhanku", "Yang Maha Tinggi"]
+    "duaName": "ruku"
+  }
+,
+  {
+    "arabicText": "سَمِعَ",
+    "indonesianText": "Allah mendengar",
+    "audioUrl": null,
+    "correctArabic": "سَمِعَ",
+    "optionsArabic": ["سَمِعَ", "اللّٰهُ", "حَمِدَهُ", "رَبَّنَا"],
+    "correctEnglish": "Allah hears",
+    "optionsEnglish": ["Allah hears", "Allah", "Praised Him", "Our Lord"],
+    "correctIndonesian": "Allah mendengar",
+    "optionsIndonesian": ["Allah mendengar", "Allah", "memuji-Nya", "Ya Tuhan kami"],
+    
+    
+    "dataType": "dua",
+    "duaName": "itidal"
   },
+  {
+    "arabicText": "لِمَنْ",
+    "indonesianText": "siapa saja yang",
+    "audioUrl": null,
+    "correctArabic": "لِمَنْ",
+    "optionsArabic": ["لِمَنْ", "حَمِدَهُ", "سَمِعَ", "لَكَ"],
+    "correctEnglish": "Whoever",
+    "optionsEnglish": ["Whoever", "Praised Him", "Allah hears", "For You"],
+    "correctIndonesian": "siapa saja yang",
+    "optionsIndonesian": ["siapa saja yang", "memuji-Nya", "Allah mendengar", "bagi-Mu"],
+    
+    
+    "dataType": "dua",
+    "duaName": "itidal"
+  },
+  {
+    "arabicText": "حَمِدَهُ",
+    "indonesianText": "memuji-Nya",
+    "audioUrl": null,
+    "correctArabic": "حَمِدَهُ",
+    "optionsArabic": ["حَمِدَهُ", "الْحَمْدُ", "اللّٰهُ", "رَبَّنَا"],
+    "correctEnglish": "Praised Him",
+    "optionsEnglish": ["Praised Him", "All praise", "Allah", "Our Lord"],
+    "correctIndonesian": "memuji-Nya",
+    "optionsIndonesian": ["memuji-Nya", "segala puji", "Allah", "Ya Tuhan kami"],
+    
+    
+    "dataType": "dua",
+    "duaName": "itidal"
+  },
+  {
+    "arabicText": "رَبَّنَا",
+    "indonesianText": "Ya Tuhan kami",
+    "audioUrl": null,
+    "correctArabic": "رَبَّنَا",
+    "optionsArabic": ["رَبَّنَا", "لَكَ", "الْحَمْدُ", "لِمَنْ"],
+    "correctEnglish": "Our Lord",
+    "optionsEnglish": ["Our Lord", "For You", "All praise", "Whoever"],
+    "correctIndonesian": "Ya Tuhan kami",
+    "optionsIndonesian": ["Ya Tuhan kami", "bagi-Mu", "segala puji", "siapa saja yang"],
+    
+    
+    "dataType": "dua",
+    "duaName": "itidal"
+  },
+  {
+    "arabicText": "الْحَمْدُ",
+    "indonesianText": "segala puji",
+    "audioUrl": null,
+    "correctArabic": "الْحَمْدُ",
+    "optionsArabic": ["الْحَمْدُ", "لَكَ", "سَمِعَ", "حَمِدَهُ"],
+    "correctEnglish": "All praise",
+    "optionsEnglish": ["All praise", "For You", "Allah hears", "Praised Him"],
+    "correctIndonesian": "segala puji",
+    "optionsIndonesian": ["segala puji", "bagi-Mu", "Allah mendengar", "memuji-Nya"],
+    
+    
+    "dataType": "dua",
+    "duaName": "itidal"
+  },
+  {
+    "arabicText": "سُبْحَانَ",
+    "indonesianText": "Mahasuci",
+    "audioUrl": null,
+    "correctArabic": "سُبْحَانَ",
+    "optionsArabic": ["سُبْحَانَ", "رَبِّيَ", "الْأَعْلَى", "وَبِحَمْدِهِ"],
+    "correctEnglish": "Glorified is",
+    "optionsEnglish": ["Glorified is", "My Lord", "The Most High", "And with His praise"],
+    "correctIndonesian": "Mahasuci",
+    "optionsIndonesian": ["Mahasuci", "Tuhanku", "Yang Maha Tinggi", "dan segala puji bagi-Nya"],
+    
+    
+    "dataType": "dua",
+    "duaName": "sujud"
+  },
+  {
+    "arabicText": "رَبِّيَ",
+    "indonesianText": "Tuhanku",
+    "audioUrl": null,
+    "correctArabic": "رَبِّيَ",
+    "optionsArabic": ["رَبِّيَ", "الْأَعْلَى", "سُبْحَانَ", "وَبِحَمْدِهِ"],
+    "correctEnglish": "My Lord",
+    "optionsEnglish": ["My Lord", "The Most High", "Glorified is", "And with His praise"],
+    "correctIndonesian": "Tuhanku",
+    "optionsIndonesian": ["Tuhanku", "Yang Maha Tinggi", "Mahasuci", "dan segala puji bagi-Nya"],
+    
+    
+    "dataType": "dua",
+    "duaName": "sujud"
+  },
+  {
+    "arabicText": "الْأَعْلَى",
+    "indonesianText": "Yang Maha Tinggi",
+    "audioUrl": null,
+    "correctArabic": "الْأَعْلَى",
+    "optionsArabic": ["الْأَعْلَى", "سُبْحَانَ", "رَبِّيَ", "وَبِحَمْدِهِ"],
+    "correctEnglish": "The Most High",
+    "optionsEnglish": ["The Most High", "Glorified is", "My Lord", "And with His praise"],
+    "correctIndonesian": "Yang Maha Tinggi",
+    "optionsIndonesian": ["Yang Maha Tinggi", "Mahasuci", "Tuhanku", "dan segala puji bagi-Nya"],
+    
+    
+    "dataType": "dua",
+    "duaName": "sujud"
+  },
+  {
+    "arabicText": "وَبِحَمْدِهِ",
+    "indonesianText": "dan segala puji bagi-Nya",
+    "audioUrl": null,
+    "correctArabic": "وَبِحَمْدِهِ",
+    "optionsArabic": ["وَبِحَمْدِهِ", "سُبْحَانَ", "رَبِّيَ", "الْأَعْلَى"],
+    "correctEnglish": "And with His praise",
+    "optionsEnglish": ["And with His praise", "Glorified is", "My Lord", "The Most High"],
+    "correctIndonesian": "dan segala puji bagi-Nya",
+    "optionsIndonesian": ["dan segala puji bagi-Nya", "Mahasuci", "Tuhanku", "Yang Maha Tinggi"],
+    
+    
+    "dataType": "dua",
+    "duaName": "sujud"
+  },
+  {
+    "arabicText": "سُبْحَانَ",
+    "indonesianText": "Mahasuci",
+    "audioUrl": null,
+    "correctArabic": "سُبْحَانَ",
+    "optionsArabic": ["سُبْحَانَ", "الْأَعْلَى", "رَبِّيَ", "وَبِحَمْدِهِ"],
+    "correctEnglish": "Glorified is",
+    "optionsEnglish": ["Glorified is", "The Most High", "My Lord", "And with His praise"],
+    "correctIndonesian": "Mahasuci",
+    "optionsIndonesian": ["Mahasuci", "Yang Maha Tinggi", "Tuhanku", "dan segala puji bagi-Nya"],
+    
+    
+    "dataType": "dua",
+    "duaName": "sujud"
+  }
+,
   {
     "arabicText": "رَبِّ",
     "indonesianText": "Wahai Tuhanku",
     "audioUrl": null,
-    "correctIndonesian": "Wahai Tuhanku",
-    "optionsIndonesian": ["Wahai Tuhanku", "ampunilah", "aku", "dan rahmatilah aku"],
     "correctArabic": "رَبِّ",
     "optionsArabic": ["رَبِّ", "اغْفِرْ", "لِي", "وَارْحَمْنِي"],
+    "correctEnglish": "My Lord",
+    "optionsEnglish": ["My Lord", "Forgive", "Me", "And have mercy on me"],
+    "correctIndonesian": "Wahai Tuhanku",
+    "optionsIndonesian": ["Wahai Tuhanku", "ampunilah", "aku", "dan rahmatilah aku"],
+    
+    
     "dataType": "dua",
-    "duaName": "duduk_antar_sujud",
-    "correctEnglish": "Wahai Tuhanku",
-    "optionsEnglish": ["Wahai Tuhanku", "ampunilah", "aku", "dan rahmatilah aku"]
+    "duaName": "duduk_antar_sujud"
   },
   {
     "arabicText": "اغْفِرْ",
     "indonesianText": "ampunilah",
     "audioUrl": null,
-    "correctIndonesian": "ampunilah",
-    "optionsIndonesian": ["Wahai Tuhanku", "ampunilah", "aku", "dan rahmatilah aku"],
     "correctArabic": "اغْفِرْ",
-    "optionsArabic": ["رَبِّ", "اغْفِرْ", "لِي", "وَارْحَمْنِي"],
+    "optionsArabic": ["اغْفِرْ", "لِي", "وَاجْبُرْنِي", "وَارْزُقْنِي"],
+    "correctEnglish": "Forgive",
+    "optionsEnglish": ["Forgive", "Me", "And repair my shortcomings", "And grant me provision"],
+    "correctIndonesian": "ampunilah",
+    "optionsIndonesian": ["ampunilah", "aku", "dan perbaikilah diriku", "dan berilah aku rezeki"],
+    
+    
     "dataType": "dua",
-    "duaName": "duduk_antar_sujud",
-    "correctEnglish": "ampunilah",
-    "optionsEnglish": ["Wahai Tuhanku", "ampunilah", "aku", "dan rahmatilah aku"]
-  },
-  {
-    "arabicText": "لِي",
-    "indonesianText": "aku",
-    "audioUrl": null,
-    "correctIndonesian": "aku",
-    "optionsIndonesian": ["Wahai Tuhanku", "ampunilah", "aku", "dan rahmatilah aku"],
-    "correctArabic": "لِي",
-    "optionsArabic": ["رَبِّ", "اغْفِرْ", "لِي", "وَارْحَمْنِي"],
-    "dataType": "dua",
-    "duaName": "duduk_antar_sujud",
-    "correctEnglish": "aku",
-    "optionsEnglish": ["Wahai Tuhanku", "ampunilah", "aku", "dan rahmatilah aku"]
+    "duaName": "duduk_antar_sujud"
   },
   {
     "arabicText": "وَارْحَمْنِي",
     "indonesianText": "dan rahmatilah aku",
     "audioUrl": null,
-    "correctIndonesian": "dan rahmatilah aku",
-    "optionsIndonesian": ["Wahai Tuhanku", "ampunilah", "aku", "dan rahmatilah aku"],
     "correctArabic": "وَارْحَمْنِي",
-    "optionsArabic": ["رَبِّ", "اغْفِرْ", "لِي", "وَارْحَمْنِي"],
+    "optionsArabic": ["وَارْحَمْنِي", "وَاجْبُرْنِي", "رَبِّ", "وَعَافِنِي"],
+    "correctEnglish": "And have mercy on me",
+    "optionsEnglish": ["And have mercy on me", "And repair my shortcomings", "My Lord", "And grant me health"],
+    "correctIndonesian": "dan rahmatilah aku",
+    "optionsIndonesian": ["dan rahmatilah aku", "dan perbaikilah diriku", "Wahai Tuhanku", "dan berilah aku kesehatan"],
+    
+    
     "dataType": "dua",
-    "duaName": "duduk_antar_sujud",
-    "correctEnglish": "dan rahmatilah aku",
-    "optionsEnglish": ["Wahai Tuhanku", "ampunilah", "aku", "dan rahmatilah aku"]
+    "duaName": "duduk_antar_sujud"
   },
   {
-    "arabicText": "وَاجْبُرْنِي",
-    "indonesianText": "dan perbaikilah diriku",
+    "arabicText": "وَارْفَعْنِي",
+    "indonesianText": "dan angkatlah derajatku",
     "audioUrl": null,
-    "correctIndonesian": "dan perbaikilah diriku",
-    "optionsIndonesian": ["dan perbaikilah diriku", "dan angkatlah derajatku", "dan berilah aku rezeki", "dan tunjukilah aku"],
-    "correctArabic": "وَاجْبُرْنِي",
-    "optionsArabic": ["وَاجْبُرْنِي", "وَارْفَعْنِي", "وَارْزُقْنِي", "وَاهْدِنِي"],
+    "correctArabic": "وَارْفَعْنِي",
+    "optionsArabic": ["وَارْفَعْنِي", "وَارْزُقْنِي", "وَاهْدِنِي", "وَاعْفُ عَنِّي"],
+    "correctEnglish": "And raise my status",
+    "optionsEnglish": ["And raise my status", "And grant me provision", "And guide me", "And pardon me"],
+    "correctIndonesian": "dan angkatlah derajatku",
+    "optionsIndonesian": ["dan angkatlah derajatku", "dan berilah aku rezeki", "dan tunjukilah aku", "dan maafkanlah aku"],
+    
+    
     "dataType": "dua",
-    "duaName": "duduk_antar_sujud",
-    "correctEnglish": "dan perbaikilah diriku",
-    "optionsEnglish": ["dan perbaikilah diriku", "dan angkatlah derajatku", "dan berilah aku rezeki", "dan tunjukilah aku"]
+    "duaName": "duduk_antar_sujud"
   },
   {
-    "arabicText": "التحيات المباركات الصلوات الطيبات لله",
-    "indonesianText": "Segala penghormatan, keberkahan, shalawat dan kebaikan adalah milik Allah.",
+    "arabicText": "وَعَافِنِي",
+    "indonesianText": "dan berilah aku kesehatan",
     "audioUrl": null,
-    "correctIndonesian": "Segala penghormatan, keberkahan, shalawat dan kebaikan adalah milik Allah.",
-    "optionsIndonesian": [
-      "Segala penghormatan, keberkahan, shalawat dan kebaikan adalah milik Allah.",
-      "Semoga keselamatan, rahmat Allah, dan berkah-Nya tercurah atasmu, wahai Nabi.",
-      "Semoga keselamatan terlimpah kepada kami dan kepada semua hamba Allah yang saleh.",
-      "Ya Allah, limpahkanlah rahmat kepada Muhammad."
-    ],
-    "correctArabic": "التحيات المباركات الصلوات الطيبات لله",
-    "optionsArabic": [
-      "التحيات المباركات الصلوات الطيبات لله",
-      "السلام عليك أيها النبي ورحمة الله وبركاته",
-      "السلام علينا وعلى عباد الله الصالحين",
-      "اللهم صل على سيدنا محمد"
-    ],
+    "correctArabic": "وَعَافِنِي",
+    "optionsArabic": ["وَعَافِنِي", "وَاعْفُ عَنِّي", "رَبِّ", "وَارْزُقْنِي"],
+    "correctEnglish": "And grant me health",
+    "optionsEnglish": ["And grant me health", "And pardon me", "My Lord", "And grant me provision"],
+    "correctIndonesian": "dan berilah aku kesehatan",
+    "optionsIndonesian": ["dan berilah aku kesehatan", "dan maafkanlah aku", "Wahai Tuhanku", "dan berilah aku rezeki"],
+    
+    
     "dataType": "dua",
-    "duaName": "tasyahhud_part_1",
-    "correctEnglish": "All greetings, blessings, prayers, and good things belong to Allah.",
-    "optionsEnglish": [
-      "All greetings, blessings, prayers, and good things belong to Allah.",
-      "Peace be upon you, O Prophet, and Allah's mercy and blessings.",
-      "Peace be upon us and the righteous servants of Allah.",
-      "O Allah, bless Muhammad."
-    ]
+    "duaName": "duduk_antar_sujud"
+  }
+,
+  {
+    "arabicText": "التَّحِيَّاتُ",
+    "indonesianText": "Segala penghormatan",
+    "audioUrl": null,
+    "correctArabic": "التَّحِيَّاتُ",
+    "optionsArabic": ["التَّحِيَّاتُ", "المُبَارَكَاتُ", "الصَّالِحِينَ", "السَّلَامُ"],
+    "correctEnglish": "All compliments",
+    "optionsEnglish": ["All compliments", "The blessings", "The righteous", "Peace"],
+    "correctIndonesian": "Segala penghormatan",
+    "optionsIndonesian": ["Segala penghormatan", "Keberkahan", "Orang-orang saleh", "Keselamatan"],
+    
+    
+    "dataType": "dua",
+    "duaName": "tasyahhud_part_1"
   },
   {
-    "arabicText": "السلام عليك أيها النبي ورحمة الله وبركاته",
-    "indonesianText": "Semoga keselamatan, rahmat Allah, dan berkah-Nya tercurah atasmu, wahai Nabi.",
+    "arabicText": "المُبَارَكَاتُ",
+    "indonesianText": "Keberkahan",
     "audioUrl": null,
-    "correctIndonesian": "Semoga keselamatan, rahmat Allah, dan berkah-Nya tercurah atasmu, wahai Nabi.",
-    "optionsIndonesian": [
-      "Segala penghormatan, keberkahan, shalawat dan kebaikan adalah milik Allah.",
-      "Semoga keselamatan, rahmat Allah, dan berkah-Nya tercurah atasmu, wahai Nabi.",
-      "Semoga keselamatan terlimpah kepada kami dan kepada semua hamba Allah yang saleh.",
-      "Ya Allah, limpahkanlah rahmat kepada Muhammad."
-    ],
-    "correctArabic": "السلام عليك أيها النبي ورحمة الله وبركاته",
-    "optionsArabic": [
-      "التحيات المباركات الصلوات الطيبات لله",
-      "السلام عليك أيها النبي ورحمة الله وبركاته",
-      "السلام علينا وعلى عباد الله الصالحين",
-      "اللهم صل على سيدنا محمد"
-    ],
+    "correctArabic": "المُبَارَكَاتُ",
+    "optionsArabic": ["المُبَارَكَاتُ", "الصَّلَوَاتُ", "لِلَّهِ", "أَيُّهَا"],
+    "correctEnglish": "The blessings",
+    "optionsEnglish": ["The blessings", "The prayers", "For Allah", "O (you)"],
+    "correctIndonesian": "Keberkahan",
+    "optionsIndonesian": ["Keberkahan", "Shalawat", "Milik Allah", "Wahai"],
+    
+    
     "dataType": "dua",
-    "duaName": "tasyahhud_part_1",
-    "correctEnglish": "Peace be upon you, O Prophet, and Allah's mercy and blessings.",
-    "optionsEnglish": [
-      "All greetings, blessings, prayers, and good things belong to Allah.",
-      "Peace be upon you, O Prophet, and Allah's mercy and blessings.",
-      "Peace be upon us and the righteous servants of Allah.",
-      "O Allah, bless Muhammad."
-    ]
+    "duaName": "tasyahhud_part_1"
   },
   {
-    "arabicText": "السلام علينا وعلى عباد الله الصالحين",
-    "indonesianText": "Semoga keselamatan terlimpah kepada kami dan kepada semua hamba Allah yang saleh.",
+    "arabicText": "الصَّلَوَاتُ",
+    "indonesianText": "Shalawat",
     "audioUrl": null,
-    "correctIndonesian": "Semoga keselamatan terlimpah kepada kami dan kepada semua hamba Allah yang saleh.",
-    "optionsIndonesian": [
-      "Segala penghormatan, keberkahan, shalawat dan kebaikan adalah milik Allah.",
-      "Semoga keselamatan, rahmat Allah, dan berkah-Nya tercurah atasmu, wahai Nabi.",
-      "Semoga keselamatan terlimpah kepada kami dan kepada semua hamba Allah yang saleh.",
-      "Ya Allah, limpahkanlah rahmat kepada Muhammad."
-    ],
-    "correctArabic": "السلام علينا وعلى عباد الله الصالحين",
-    "optionsArabic": [
-      "التحيات المباركات الصلوات الطيبات لله",
-      "السلام عليك أيها النبي ورحمة الله وبركاته",
-      "السلام علينا وعلى عباد الله الصالحين",
-      "اللهم صل على سيدنا محمد"
-    ],
+    "correctArabic": "الصَّلَوَاتُ",
+    "optionsArabic": ["الصَّلَوَاتُ", "الطَّيِّبَاتُ", "التَّحِيَّاتُ", "النَّبِيُّ"],
+    "correctEnglish": "The prayers",
+    "optionsEnglish": ["The prayers", "The good things", "All compliments", "The Prophet"],
+    "correctIndonesian": "Shalawat",
+    "optionsIndonesian": ["Shalawat", "Kebaikan", "Segala penghormatan", "Nabi"],
+    
+    
     "dataType": "dua",
-    "duaName": "tasyahhud_part_1",
-    "correctEnglish": "Peace be upon us and the righteous servants of Allah.",
-    "optionsEnglish": [
-      "All greetings, blessings, prayers, and good things belong to Allah.",
-      "Peace be upon you, O Prophet, and Allah's mercy and blessings.",
-      "Peace be upon us and the righteous servants of Allah.",
-      "O Allah, bless Muhammad."
-    ]
+    "duaName": "tasyahhud_part_1"
   },
   {
-    "arabicText": "أشهد أن لا إله إلا الله",
-    "indonesianText": "Aku bersaksi bahwa tidak ada Tuhan selain Allah.",
+    "arabicText": "الطَّيِّبَاتُ",
+    "indonesianText": "Kebaikan",
     "audioUrl": null,
-    "correctIndonesian": "Aku bersaksi bahwa tidak ada Tuhan selain Allah.",
-    "optionsIndonesian": [
-      "Aku bersaksi bahwa tidak ada Tuhan selain Allah.",
-      "Dan aku bersaksi bahwa Muhammad adalah utusan Allah.",
-      "Segala puji bagi Allah.",
-      "Semoga keselamatan terlimpah kepada kami."
-    ],
-    "correctArabic": "أشهد أن لا إله إلا الله",
-    "optionsArabic": [
-      "أشهد أن لا إله إلا الله",
-      "وأشهد أن محمدًا رسول الله",
-      "اللهم صل على سيدنا محمد",
-      "السلام عليكم ورحمة الله"
-    ],
+    "correctArabic": "الطَّيِّبَاتُ",
+    "optionsArabic": ["الطَّيِّبَاتُ", "لِلَّهِ", "وَرَحْمَةُ", "الصَّالِحِينَ"],
+    "correctEnglish": "The good things",
+    "optionsEnglish": ["The good things", "For Allah", "And mercy", "The righteous"],
+    "correctIndonesian": "Kebaikan",
+    "optionsIndonesian": ["Kebaikan", "Milik Allah", "Dan rahmat", "Orang-orang saleh"],
+    
+    
     "dataType": "dua",
-    "duaName": "tasyahhud_part_2",
-    "correctEnglish": "I bear witness that there is no deity except Allah.",
-    "optionsEnglish": [
-      "I bear witness that there is no deity except Allah.",
-      "And I bear witness that Muhammad is the Messenger of Allah.",
-      "All praise is for Allah.",
-      "Peace be upon us."
-    ]
+    "duaName": "tasyahhud_part_1"
   },
   {
-    "arabicText": "وأشهد أن محمدًا رسول الله",
-    "indonesianText": "Dan aku bersaksi bahwa Muhammad adalah utusan Allah.",
+    "arabicText": "السَّلَامُ",
+    "indonesianText": "Keselamatan",
     "audioUrl": null,
-    "correctIndonesian": "Dan aku bersaksi bahwa Muhammad adalah utusan Allah.",
-    "optionsIndonesian": [
-      "Aku bersaksi bahwa tidak ada Tuhan selain Allah.",
-      "Dan aku bersaksi bahwa Muhammad adalah utusan Allah.",
-      "Segala puji bagi Allah.",
-      "Semoga keselamatan terlimpah kepada kami."
-    ],
-    "correctArabic": "وأشهد أن محمدًا رسول الله",
-    "optionsArabic": [
-      "أشهد أن لا إله إلا الله",
-      "وأشهد أن محمدًا رسول الله",
-      "اللهم صل على سيدنا محمد",
-      "السلام عليكم ورحمة الله"
-    ],
+    "correctArabic": "السَّلَامُ",
+    "optionsArabic": ["السَّلَامُ", "النَّبِيُّ", "المُبَارَكَاتُ", "وَعَلَى"],
+    "correctEnglish": "Peace",
+    "optionsEnglish": ["Peace", "The Prophet", "The blessings", "And upon"],
+    "correctIndonesian": "Keselamatan",
+    "optionsIndonesian": ["Keselamatan", "Nabi", "Keberkahan", "Dan atas"],
+    
+    
     "dataType": "dua",
-    "duaName": "tasyahhud_part_2",
-    "correctEnglish": "And I bear witness that Muhammad is the Messenger of Allah.",
-    "optionsEnglish": [
-      "I bear witness that there is no deity except Allah.",
-      "And I bear witness that Muhammad is the Messenger of Allah.",
-      "All praise is for Allah.",
-      "Peace be upon us."
-    ]
-  },
-
+    "duaName": "tasyahhud_part_1"
+  }
+,
   {
-    "arabicText": "اللهم صل على سيدنا محمد وعلى آل سيدنا محمد كما صليت على سيدنا إبراهيم وعلى آل سيدنا إبراهيم",
-    "indonesianText": "Ya Allah, limpahkanlah rahmat kepada Sayyidina Muhammad dan keluarga Sayyidina Muhammad sebagaimana Engkau telah melimpahkan rahmat kepada Sayyidina Ibrahim dan keluarga Sayyidina Ibrahim.",
+    "arabicText": "أشهد",
+    "indonesianText": "Aku bersaksi",
     "audioUrl": null,
-    "correctIndonesian": "Ya Allah, limpahkanlah rahmat kepada Sayyidina Muhammad dan keluarga Sayyidina Muhammad sebagaimana Engkau telah melimpahkan rahmat kepada Sayyidina Ibrahim dan keluarga Sayyidina Ibrahim.",
-    "optionsIndonesian": [
-      "Ya Allah, limpahkanlah rahmat kepada Sayyidina Muhammad dan keluarga Sayyidina Muhammad sebagaimana Engkau telah melimpahkan rahmat kepada Sayyidina Ibrahim dan keluarga Sayyidina Ibrahim.",
-      "Dan berkahilah Sayyidina Muhammad dan keluarganya.",
-      "Sesungguhnya Engkau Maha Terpuji lagi Maha Mulia.",
-      "Ya Allah, aku berlindung kepada-Mu dari azab neraka."
-    ],
-    "correctArabic": "اللهم صل على سيدنا محمد وعلى آل سيدنا محمد كما صليت على سيدنا إبراهيم وعلى آل سيدنا إبراهيم",
-    "optionsArabic": [
-      "اللهم صل على سيدنا محمد وعلى آل سيدنا محمد كما صليت على سيدنا إبراهيم وعلى آل سيدنا إبراهيم",
-      "وبارك على سيدنا محمد وعلى آل سيدنا محمد كما باركت على سيدنا إبراهيم وعلى آل سيدنا إبراهيم",
-      "في العالمين إنك حميد مجيد",
-      "اللهم إني أعوذ بك من عذاب جهنم"
-    ],
+    "correctArabic": "أشهد",
+    "optionsArabic": ["أشهد", "إِلَهَ", "لَا", "رَسُولُ"],
+    "correctEnglish": "I bear witness",
+    "optionsEnglish": ["I bear witness", "God", "There is no", "Messenger"],
+    "correctIndonesian": "Aku bersaksi",
+    "optionsIndonesian": ["Aku bersaksi", "Tuhan", "tidak ada", "Utusan"],
+    
+    
     "dataType": "dua",
-    "duaName": "tasyahhud_part_3",
-    "correctEnglish": "O Allah, send blessings upon our master Muhammad and the family of our master Muhammad as You sent blessings upon Ibrahim and his family.",
-    "optionsEnglish": [
-      "O Allah, send blessings upon our master Muhammad and the family of our master Muhammad as You sent blessings upon Ibrahim and his family.",
-      "And bless Muhammad and his family.",
-      "Indeed, You are Praiseworthy and Glorious.",
-      "O Allah, I seek refuge in You from the punishment of Hellfire."
-    ]
+    "duaName": "tasyahhud_part_2"
   },
   {
-    "arabicText": "وبارك على سيدنا محمد وعلى آل سيدنا محمد كما باركت على سيدنا إبراهيم وعلى آل سيدنا إبراهيم",
-    "indonesianText": "Dan berkahilah Sayyidina Muhammad dan keluarganya sebagaimana Engkau telah memberkahi Sayyidina Ibrahim dan keluarganya.",
+    "arabicText": "أن لا إله",
+    "indonesianText": "bahwa tidak ada Tuhan",
     "audioUrl": null,
-    "correctIndonesian": "Dan berkahilah Sayyidina Muhammad dan keluarganya sebagaimana Engkau telah memberkahi Sayyidina Ibrahim dan keluarganya.",
-    "optionsIndonesian": [
-      "Ya Allah, limpahkanlah rahmat kepada Sayyidina Muhammad dan keluarganya.",
-      "Dan berkahilah Sayyidina Muhammad dan keluarganya.",
-      "Sesungguhnya Engkau Maha Terpuji lagi Maha Mulia.",
-      "Ya Allah, aku berlindung kepada-Mu dari azab neraka."
-    ],
-    "correctArabic": "وبارك على سيدنا محمد وعلى آل سيدنا محمد كما باركت على سيدنا إبراهيم وعلى آل سيدنا إبراهيم",
-    "optionsArabic": [
-      "اللهم صل على سيدنا محمد وعلى آل سيدنا محمد كما صليت على سيدنا إبراهيم وعلى آل سيدنا إبراهيم",
-      "وبارك على سيدنا محمد وعلى آل سيدنا محمد كما باركت على سيدنا إبراهيم وعلى آل سيدنا إبراهيم",
-      "في العالمين إنك حميد مجيد",
-      "اللهم إني أعوذ بك من عذاب جهنم"
-    ],
+    "correctArabic": "أن لا إله",
+    "optionsArabic": ["أن لا إله", "إِلَّا", "محمدًا", "اللّٰهِ"],
+    "correctEnglish": "That there is no God",
+    "optionsEnglish": ["That there is no God", "Except", "Muhammad is", "Allah"],
+    "correctIndonesian": "bahwa tidak ada Tuhan",
+    "optionsIndonesian": ["bahwa tidak ada Tuhan", "selain", "Muhammad adalah", "Allah"],
+    
+    
     "dataType": "dua",
-    "duaName": "tasyahhud_part_3",
-    "correctEnglish": "And bless our master Muhammad and his family as You blessed Ibrahim and his family.",
-    "optionsEnglish": [
-      "O Allah, send blessings upon our master Muhammad and the family of our master Muhammad as You sent blessings upon Ibrahim and his family.",
-      "And bless our master Muhammad and his family as You blessed Ibrahim and his family.",
-      "Indeed, You are Praiseworthy and Glorious.",
-      "O Allah, I seek refuge in You from the punishment of Hellfire."
-    ]
+    "duaName": "tasyahhud_part_2"
   },
   {
-    "arabicText": "اَللّٰهُمَّ اهْدِنِي فِيمَنْ هَدَيْتَ",
-    "indonesianText": "Ya Allah, berilah aku petunjuk bersama orang yang Engkau beri petunjuk.",
+    "arabicText": "إلا الله",
+    "indonesianText": "selain Allah",
     "audioUrl": null,
-    "correctIndonesian": "Ya Allah, berilah aku petunjuk bersama orang yang Engkau beri petunjuk.",
-    "optionsIndonesian": [
-      "Ya Allah, berilah aku petunjuk bersama orang yang Engkau beri petunjuk.",
-      "Ya Allah, ampunilah aku dari dosa.",
-      "Ya Allah, lindungilah aku dari azab neraka.",
-      "Ya Allah, berkahilah keluargaku."
-    ],
-    "correctArabic": "اَللّٰهُمَّ اهْدِنِي فِيمَنْ هَدَيْتَ",
-    "optionsArabic": [
-      "اَللّٰهُمَّ اهْدِنِي فِيمَنْ هَدَيْتَ",
-      "وَعَافِنِي فِيمَنْ عَافَيْتَ",
-      "وَتَوَلَّنِي فِيمَنْ تَوَلَّيْتَ",
-      "وَبَارِكْ لِي فِيمَا أَعْطَيْتَ"
-    ],
+    "correctArabic": "إلا الله",
+    "optionsArabic": ["إلا الله", "أشهد", "وَأَشْهَدُ", "رَسُولُ"],
+    "correctEnglish": "Except Allah",
+    "optionsEnglish": ["Except Allah", "I bear witness", "And I bear witness", "Messenger"],
+    "correctIndonesian": "selain Allah",
+    "optionsIndonesian": ["selain Allah", "Aku bersaksi", "Dan aku bersaksi", "Utusan"],
+    
+    
     "dataType": "dua",
-    "duaName": "qunut_part_1",
-    "correctEnglish": "O Allah, guide me along with those You have guided.",
-    "optionsEnglish": [
-      "O Allah, guide me along with those You have guided.",
-      "O Allah, grant me health along with those You have granted health.",
-      "O Allah, take care of me along with those You have taken care of.",
-      "O Allah, bless me in what You have given."
-    ]
+    "duaName": "tasyahhud_part_2"
   },
   {
-    "arabicText": "وَعَافِنِي فِيمَنْ عَافَيْتَ",
-    "indonesianText": "Dan berilah aku kesehatan bersama orang yang Engkau beri kesehatan.",
+    "arabicText": "وأن محمدًا",
+    "indonesianText": "Dan Muhammad adalah",
     "audioUrl": null,
-    "correctIndonesian": "Dan berilah aku kesehatan bersama orang yang Engkau beri kesehatan.",
-    "optionsIndonesian": [
-      "Dan berilah aku kesehatan bersama orang yang Engkau beri kesehatan.",
-      "Dan lindungilah aku dari dosa.",
-      "Dan pimpinlah aku bersama orang yang Engkau pimpin.",
-      "Dan berkahilah aku di apa yang Engkau berikan."
-    ],
-    "correctArabic": "وَعَافِنِي فِيمَنْ عَافَيْتَ",
-    "optionsArabic": [
-      "اَللّٰهُمَّ اهْدِنِي فِيمَنْ هَدَيْتَ",
-      "وَعَافِنِي فِيمَنْ عَافَيْتَ",
-      "وَتَوَلَّنِي فِيمَنْ تَوَلَّيْتَ",
-      "وَبَارِكْ لِي فِيمَا أَعْطَيْتَ"
-    ],
+    "correctArabic": "وأن محمدًا",
+    "optionsArabic": ["وأن محمدًا", "أشهد", "أن لا إله", "رسول"],
+    "correctEnglish": "And that Muhammad is",
+    "optionsEnglish": ["And that Muhammad is", "I bear witness", "That there is no God", "Messenger"],
+    "correctIndonesian": "Dan Muhammad adalah",
+    "optionsIndonesian": ["Dan Muhammad adalah", "Aku bersaksi", "bahwa tidak ada Tuhan", "Utusan"],
+    
+    
     "dataType": "dua",
-    "duaName": "qunut_part_1",
-    "correctEnglish": "And grant me health along with those You have granted health.",
-    "optionsEnglish": [
-      "O Allah, guide me along with those You have guided.",
-      "And grant me health along with those You have granted health.",
-      "O Allah, take care of me along with those You have taken care of.",
-      "O Allah, bless me in what You have given."
-    ]
-  },
-  
-  {
-    "arabicText": "وَتَوَلَّنِي فِيمَنْ تَوَلَّيْتَ",
-    "indonesianText": "Dan pimpinlah aku bersama orang yang Engkau pimpin.",
-    "audioUrl": null,
-    "correctIndonesian": "Dan pimpinlah aku bersama orang yang Engkau pimpin.",
-    "optionsIndonesian": [
-      "Dan pimpinlah aku bersama orang yang Engkau pimpin.",
-      "Dan berkahilah aku di apa yang Engkau berikan.",
-      "Dan lindungilah aku dari kejahatan yang Engkau tetapkan.",
-      "Ya Allah, berilah aku petunjuk."
-    ],
-    "correctArabic": "وَتَوَلَّنِي فِيمَنْ تَوَلَّيْتَ",
-    "optionsArabic": [
-      "وَتَوَلَّنِي فِيمَنْ تَوَلَّيْتَ",
-      "وَبَارِكْ لِي فِيمَا أَعْطَيْتَ",
-      "وَقِنِي شَرَّ مَا قَضَيْتَ",
-      "اَللّٰهُمَّ اهْدِنِي فِيمَنْ هَدَيْتَ"
-    ],
-    "dataType": "dua",
-    "duaName": "qunut_part_2",
-    "correctEnglish": "And take care of me along with those You have taken care of.",
-    "optionsEnglish": [
-      "And take care of me along with those You have taken care of.",
-      "And bless me in what You have given.",
-      "And protect me from the evil You have decreed.",
-      "O Allah, guide me along with those You have guided."
-    ]
+    "duaName": "tasyahhud_part_2"
   },
   {
-    "arabicText": "وَبَارِكْ لِي فِيمَا أَعْطَيْتَ",
-    "indonesianText": "Dan berkahilah aku pada apa yang Engkau berikan.",
+    "arabicText": "رسول الله",
+    "indonesianText": "utusan Allah",
     "audioUrl": null,
-    "correctIndonesian": "Dan berkahilah aku pada apa yang Engkau berikan.",
-    "optionsIndonesian": [
-      "Dan berkahilah aku pada apa yang Engkau berikan.",
-      "Dan lindungilah aku dari kejahatan yang Engkau tetapkan.",
-      "Dan pimpinlah aku bersama orang yang Engkau pimpin.",
-      "Ya Allah, berilah aku petunjuk."
-    ],
-    "correctArabic": "وَبَارِكْ لِي فِيمَا أَعْطَيْتَ",
-    "optionsArabic": [
-      "وَتَوَلَّنِي فِيمَنْ تَوَلَّيْتَ",
-      "وَبَارِكْ لِي فِيمَا أَعْطَيْتَ",
-      "وَقِنِي شَرَّ مَا قَضَيْتَ",
-      "اَللّٰهُمَّ اهْدِنِي فِيمَنْ هَدَيْتَ"
-    ],
+    "correctArabic": "رسول الله",
+    "optionsArabic": ["رسول الله", "إلا الله", "وأن محمدًا", "أشهد"],
+    "correctEnglish": "Messenger of Allah",
+    "optionsEnglish": ["Messenger of Allah", "Except Allah", "And that Muhammad is", "I bear witness"],
+    "correctIndonesian": "utusan Allah",
+    "optionsIndonesian": ["utusan Allah", "selain Allah", "Dan Muhammad adalah", "Aku bersaksi"],
+    
+    
     "dataType": "dua",
-    "duaName": "qunut_part_2",
-    "correctEnglish": "And bless me in what You have given.",
-    "optionsEnglish": [
-      "And take care of me along with those You have taken care of.",
-      "And bless me in what You have given.",
-      "And protect me from the evil You have decreed.",
-      "O Allah, guide me along with those You have guided."
-    ]
-  },
-
-
+    "duaName": "tasyahhud_part_2"
+  }
+,
   {
-    "arabicText": "فَإِنَّكَ تَقْضِي وَلَا يُقْضَى عَلَيْكَ",
-    "indonesianText": "Sesungguhnya Engkau menetapkan dan tidak ada yang menetapkan atas-Mu.",
+    "arabicText": "اللهم صل",
+    "indonesianText": "Ya Allah, berilah rahmat",
     "audioUrl": null,
-    "correctIndonesian": "Sesungguhnya Engkau menetapkan dan tidak ada yang menetapkan atas-Mu.",
-    "optionsIndonesian": [
-      "Sesungguhnya Engkau menetapkan dan tidak ada yang menetapkan atas-Mu.",
-      "Dan tidak menjadi mulia orang yang Engkau musuhi.",
-      "Maha Berkah Engkau, wahai Tuhan kami.",
-      "Aku memohon ampun kepada-Mu dan bertaubat."
-    ],
-    "correctArabic": "فَإِنَّكَ تَقْضِي وَلَا يُقْضَى عَلَيْكَ",
-    "optionsArabic": [
-      "فَإِنَّكَ تَقْضِي وَلَا يُقْضَى عَلَيْكَ",
-      "وَلَا يَعِزُّ مَنْ عَادَيْتَ",
-      "تَبَارَكْتَ رَبَّنَا وَتَعَالَيْتَ",
-      "أَسْتَغْفِرُكَ وَأَتُوبُ إِلَيْكَ"
-    ],
+    "correctArabic": "اللهم صل",
+    "optionsArabic": ["اللهم صل", "مُحَمَّدٍ", "كَمَا", "إِبْرَاهِيمَ"],
+    "correctEnglish": "O Allah, send prayers",
+    "optionsEnglish": ["O Allah, send prayers", "Muhammad", "Just as", "Ibrahim"],
+    "correctIndonesian": "Ya Allah, berilah rahmat",
+    "optionsIndonesian": ["Ya Allah, berilah rahmat", "Muhammad", "sebagaimana", "Ibrahim"],
+    
+    
     "dataType": "dua",
-    "duaName": "qunut_part_3",
-    "correctEnglish": "Indeed, You decree, and none can decree over You.",
-    "optionsEnglish": [
-      "Indeed, You decree, and none can decree over You.",
-      "And none becomes honored whom You oppose.",
-      "Blessed are You, our Lord, and Exalted.",
-      "I seek Your forgiveness and repent to You."
-    ]
+    "duaName": "tasyahhud_part_3"
   },
   {
-    "arabicText": "أَسْتَغْفِرُكَ وَأَتُوبُ إِلَيْكَ",
-    "indonesianText": "Aku memohon ampun kepada-Mu dan aku bertaubat kepada-Mu.",
+    "arabicText": "على محمد",
+    "indonesianText": "kepada Nabi Muhammad",
     "audioUrl": null,
-    "correctIndonesian": "Aku memohon ampun kepada-Mu dan aku bertaubat kepada-Mu.",
-    "optionsIndonesian": [
-      "Aku memohon ampun kepada-Mu dan aku bertaubat kepada-Mu.",
-      "Maha Berkah Engkau, wahai Tuhan kami.",
-      "Sesungguhnya Engkau menetapkan dan tidak ada yang menetapkan atas-Mu.",
-      "Dan lindungilah aku dari kejahatan yang Engkau tetapkan."
-    ],
-    "correctArabic": "أَسْتَغْفِرُكَ وَأَتُوبُ إِلَيْكَ",
-    "optionsArabic": [
-      "أَسْتَغْفِرُكَ وَأَتُوبُ إِلَيْكَ",
-      "تَبَارَكْتَ رَبَّنَا وَتَعَالَيْتَ",
-      "فَإِنَّكَ تَقْضِي وَلَا يُقْضَى عَلَيْكَ",
-      "وَقِنِي شَرَّ مَا قَضَيْتَ"
-    ],
+    "correctArabic": "على محمد",
+    "optionsArabic": ["على محمد", "وَبَارِكْ", "آلِ", "عَلَى"],
+    "correctEnglish": "upon Muhammad",
+    "optionsEnglish": ["upon Muhammad", "And bless", "Family of", "Upon"],
+    "correctIndonesian": "kepada Nabi Muhammad",
+    "optionsIndonesian": ["kepada Nabi Muhammad", "Dan berilah berkat", "Keluarga", "Kepada"],
+    
+    
     "dataType": "dua",
-    "duaName": "qunut_part_3",
-    "correctEnglish": "I seek Your forgiveness and repent to You.",
-    "optionsEnglish": [
-      "I seek Your forgiveness and repent to You.",
-      "Blessed are You, our Lord, and Exalted.",
-      "Indeed, You decree, and none can decree over You.",
-      "And protect me from the evil You have decreed."
-    ]
+    "duaName": "tasyahhud_part_3"
   },
   {
-    "arabicText": "اَللّٰهُمَّ أَنْتَ رَبِّي",
-    "indonesianText": "Ya Allah, Engkau Tuhanku",
+    "arabicText": "كما صليت",
+    "indonesianText": "sebagaimana Engkau telah memberi rahmat",
     "audioUrl": null,
-    "correctIndonesian": "Ya Allah, Engkau Tuhanku",
-    "optionsIndonesian": [
-      "Ya Allah, Engkau Tuhanku",
-      "Aku mengakui dosaku",
-      "Aku memohon ampun kepada-Mu",
-      "Dan aku bertaubat"
-    ],
-    "correctArabic": "اَللّٰهُمَّ أَنْتَ رَبِّي",
-    "optionsArabic": [
-      "اَللّٰهُمَّ أَنْتَ رَبِّي",
-      "وَأَبُوءُ بِذَنْبِي",
-      "أَسْتَغْفِرُكَ وَأَتُوبُ إِلَيْكَ",
-      "وَأَنَا عَبْدُكَ"
-    ],
+    "correctArabic": "كما صليت",
+    "optionsArabic": ["كما صليت", "آلِ", "إِبْرَاهِيمَ", "وَبَارِكْ"],
+    "correctEnglish": "just as You sent prayers",
+    "optionsEnglish": ["just as You sent prayers", "Family of", "Ibrahim", "And bless"],
+    "correctIndonesian": "sebagaimana Engkau telah memberi rahmat",
+    "optionsIndonesian": ["sebagaimana Engkau telah memberi rahmat", "Keluarga", "Ibrahim", "Dan berilah berkat"],
+    
+    
     "dataType": "dua",
-    "duaName": "istighfar_part_1",
-    "correctEnglish": "O Allah, You are my Lord",
-    "optionsEnglish": [
-      "O Allah, You are my Lord",
-      "I admit my sins",
-      "I seek Your forgiveness",
-      "And I repent to You"
-    ]
+    "duaName": "tasyahhud_part_3"
   },
   {
-    "arabicText": "لَا إِلٰهَ إِلَّا أَنْتَ",
-    "indonesianText": "Tidak ada Tuhan selain Engkau",
+    "arabicText": "وبارك على محمد",
+    "indonesianText": "Dan berilah berkat kepada Nabi Muhammad",
     "audioUrl": null,
-    "correctIndonesian": "Tidak ada Tuhan selain Engkau",
-    "optionsIndonesian": [
-      "Tidak ada Tuhan selain Engkau",
-      "Engkau menciptakanku",
-      "Aku mengakui nikmat-Mu",
-      "Dan aku hamba-Mu"
-    ],
-    "correctArabic": "لَا إِلٰهَ إِلَّا أَنْتَ",
-    "optionsArabic": [
-      "لَا إِلٰهَ إِلَّا أَنْتَ",
-      "خَلَقْتَنِي",
-      "بِنِعْمَتِكَ عَلَيَّ",
-      "أَنَا عَبْدُكَ"
-    ],
+    "correctArabic": "وبارك على محمد",
+    "optionsArabic": ["وبارك على محمد", "اللهم صل", "وَعَلَى آلِ", "فِي الْعَالَمِينَ"],
+    "correctEnglish": "And bless Muhammad",
+    "optionsEnglish": ["And bless Muhammad", "O Allah, send prayers", "And upon the family of", "In the worlds"],
+    "correctIndonesian": "Dan berilah berkat kepada Nabi Muhammad",
+    "optionsIndonesian": ["Dan berilah berkat kepada Nabi Muhammad", "Ya Allah, berilah rahmat", "Dan atas keluarga", "di seluruh alam"],
+    
+    
     "dataType": "dua",
-    "duaName": "istighfar_part_1",
-    "correctEnglish": "There is no deity except You",
-    "optionsEnglish": [
-      "There is no deity except You",
-      "You created me",
-      "By Your blessings upon me",
-      "I am Your servant"
-    ]
+    "duaName": "tasyahhud_part_3"
   },
   {
-    "arabicText": "وَأَنَا عَلَىٰ عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ",
-    "indonesianText": "Dan aku berusaha memenuhi janji-Mu sebatas kemampuanku",
+    "arabicText": "حميد مجيد",
+    "indonesianText": "Maha Terpuji dan Maha Mulia",
     "audioUrl": null,
-    "correctIndonesian": "Dan aku berusaha memenuhi janji-Mu sebatas kemampuanku",
-    "optionsIndonesian": [
-      "Dan aku berusaha memenuhi janji-Mu sebatas kemampuanku",
-      "Aku mengakui dosaku",
-      "Aku memohon ampun kepada-Mu",
-      "Segala puji bagi Allah"
-    ],
-    "correctArabic": "وَأَنَا عَلَىٰ عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ",
-    "optionsArabic": [
-      "وَأَنَا عَلَىٰ عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ",
-      "أَبُوءُ بِذَنْبِي",
-      "أَسْتَغْفِرُكَ وَأَتُوبُ إِلَيْكَ",
-      "الْحَمْدُ لِلّٰهِ"
-    ],
+    "correctArabic": "حميد مجيد",
+    "optionsArabic": ["حميد مجيد", "إِنَّكَ", "كَمَا", "صَلَّيْتَ"],
+    "correctEnglish": "Praiseworthy, Most Glorious",
+    "optionsEnglish": ["Praiseworthy, Most Glorious", "Verily You", "Just as", "You sent prayers"],
+    "correctIndonesian": "Maha Terpuji dan Maha Mulia",
+    "optionsIndonesian": ["Maha Terpuji dan Maha Mulia", "Sesungguhnya Engkau", "Sebagaimana", "Engkau telah memberi rahmat"],
+    
+    
     "dataType": "dua",
-    "duaName": "istighfar_part_2",
-    "correctEnglish": "And I strive to uphold Your covenant and promise to the best of my ability",
-    "optionsEnglish": [
-      "And I strive to uphold Your covenant and promise to the best of my ability",
-      "I admit my sins",
-      "I seek Your forgiveness",
-      "All praise is due to Allah"
-    ]
+    "duaName": "tasyahhud_part_3"
+  }
+,
+  {
+    "arabicText": "اللهم اهدني",
+    "indonesianText": "Ya Allah, berilah aku petunjuk",
+    "audioUrl": null,
+    "correctArabic": "اللهم اهدني",
+    "optionsArabic": ["اللهم اهدني", "فِيمَنْ", "تَوَلَّيْتَ", "بَارِكْ"],
+    "correctEnglish": "O Allah, guide me",
+    "optionsEnglish": ["O Allah, guide me", "Among those who", "You have taken into your care", "Bless"],
+    "correctIndonesian": "Ya Allah, berilah aku petunjuk",
+    "optionsIndonesian": ["Ya Allah, berilah aku petunjuk", "di antara orang-orang yang", "Engkau lindungi", "berkatilah"],
+    
+    
+    "dataType": "dua",
+    "duaName": "qunut_part_1"
   },
   {
-    "arabicText": "أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ",
-    "indonesianText": "Aku berlindung kepada-Mu dari kejahatan yang telah aku lakukan",
+    "arabicText": "فيمن هديت",
+    "indonesianText": "di antara orang yang telah Engkau beri petunjuk",
     "audioUrl": null,
-    "correctIndonesian": "Aku berlindung kepada-Mu dari kejahatan yang telah aku lakukan",
-    "optionsIndonesian": [
-      "Aku berlindung kepada-Mu dari kejahatan yang telah aku lakukan",
-      "Segala puji bagi Allah",
-      "Aku bersaksi tiada Tuhan selain Allah",
-      "Dan aku hamba-Mu"
-    ],
-    "correctArabic": "أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ",
-    "optionsArabic": [
-      "أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ",
-      "الْحَمْدُ لِلّٰهِ",
-      "لَا إِلٰهَ إِلَّا أَنْتَ",
-      "أَنَا عَبْدُكَ"
-    ],
+    "correctArabic": "فيمن هديت",
+    "optionsArabic": ["فيمن هديت", "عَافِنِي", "قَضَيْتَ", "وَعَافِنِي"],
+    "correctEnglish": "among those whom You have guided",
+    "optionsEnglish": ["among those whom You have guided", "Grant me health", "You decreed", "And grant me health"],
+    "correctIndonesian": "di antara orang yang telah Engkau beri petunjuk",
+    "optionsIndonesian": ["di antara orang yang telah Engkau beri petunjuk", "berilah aku kesehatan", "Engkau tetapkan", "Dan berilah aku kesehatan"],
+    
+    
     "dataType": "dua",
-    "duaName": "istighfar_part_2",
-    "correctEnglish": "I seek refuge in You from the evil of what I have done",
-    "optionsEnglish": [
-      "I seek refuge in You from the evil of what I have done",
-      "All praise is due to Allah",
-      "There is no deity except You",
-      "I am Your servant"
-    ]
+    "duaName": "qunut_part_1"
   },
   {
-    "arabicText": "أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ",
-    "indonesianText": "Aku mengakui nikmat-Mu atas diriku",
+    "arabicText": "وعافني",
+    "indonesianText": "Dan berilah aku kesehatan",
     "audioUrl": null,
-    "correctIndonesian": "Aku mengakui nikmat-Mu atas diriku",
-    "optionsIndonesian": [
-      "Aku mengakui nikmat-Mu atas diriku",
-      "Segala puji bagi Allah",
-      "Aku memohon ampun kepada-Mu",
-      "Aku berlindung kepada-Mu"
-    ],
-    "correctArabic": "أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ",
-    "optionsArabic": [
-      "أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ",
-      "الْحَمْدُ لِلّٰهِ",
-      "أَسْتَغْفِرُكَ وَأَتُوبُ إِلَيْكَ",
-      "أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ"
-    ],
+    "correctArabic": "وعافني",
+    "optionsArabic": ["وعافني", "فِيمَنْ", "تَوَلَّيْتَ", "وَتَوَلَّنِي"],
+    "correctEnglish": "And grant me health",
+    "optionsEnglish": ["And grant me health", "Among those who", "You have taken into your care", "And take me into Your care"],
+    "correctIndonesian": "Dan berilah aku kesehatan",
+    "optionsIndonesian": ["Dan berilah aku kesehatan", "di antara orang-orang yang", "Engkau lindungi", "Dan lindungilah aku"],
+    
+    
     "dataType": "dua",
-    "duaName": "istighfar_part_3",
-    "correctEnglish": "I acknowledge Your blessings upon me",
-    "optionsEnglish": [
-      "I acknowledge Your blessings upon me",
-      "All praise is due to Allah",
-      "I seek Your forgiveness",
-      "I seek refuge in You from the evil of what I have done"
-    ]
+    "duaName": "qunut_part_1"
+  },
+  {
+    "arabicText": "فيمن عافيت",
+    "indonesianText": "di antara orang yang telah Engkau berikan kesehatan",
+    "audioUrl": null,
+    "correctArabic": "فيمن عافيت",
+    "optionsArabic": ["فيمن عافيت", "وَبَارِكْ", "وَقِنِي", "شَرَّ"],
+    "correctEnglish": "among those whom You have granted health",
+    "optionsEnglish": ["among those whom You have granted health", "And bless", "And protect me", "The evil of"],
+    "correctIndonesian": "di antara orang yang telah Engkau berikan kesehatan",
+    "optionsIndonesian": ["di antara orang yang telah Engkau berikan kesehatan", "dan berkatilah", "dan peliharalah aku", "kejahatan"],
+    
+    
+    "dataType": "dua",
+    "duaName": "qunut_part_1"
+  },
+  {
+    "arabicText": "وتولني فيمن توليت",
+    "indonesianText": "Dan lindungilah aku di antara orang yang telah Engkau lindungi",
+    "audioUrl": null,
+    "correctArabic": "وتولني فيمن توليت",
+    "optionsArabic": ["وتولني فيمن توليت", "اللهم اهدني", "وعافني", "بَارِكْ"],
+    "correctEnglish": "And take me into Your care among those whom You have taken into Your care",
+    "optionsEnglish": ["And take me into Your care among those whom You have taken into Your care", "O Allah, guide me", "And grant me health", "Bless"],
+    "correctIndonesian": "Dan lindungilah aku di antara orang yang telah Engkau lindungi",
+    "optionsIndonesian": ["Dan lindungilah aku di antara orang yang telah Engkau lindungi", "Ya Allah, berilah aku petunjuk", "Dan berilah aku kesehatan", "berkatilah"],
+    
+    
+    "dataType": "dua",
+    "duaName": "qunut_part_1"
+  }
+,
+  {
+    "arabicText": "وَبَارِكْ",
+    "indonesianText": "Dan berkatilah",
+    "audioUrl": null,
+    "correctArabic": "وَبَارِكْ",
+    "optionsArabic": ["وَبَارِكْ", "لِي", "فِيمَا", "قَضَيْتَ"],
+    "correctEnglish": "And bless",
+    "optionsEnglish": ["And bless", "For me", "In what", "You decreed"],
+    "correctIndonesian": "Dan berkatilah",
+    "optionsIndonesian": ["Dan berkatilah", "aku", "pada apa yang", "Engkau tetapkan"],
+    
+    
+    "dataType": "dua",
+    "duaName": "qunut_part_2"
+  },
+  {
+    "arabicText": "أَعْطَيْتَ",
+    "indonesianText": "Engkau berikan",
+    "audioUrl": null,
+    "correctArabic": "أَعْطَيْتَ",
+    "optionsArabic": ["أَعْطَيْتَ", "شَرَّ", "فَإِنَّكَ", "وَقِنِي"],
+    "correctEnglish": "You have given",
+    "optionsEnglish": ["You have given", "Evil of", "For verily You", "And protect me"],
+    "correctIndonesian": "Engkau berikan",
+    "optionsIndonesian": ["Engkau berikan", "Kejahatan", "Karena sesungguhnya Engkau", "Dan peliharalah aku"],
+    
+    
+    "dataType": "dua",
+    "duaName": "qunut_part_2"
+  },
+  {
+    "arabicText": "وَقِنِي",
+    "indonesianText": "Dan peliharalah aku",
+    "audioUrl": null,
+    "correctArabic": "وَقِنِي",
+    "optionsArabic": ["وَقِنِي", "شَرَّ", "تَقْضِي", "عَلَيْكَ"],
+    "correctEnglish": "And protect me",
+    "optionsEnglish": ["And protect me", "Evil of", "You decree", "Upon You"],
+    "correctIndonesian": "Dan peliharalah aku",
+    "optionsIndonesian": ["Dan peliharalah aku", "kejahatan", "Engkau menetapkan", "atas-Mu"],
+    
+    
+    "dataType": "dua",
+    "duaName": "qunut_part_2"
+  },
+  {
+    "arabicText": "قَضَيْتَ",
+    "indonesianText": "Engkau tetapkan",
+    "audioUrl": null,
+    "correctArabic": "قَضَيْتَ",
+    "optionsArabic": ["قَضَيْتَ", "وَلَا", "يُقْضَىٰ", "أَعْطَيْتَ"],
+    "correctEnglish": "You decreed",
+    "optionsEnglish": ["You decreed", "And none", "It is decreed", "You have given"],
+    "correctIndonesian": "Engkau tetapkan",
+    "optionsIndonesian": ["Engkau tetapkan", "dan tidak", "Ditetapkan", "Engkau berikan"],
+    
+    
+    "dataType": "dua",
+    "duaName": "qunut_part_2"
+  },
+  {
+    "arabicText": "تَقْضِي",
+    "indonesianText": "Engkau menetapkan",
+    "audioUrl": null,
+    "correctArabic": "تَقْضِي",
+    "optionsArabic": ["تَقْضِي", "فَإِنَّكَ", "وَلَا", "يُقْضَىٰ"],
+    "correctEnglish": "You decree",
+    "optionsEnglish": ["You decree", "For verily You", "And none", "It is decreed"],
+    "correctIndonesian": "Engkau menetapkan",
+    "optionsIndonesian": ["Engkau menetapkan", "Karena sesungguhnya Engkau", "dan tidak", "Ditetapkan"],
+    
+    
+    "dataType": "dua",
+    "duaName": "qunut_part_2"
+  }
+,
+  {
+    "arabicText": "إِنَّهُ",
+    "indonesianText": "Sesungguhnya",
+    "audioUrl": null,
+    "correctArabic": "إِنَّهُ",
+    "optionsArabic": ["إِنَّهُ", "يَذِلُّ", "تَبَارَكْتَ", "وَلَا"],
+    "correctEnglish": "Verily, He",
+    "optionsEnglish": ["Verily, He", "Will be humiliated", "Blessed You are", "And not"],
+    "correctIndonesian": "Sesungguhnya",
+    "optionsIndonesian": ["Sesungguhnya", "akan terhina", "Maha Berkah Engkau", "Dan tidak"],
+    
+    
+    "dataType": "dua",
+    "duaName": "qunut_part_3"
+  },
+  {
+    "arabicText": "لَا يَذِلُّ",
+    "indonesianText": "tidak akan terhina",
+    "audioUrl": null,
+    "correctArabic": "لَا يَذِلُّ",
+    "optionsArabic": ["لَا يَذِلُّ", "مَنْ", "وَالَيْتَ", "يَعِزُّ"],
+    "correctEnglish": "will not be humiliated",
+    "optionsEnglish": ["will not be humiliated", "Whoever", "You befriended", "Will be honored"],
+    "correctIndonesian": "tidak akan terhina",
+    "optionsIndonesian": ["tidak akan terhina", "orang yang", "Engkau cintai", "akan mulia"],
+    
+    
+    "dataType": "dua",
+    "duaName": "qunut_part_3"
+  },
+  {
+    "arabicText": "وَلَا يَعِزُّ",
+    "indonesianText": "dan tidak akan mulia",
+    "audioUrl": null,
+    "correctArabic": "وَلَا يَعِزُّ",
+    "optionsArabic": ["وَلَا يَعِزُّ", "مَنْ", "عَادَيْتَ", "رَبَّنَا"],
+    "correctEnglish": "And none will be honored",
+    "optionsEnglish": ["And none will be honored", "Whoever", "You opposed", "Our Lord"],
+    "correctIndonesian": "dan tidak akan mulia",
+    "optionsIndonesian": ["dan tidak akan mulia", "orang yang", "Engkau musuhi", "Ya Tuhan kami"],
+    
+    
+    "dataType": "dua",
+    "duaName": "qunut_part_3"
+  },
+  {
+    "arabicText": "تَبَارَكْتَ",
+    "indonesianText": "Maha Berkah Engkau",
+    "audioUrl": null,
+    "correctArabic": "تَبَارَكْتَ",
+    "optionsArabic": ["تَبَارَكْتَ", "رَبَّنَا", "فَلَكَ", "تَعَالَيْتَ"],
+    "correctEnglish": "Blessed You are",
+    "optionsEnglish": ["Blessed You are", "Our Lord", "So to You", "Exalted are You"],
+    "correctIndonesian": "Maha Berkah Engkau",
+    "optionsIndonesian": ["Maha Berkah Engkau", "Ya Tuhan kami", "Maka bagi-Mu", "Maha Tinggi Engkau"],
+    
+    
+    "dataType": "dua",
+    "duaName": "qunut_part_3"
+  },
+  {
+    "arabicText": "نَسْتَغْفِرُكَ",
+    "indonesianText": "Kami memohon ampunan-Mu",
+    "audioUrl": null,
+    "correctArabic": "نَسْتَغْفِرُكَ",
+    "optionsArabic": ["نَسْتَغْفِرُكَ", "وَنَتُوبُ", "إِلَيْكَ", "قَضَيْتَ"],
+    "correctEnglish": "We seek Your forgiveness",
+    "optionsEnglish": ["We seek Your forgiveness", "And we repent", "To You", "You decreed"],
+    "correctIndonesian": "Kami memohon ampunan-Mu",
+    "optionsIndonesian": ["Kami memohon ampunan-Mu", "dan kami bertaubat", "kepada-Mu", "Engkau tetapkan"],
+    
+    
+    "dataType": "dua",
+    "duaName": "qunut_part_3"
+  }
+,
+  {
+    "arabicText": "اللَّهُمَّ",
+    "indonesianText": "Ya Allah",
+    "audioUrl": null,
+    "correctArabic": "اللَّهُمَّ",
+    "optionsArabic": ["اللَّهُمَّ", "أَنْتَ", "رَبِّي", "خَلَقْتَنِي"],
+    "correctEnglish": "O Allah",
+    "optionsEnglish": ["O Allah", "You", "My Lord", "You created me"],
+    "correctIndonesian": "Ya Allah",
+    "optionsIndonesian": ["Ya Allah", "Engkau", "Tuhanku", "Engkau menciptakan aku"],
+    
+    
+    "dataType": "dua",
+    "duaName": "istighfar_part_1"
+  },
+  {
+    "arabicText": "أَنْتَ رَبِّي",
+    "indonesianText": "Engkau adalah Tuhanku",
+    "audioUrl": null,
+    "correctArabic": "أَنْتَ رَبِّي",
+    "optionsArabic": ["أَنْتَ رَبِّي", "لَا إِلَهَ", "إِلَّا", "عَبْدُكَ"],
+    "correctEnglish": "You are my Lord",
+    "optionsEnglish": ["You are my Lord", "There is no God", "Except", "Your servant"],
+    "correctIndonesian": "Engkau adalah Tuhanku",
+    "optionsIndonesian": ["Engkau adalah Tuhanku", "Tidak ada Tuhan", "kecuali", "hamba-Mu"],
+    
+    
+    "dataType": "dua",
+    "duaName": "istighfar_part_1"
+  },
+  {
+    "arabicText": "لَا إِلَهَ إِلَّا أَنْتَ",
+    "indonesianText": "Tidak ada Tuhan kecuali Engkau",
+    "audioUrl": null,
+    "correctArabic": "لَا إِلَهَ إِلَّا أَنْتَ",
+    "optionsArabic": ["لَا إِلَهَ إِلَّا أَنْتَ", "خَلَقْتَنِي", "رَبِّي", "وَعْدِكَ"],
+    "correctEnglish": "There is no God but You",
+    "optionsEnglish": ["There is no God but You", "You created me", "My Lord", "Your promise"],
+    "correctIndonesian": "Tidak ada Tuhan kecuali Engkau",
+    "optionsIndonesian": ["Tidak ada Tuhan kecuali Engkau", "Engkau menciptakan aku", "Tuhanku", "janji-Mu"],
+    
+    
+    "dataType": "dua",
+    "duaName": "istighfar_part_1"
+  },
+  {
+    "arabicText": "خَلَقْتَنِي",
+    "indonesianText": "Engkau menciptakan aku",
+    "audioUrl": null,
+    "correctArabic": "خَلَقْتَنِي",
+    "optionsArabic": ["خَلَقْتَنِي", "وَأَنَا", "عَبْدُكَ", "عَهْدِكَ"],
+    "correctEnglish": "You created me",
+    "optionsEnglish": ["You created me", "And I am", "Your servant", "Your covenant"],
+    "correctIndonesian": "Engkau menciptakan aku",
+    "optionsIndonesian": ["Engkau menciptakan aku", "Dan aku", "hamba-Mu", "perjanjian-Mu"],
+    
+    
+    "dataType": "dua",
+    "duaName": "istighfar_part_1"
+  },
+  {
+    "arabicText": "وَأَنَا عَبْدُكَ",
+    "indonesianText": "dan aku adalah hamba-Mu",
+    "audioUrl": null,
+    "correctArabic": "وَأَنَا عَبْدُكَ",
+    "optionsArabic": ["وَأَنَا عَبْدُكَ", "اللَّهُمَّ", "أَنْتَ رَبِّي", "مَا"],
+    "correctEnglish": "and I am Your servant",
+    "optionsEnglish": ["and I am Your servant", "O Allah", "You are my Lord", "As long as"],
+    "correctIndonesian": "dan aku adalah hamba-Mu",
+    "optionsIndonesian": ["dan aku adalah hamba-Mu", "Ya Allah", "Engkau adalah Tuhanku", "Selama"],
+    
+    
+    "dataType": "dua",
+    "duaName": "istighfar_part_1"
+  }
+,
+  {
+    "arabicText": "وَأَنَا عَلَى عَهْدِكَ",
+    "indonesianText": "Dan aku menepati perjanjian-Mu",
+    "audioUrl": null,
+    "correctArabic": "وَأَنَا عَلَى عَهْدِكَ",
+    "optionsArabic": ["وَأَنَا عَلَى عَهْدِكَ", "وَعْدِكَ", "مَا اسْتَطَعْتُ", "صَنَعْتُ"],
+    "correctEnglish": "And I am keeping Your covenant",
+    "optionsEnglish": ["And I am keeping Your covenant", "And Your promise", "To the best of my ability", "I have done"],
+    "correctIndonesian": "Dan aku menepati perjanjian-Mu",
+    "optionsIndonesian": ["Dan aku menepati perjanjian-Mu", "dan janji-Mu", "sekuat tenagaku", "yang aku perbuat"],
+    
+    
+    "dataType": "dua",
+    "duaName": "istighfar_part_2"
+  },
+  {
+    "arabicText": "وَوَعْدِكَ",
+    "indonesianText": "dan janji-Mu",
+    "audioUrl": null,
+    "correctArabic": "وَوَعْدِكَ",
+    "optionsArabic": ["وَوَعْدِكَ", "عَهْدِكَ", "أَعُوذُ", "بِكَ"],
+    "correctEnglish": "and Your promise",
+    "optionsEnglish": ["and Your promise", "Your covenant", "I seek refuge", "In You"],
+    "correctIndonesian": "dan janji-Mu",
+    "optionsIndonesian": ["dan janji-Mu", "perjanjian-Mu", "Aku berlindung", "kepada-Mu"],
+    
+    
+    "dataType": "dua",
+    "duaName": "istighfar_part_2"
+  },
+  {
+    "arabicText": "مَا اسْتَطَعْتُ",
+    "indonesianText": "sekuat tenagaku",
+    "audioUrl": null,
+    "correctArabic": "مَا اسْتَطَعْتُ",
+    "optionsArabic": ["مَا اسْتَطَعْتُ", "شَرِّ", "أَعُوذُ", "وَعْدِكَ"],
+    "correctEnglish": "to the best of my ability",
+    "optionsEnglish": ["to the best of my ability", "Evil of", "I seek refuge", "Your promise"],
+    "correctIndonesian": "sekuat tenagaku",
+    "optionsIndonesian": ["sekuat tenagaku", "kejahatan", "Aku berlindung", "janji-Mu"],
+    
+    
+    "dataType": "dua",
+    "duaName": "istighfar_part_2"
+  },
+  {
+    "arabicText": "أَعُوذُ بِكَ مِنْ شَرِّ",
+    "indonesianText": "Aku berlindung kepada-Mu dari kejahatan",
+    "audioUrl": null,
+    "correctArabic": "أَعُوذُ بِكَ مِنْ شَرِّ",
+    "optionsArabic": ["أَعُوذُ بِكَ مِنْ شَرِّ", "مَا صَنَعْتُ", "أَبُوءُ", "عَلَى عَهْدِكَ"],
+    "correctEnglish": "I seek refuge in You from the evil of",
+    "optionsEnglish": ["I seek refuge in You from the evil of", "What I have done", "I confess", "Keeping Your covenant"],
+    "correctIndonesian": "Aku berlindung kepada-Mu dari kejahatan",
+    "optionsIndonesian": ["Aku berlindung kepada-Mu dari kejahatan", "yang aku perbuat", "Aku mengakui", "menepati perjanjian-Mu"],
+    
+    
+    "dataType": "dua",
+    "duaName": "istighfar_part_2"
+  },
+  {
+    "arabicText": "مَا صَنَعْتُ",
+    "indonesianText": "yang aku perbuat",
+    "audioUrl": null,
+    "correctArabic": "مَا صَنَعْتُ",
+    "optionsArabic": ["مَا صَنَعْتُ", "أَبُوءُ", "مَا اسْتَطَعْتُ", "بِذَنْبِي"],
+    "correctEnglish": "what I have done",
+    "optionsEnglish": ["what I have done", "I confess", "To the best of my ability", "With my sin"],
+    "correctIndonesian": "yang aku perbuat",
+    "optionsIndonesian": ["yang aku perbuat", "Aku mengakui", "sekuat tenagaku", "dengan dosaku"],
+    
+    
+    "dataType": "dua",
+    "duaName": "istighfar_part_2"
+  }
+,
+  {
+    "arabicText": "أَبُوءُ لَكَ",
+    "indonesianText": "Aku mengakui kepada-Mu",
+    "audioUrl": null,
+    "correctArabic": "أَبُوءُ لَكَ",
+    "optionsArabic": ["أَبُوءُ لَكَ", "بِنِعْمَتِكَ", "عَلَيَّ", "بِذَنْبِي"],
+    "correctEnglish": "I confess to You",
+    "optionsEnglish": ["I confess to You", "With Your favour", "Upon me", "My sin"],
+    "correctIndonesian": "Aku mengakui kepada-Mu",
+    "optionsIndonesian": ["Aku mengakui kepada-Mu", "dengan nikmat-Mu", "atas diriku", "dosaku"],
+    
+    
+    "dataType": "dua",
+    "duaName": "istighfar_part_3"
+  },
+  {
+    "arabicText": "بِنِعْمَتِكَ عَلَيَّ",
+    "indonesianText": "dengan nikmat-Mu atasku",
+    "audioUrl": null,
+    "correctArabic": "بِنِعْمَتِكَ عَلَيَّ",
+    "optionsArabic": ["بِنِعْمَتِكَ عَلَيَّ", "وَأَبُوءُ", "فَاغْفِرْ لِي", "الذُّنُوبَ"],
+    "correctEnglish": "with Your favour upon me",
+    "optionsEnglish": ["with Your favour upon me", "And I confess", "So forgive me", "The sins"],
+    "correctIndonesian": "dengan nikmat-Mu atasku",
+    "optionsIndonesian": ["dengan nikmat-Mu atasku", "Dan aku mengakui", "Maka ampunilah aku", "dosa-dosa"],
+    
+    
+    "dataType": "dua",
+    "duaName": "istighfar_part_3"
   },
   {
     "arabicText": "وَأَبُوءُ بِذَنْبِي",
-    "indonesianText": "Dan aku mengakui dosaku",
+    "indonesianText": "dan aku mengakui dosaku",
     "audioUrl": null,
-    "correctIndonesian": "Dan aku mengakui dosaku",
-    "optionsIndonesian": [
-      "Dan aku mengakui dosaku",
-      "Aku memohon ampun kepada-Mu",
-      "Segala puji bagi Allah",
-      "Aku mengakui nikmat-Mu atas diriku"
-    ],
     "correctArabic": "وَأَبُوءُ بِذَنْبِي",
-    "optionsArabic": [
-      "وَأَبُوءُ بِذَنْبِي",
-      "أَسْتَغْفِرُكَ وَأَتُوبُ إِلَيْكَ",
-      "الْحَمْدُ لِلّٰهِ",
-      "أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ"
-    ],
+    "optionsArabic": ["وَأَبُوءُ بِذَنْبِي", "لَا يَغْفِرُ", "بِنِعْمَتِكَ", "إِلَّا أَنْتَ"],
+    "correctEnglish": "and I confess my sin",
+    "optionsEnglish": ["and I confess my sin", "None forgives", "With Your favour", "Except You"],
+    "correctIndonesian": "dan aku mengakui dosaku",
+    "optionsIndonesian": ["dan aku mengakui dosaku", "Tidak ada yang mengampuni", "Dengan nikmat-Mu", "kecuali Engkau"],
+    
+    
     "dataType": "dua",
-    "duaName": "istighfar_part_3",
-    "correctEnglish": "And I acknowledge my sins",
-    "optionsEnglish": [
-      "And I acknowledge my sins",
-      "I seek Your forgiveness",
-      "All praise is due to Allah",
-      "I acknowledge Your blessings upon me"
-    ]
+    "duaName": "istighfar_part_3"
   },
   {
     "arabicText": "فَاغْفِرْ لِي",
-    "indonesianText": "Maka ampunilah aku",
+    "indonesianText": "maka ampunilah aku",
     "audioUrl": null,
-    "correctIndonesian": "Maka ampunilah aku",
-    "optionsIndonesian": [
-      "Maka ampunilah aku",
-      "Aku mengakui dosaku",
-      "Segala puji bagi Allah",
-      "Aku mengakui nikmat-Mu atas diriku"
-    ],
     "correctArabic": "فَاغْفِرْ لِي",
-    "optionsArabic": [
-      "فَاغْفِرْ لِي",
-      "وَأَبُوءُ بِذَنْبِي",
-      "الْحَمْدُ لِلّٰهِ",
-      "أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ"
-    ],
+    "optionsArabic": ["فَاغْفِرْ لِي", "فَإِنَّهُ", "الذُّنُوبَ", "أَبُوءُ لَكَ"],
+    "correctEnglish": "so forgive me",
+    "optionsEnglish": ["so forgive me", "For verily He", "The sins", "I confess to You"],
+    "correctIndonesian": "maka ampunilah aku",
+    "optionsIndonesian": ["maka ampunilah aku", "Karena sesungguhnya Dia", "Dosa-dosa", "Aku mengakui kepada-Mu"],
+    
+    
     "dataType": "dua",
-    "duaName": "istighfar_part_3",
-    "correctEnglish": "So forgive me",
-    "optionsEnglish": [
-      "So forgive me",
-      "And I acknowledge my sins",
-      "All praise is due to Allah",
-      "I acknowledge Your blessings upon me"
-    ]
+    "duaName": "istighfar_part_3"
   },
   {
-    "arabicText": "فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ",
-    "indonesianText": "Sesungguhnya tidak ada yang mengampuni dosa-dosa kecuali Engkau",
+    "arabicText": "إِلَّا أَنْتَ",
+    "indonesianText": "kecuali Engkau",
     "audioUrl": null,
-    "correctIndonesian": "Sesungguhnya tidak ada yang mengampuni dosa-dosa kecuali Engkau",
-    "optionsIndonesian": [
-      "Sesungguhnya tidak ada yang mengampuni dosa-dosa kecuali Engkau",
-      "Aku memohon ampun kepada-Mu",
-      "All praise is due to Allah",
-      "Aku mengakui nikmat-Mu atas diriku"
-    ],
-    "correctArabic": "فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ",
-    "optionsArabic": [
-      "فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ",
-      "فَاغْفِرْ لِي",
-      "أَبُوءُ بِذَنْبِي",
-      "أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ"
-    ],
+    "correctArabic": "إِلَّا أَنْتَ",
+    "optionsArabic": ["إِلَّا أَنْتَ", "يَغْفِرُ", "بِذَنْبِي", "الذُّنُوبَ"],
+    "correctEnglish": "except You",
+    "optionsEnglish": ["except You", "Forgives", "My sin", "The sins"],
+    "correctIndonesian": "kecuali Engkau",
+    "optionsIndonesian": ["kecuali Engkau", "Mengampuni", "Dosaku", "Dosa-dosa"],
+    
+    
     "dataType": "dua",
-    "duaName": "istighfar_part_3",
-    "correctEnglish": "Indeed, none forgives sins except You",
-    "optionsEnglish": [
-      "Indeed, none forgives sins except You",
-      "So forgive me",
-      "And I acknowledge my sins",
-      "I acknowledge Your blessings upon me"
-    ]
+    "duaName": "istighfar_part_3"
+  }
+,
+  {
+    "arabicText": "رَبَّنَا",
+    "indonesianText": "Tuhan kami",
+    "audioUrl": null,
+    "correctArabic": "رَبَّنَا",
+    "optionsArabic": ["رَبَّنَا", "آتِنَا", "الدُّنْيَا", "الآخِرَةِ"],
+    "correctEnglish": "Our Lord",
+    "optionsEnglish": ["Our Lord", "Give us", "The world", "The Hereafter"],
+    "correctIndonesian": "Tuhan kami",
+    "optionsIndonesian": ["Tuhan kami", "Berikanlah kepada kami", "Dunia", "Akhirat"],
+    
+    
+    "dataType": "dua",
+    "duaName": "dua_selamat"
   },
   {
-    "arabicText": "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً",
-    "indonesianText": "Wahai Tuhan kami, berilah kami kebaikan di dunia",
+    "arabicText": "آتِنَا",
+    "indonesianText": "berikanlah kepada kami",
     "audioUrl": null,
-    "correctIndonesian": "Wahai Tuhan kami, berilah kami kebaikan di dunia",
-    "optionsIndonesian": [
-      "Wahai Tuhan kami, berilah kami kebaikan di dunia",
-      "Dan lindungilah kami dari azab",
-      "Segala puji bagi Allah",
-      "Berilah aku petunjuk"
-    ],
-    "correctArabic": "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً",
-    "optionsArabic": [
-      "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً",
-      "وَقِنَا عَذَابَ النَّارِ",
-      "الْحَمْدُ لِلّٰهِ",
-      "اهْدِنِي فِيمَنْ هَدَيْتَ"
-    ],
+    "correctArabic": "آتِنَا",
+    "optionsArabic": ["آتِنَا", "حَسَنَةً", "وَقِنَا", "عَذَابَ"],
+    "correctEnglish": "Give us",
+    "optionsEnglish": ["Give us", "Good", "And protect us", "Punishment of"],
+    "correctIndonesian": "berikanlah kepada kami",
+    "optionsIndonesian": ["berikanlah kepada kami", "Kebaikan", "Dan peliharalah kami", "Siksa"],
+    
+    
     "dataType": "dua",
-    "duaName": "dua_selamat",
-    "correctEnglish": "Our Lord, grant us good in this world",
-    "optionsEnglish": [
-      "Our Lord, grant us good in this world",
-      "And protect us from the punishment",
-      "All praise is due to Allah",
-      "Guide me among those You have guided"
-    ]
+    "duaName": "dua_selamat"
   },
   {
-    "arabicText": "وَفِي الْآخِرَةِ حَسَنَةً",
-    "indonesianText": "Dan berilah kami kebaikan di akhirat",
+    "arabicText": "حَسَنَةً",
+    "indonesianText": "kebaikan",
     "audioUrl": null,
-    "correctIndonesian": "Dan berilah kami kebaikan di akhirat",
-    "optionsIndonesian": [
-      "Dan berilah kami kebaikan di akhirat",
-      "Wahai Tuhan kami, berilah kami kebaikan di dunia",
-      "Segala puji bagi Allah",
-      "Aku memohon ampun kepada-Mu"
-    ],
-    "correctArabic": "وَفِي الْآخِرَةِ حَسَنَةً",
-    "optionsArabic": [
-      "وَفِي الْآخِرَةِ حَسَنَةً",
-      "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً",
-      "الْحَمْدُ لِلّٰهِ",
-      "أَسْتَغْفِرُكَ وَأَتُوبُ إِلَيْكَ"
-    ],
+    "correctArabic": "حَسَنَةً",
+    "optionsArabic": ["حَسَنَةً", "فِي", "الدُّنْيَا", "النَّارِ"],
+    "correctEnglish": "Good",
+    "optionsEnglish": ["Good", "In", "The world", "The Fire"],
+    "correctIndonesian": "kebaikan",
+    "optionsIndonesian": ["kebaikan", "Di", "Dunia", "Api neraka"],
+    
+    
     "dataType": "dua",
-    "duaName": "dua_selamat",
-    "correctEnglish": "And grant us good in the Hereafter",
-    "optionsEnglish": [
-      "And grant us good in the Hereafter",
-      "Our Lord, grant us good in this world",
-      "All praise is due to Allah",
-      "I seek Your forgiveness"
-    ]
+    "duaName": "dua_selamat"
   },
   {
-    "arabicText": "وَقِنَا عَذَابَ النَّارِ",
-    "indonesianText": "Dan lindungilah kami dari azab neraka",
+    "arabicText": "وَقِنَا",
+    "indonesianText": "dan peliharalah kami",
     "audioUrl": null,
-    "correctIndonesian": "Dan lindungilah kami dari azab neraka",
-    "optionsIndonesian": [
-      "Dan lindungilah kami dari azab neraka",
-      "Dan berilah kami kebaikan di akhirat",
-      "Wahai Tuhan kami, berilah kami kebaikan di dunia",
-      "Aku memohon ampun kepada-Mu"
-    ],
-    "correctArabic": "وَقِنَا عَذَابَ النَّارِ",
-    "optionsArabic": [
-      "وَقِنَا عَذَابَ النَّارِ",
-      "وَفِي الْآخِرَةِ حَسَنَةً",
-      "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً",
-      "أَسْتَغْفِرُكَ وَأَتُوبُ إِلَيْكَ"
-    ],
+    "correctArabic": "وَقِنَا",
+    "optionsArabic": ["وَقِنَا", "عَذَابَ", "رَبَّنَا", "الآخِرَةِ"],
+    "correctEnglish": "And protect us",
+    "optionsEnglish": ["And protect us", "Punishment of", "Our Lord", "The Hereafter"],
+    "correctIndonesian": "dan peliharalah kami",
+    "optionsIndonesian": ["dan peliharalah kami", "Siksa", "Tuhan kami", "Akhirat"],
+    
+    
     "dataType": "dua",
-    "duaName": "dua_selamat",
-    "correctEnglish": "And protect us from the punishment of the Fire",
-    "optionsEnglish": [
-      "And protect us from the punishment of the Fire",
-      "And grant us good in the Hereafter",
-      "Our Lord, grant us good in this world",
-      "I seek Your forgiveness"
-    ]
+    "duaName": "dua_selamat"
   },
   {
-    "arabicText": "رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ",
-    "indonesianText": "Wahai Tuhan kami, anugerahkanlah kepada kami pasangan dan keturunan yang menjadi penyejuk mata",
+    "arabicText": "النَّارِ",
+    "indonesianText": "api neraka",
     "audioUrl": null,
-    "correctIndonesian": "Wahai Tuhan kami, anugerahkanlah kepada kami pasangan dan keturunan yang menjadi penyejuk mata",
-    "optionsIndonesian": [
-      "Wahai Tuhan kami, anugerahkanlah kepada kami pasangan dan keturunan yang menjadi penyejuk mata",
-      "Dan lindungilah kami dari azab neraka",
-      "Dan berilah kami kebaikan di akhirat",
-      "Berilah aku petunjuk"
-    ],
-    "correctArabic": "رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ",
-    "optionsArabic": [
-      "رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ",
-      "وَقِنَا عَذَابَ النَّارِ",
-      "وَفِي الْآخِرَةِ حَسَنَةً",
-      "اهْدِنِي فِيمَنْ هَدَيْتَ"
-    ],
+    "correctArabic": "النَّارِ",
+    "optionsArabic": ["النَّارِ", "آتِنَا", "عَذَابَ", "حَسَنَةً"],
+    "correctEnglish": "The Fire",
+    "optionsEnglish": ["The Fire", "Give us", "Punishment of", "Good"],
+    "correctIndonesian": "api neraka",
+    "optionsIndonesian": ["api neraka", "Berikanlah kepada kami", "Siksa", "Kebaikan"],
+    
+    
     "dataType": "dua",
-    "duaName": "dua_selamat",
-    "correctEnglish": "Our Lord, grant us from our spouses and offspring comfort for our eyes",
-    "optionsEnglish": [
-      "Our Lord, grant us from our spouses and offspring comfort for our eyes",
-      "And protect us from the punishment of the Fire",
-      "And grant us good in the Hereafter",
-      "Guide me among those You have guided"
-    ]
-  },
-  {
-    "arabicText": "وَاجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا",
-    "indonesianText": "Dan jadikanlah kami pemimpin bagi orang-orang yang bertakwa",
-    "audioUrl": null,
-    "correctIndonesian": "Dan jadikanlah kami pemimpin bagi orang-orang yang bertakwa",
-    "optionsIndonesian": [
-      "Dan jadikanlah kami pemimpin bagi orang-orang yang bertakwa",
-      "Wahai Tuhan kami, anugerahkanlah pasangan dan keturunan yang menjadi penyejuk mata",
-      "Dan lindungilah kami dari azab neraka",
-      "Berilah aku petunjuk"
-    ],
-    "correctArabic": "وَاجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا",
-    "optionsArabic": [
-      "وَاجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا",
-      "رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ",
-      "وَقِنَا عَذَابَ النَّارِ",
-      "وَفِي الْآخِرَةِ حَسَنَةً"
-    ],
-    "dataType": "dua",
-    "duaName": "dua_selamat",
-    "correctEnglish": "And make us leaders for the righteous",
-    "optionsEnglish": [
-      "And make us leaders for the righteous",
-      "Our Lord, grant us from our spouses and offspring comfort for our eyes",
-      "And protect us from the punishment of the Fire",
-      "And grant us good in the Hereafter"
-    ]
+    "duaName": "dua_selamat"
   }
 
 ]
