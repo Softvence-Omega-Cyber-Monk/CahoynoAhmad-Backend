@@ -1,3 +1,5 @@
+// src/xendit-payment/xendit-payment.service.ts
+
 import {
   Injectable,
   InternalServerErrorException,
@@ -5,155 +7,148 @@ import {
   Logger,
   NotFoundException,
   HttpException,
+  BadRequestException,
 } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { Xendit } from 'xendit-node';
-import { CreateXenditPaymentDto } from './dto/create-xendit-payment.dto';
+import axios from 'axios';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { CreateXenditPaymentDto } from './dto/create-xendit-payment.dto';
+import { CreateWithdrawalRequestDto } from './dto/createWithdrawRequest.dto';
 
 @Injectable()
 export class XenditPaymentService {
   private readonly logger = new Logger(XenditPaymentService.name);
-  private xenditClient: Xendit;
   private webhookToken: string;
 
-  constructor(
-    private configService: ConfigService,
-    private readonly prisma: PrismaService,
-  ) {
-    const secretKey = process.env.XENDIT_SECRET_KEY;
-    this.webhookToken = process.env.XENDIT_CALLBACK_TOKEN!;
+  constructor(private readonly prisma: PrismaService) {
+    this.webhookToken = process.env.XENDIT_CALLBACK_TOKEN as any;
 
-    if (!secretKey) {
+    if (!process.env.XENDIT_SECRET_KEY) {
       this.logger.error('XENDIT_SECRET_KEY not configured.');
       throw new InternalServerErrorException('Payment gateway not configured.');
     }
-
-    this.xenditClient = new Xendit({ secretKey });
   }
 
-  async createInvoice(dto: CreateXenditPaymentDto,email:string) {
+  // ================= Payment / Invoice =================
+  async createInvoice(dto: CreateXenditPaymentDto, email: string) {
     const externalId = `ORD-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-    const successUrl = this.configService.get('APP_BASE_URL') + '/payment/success';
-    const failureUrl = this.configService.get('APP_BASE_URL') + '/payment/failure';
+    const successUrl = process.env.APP_BASE_URL + '/payment/success';
+    const failureUrl = process.env.APP_BASE_URL + '/payment/failure';
 
     try {
+      const user = await this.prisma.credential.findFirst({ where: { email } });
+      if (!user) throw new NotFoundException('User with this email does not exist.');
 
-      const isExistUser=await this.prisma.credential.findFirst({
-        where:{
-          email:email
-        }
-      })
-      if(!isExistUser){
-        throw new NotFoundException('User with this email does not exist.');
-      }
       this.logger.log(`Creating Xendit invoice for ${dto.amount} with external_id: ${externalId}`);
 
-      const invoice = await this.xenditClient.Invoice.createInvoice({
-        data: {
-          externalId,
+      const response = await axios.post(
+        'https://api.xendit.co/invoices',
+        {
+          external_id: externalId,
           amount: dto.amount,
           description: dto.description,
-          payerEmail: email,
-          successRedirectUrl: successUrl,
-          failureRedirectUrl: failureUrl,
+          payer_email: email,
+          success_redirect_url: successUrl,
+          failure_redirect_url: failureUrl,
           currency: dto.currency,
-          // metadata: {
-          //   planId: 'PLAN-001', // Example static planId
-          //   planName: 'Pro Plan',
-          //   // planId:dto.planId
-          //   // ...(dto.metadata ? JSON.parse(dto.metadata) : {}),
-          //   // ...(dto.planId && { planId: dto.planId }),
-          //   // ...(dto.planName && { planName: dto.planName }),
-          // },
         },
-      });
+        {
+          auth: { username: process.env.XENDIT_SECRET_KEY!, password: '' },
+        },
+      );
 
-      this.logger.log(`Xendit Invoice created successfully. ID: ${invoice.id}`);
+      const invoice = response.data;
+
       return {
         success: true,
-        invoiceUrl: invoice.invoiceUrl,
-        externalId: invoice.externalId,
+        invoiceUrl: invoice.invoice_url,
+        externalId: invoice.external_id,
         xenditId: invoice.id,
       };
-    } catch (error) {
-      // this.logger.error('Xendit API Error:', error.message, error.stack);
-      throw new HttpException(error.message, error.statusCode || 500);
+    } catch (error: any) {
+      throw new HttpException(error.response?.data || error.message, error.response?.status || 500);
     }
   }
 
-  validateWebhookSignature(receivedToken: string): void {
+  // ================= Webhook =================
+  validateWebhookSignature(receivedToken: string) {
     if (!receivedToken || receivedToken !== this.webhookToken) {
       throw new UnauthorizedException('Invalid X-Callback-Token. Webhook not from Xendit.');
     }
   }
 
-  /**
-   * Processes the Xendit webhook event, safely extracting and parsing metadata.
-   */
-  async processWebhookEvent(event: any): Promise<void> {
-    const { external_id, status, payer_email, amount, metadata: rawMetadata } = event;
-    let metadata = {};
-    if (typeof rawMetadata === 'string' && rawMetadata.length > 0) {
+  async processWebhookEvent(event: any) {
+    const { status, payer_email, amount, metadata: rawMetadata } = event;
+    let metadata: any = {};
+
+    if (typeof rawMetadata === 'string') {
       try {
         metadata = JSON.parse(rawMetadata);
-        console.log(metadata,"fronm webhook")
-      } catch (e) {
-        this.logger.error(`Failed to parse metadata string for Order: ${external_id}`, e.stack);
+      } catch {}
+    } else if (typeof rawMetadata === 'object') metadata = rawMetadata;
+
+    const { planId, planName } = metadata;
+
+    if (status === 'PAID') {
+      try {
+        await this.prisma.payment.create({
+          data: { userEmail: payer_email, amount, status, planId, planName },
+        });
+
+        await this.prisma.credential.updateMany({
+          where: { email: payer_email },
+          data: { isSubscribe: true, subscription: planName || 'PREMIUM' },
+        });
+
+        this.logger.log(`Payment successful for ${payer_email}`);
+      } catch (err) {
+        this.logger.error('Failed to save payment to DB', err.stack);
       }
-    } else if (typeof rawMetadata === 'object' && rawMetadata !== null) {
-      metadata = rawMetadata;
+    } else {
+      this.logger.warn(`Unhandled payment status: ${status}`);
     }
-    const { planId, planName } = metadata as { planId?: string; planName?: string };
-    console.log(metadata,"fronm webhook")
-    this.logger.debug(`Processing event ${event.event} for order ${external_id}. Status: ${status}, Plan: ${planName}`);
-    
-    switch (status) {
-      case 'PAID':
-        this.logger.log(`✅ Payment successful for Order: ${external_id}`);
-        
-        try {
-          await this.prisma.payment.create({
-            data: {
-              userEmail: payer_email,
-              amount,
-              status,
-              // These will be undefined if not found, which is safe for the DB
-              planId,
-              planName,
-            },
-          });
-          // Use updateMany when filtering by non-unique fields like email
-          const updateResult = await this.prisma.credential.updateMany({
-            where: {
-              email: payer_email,
-            },
-            data: {
-              isSubscribe: true,
-              subscription: planName || 'PREMIUM',
-            },
-          });
-          console.log(updateResult)
-          if (updateResult.count === 0) {
-            this.logger.warn(`No credential found for email ${payer_email} to update subscription status.`);
-          }
-          this.logger.log(`Payment record created for ${payer_email}. Plan: ${planName}`);
+  }
 
-        } catch (err) {
-          this.logger.error('Failed to save payment to DB', err.stack);
-        }
-        break;
+  // ================= Withdrawal =================
+  async createWithdrawlRequst(dto: CreateWithdrawalRequestDto, userId: string) {
+    const user = await this.prisma.credential.findFirst({ where: { id: userId } });
+    if (!user) throw new NotFoundException('User not found');
+    if (user.total_earnings < dto.amount) throw new BadRequestException('Insufficient balance');
 
-      case 'PENDING':
-        this.logger.warn(`Payment is still pending for Order: ${external_id}`);
-        break;
+    return this.prisma.withdrawalRequest.create({ data: { ...dto, userId } });
+  }
 
-      case 'EXPIRED':
-        this.logger.warn(`❌ Payment expired for Order: ${external_id}`);
-        break;
+ async acceptWithdrawRequestManual(withdrawalId: string, adminId: string) {
+  const request = await this.prisma.withdrawalRequest.findUnique({
+    where: { id: withdrawalId },
+    include: { user: true },
+  });
 
-      default:
-        this.logger.warn(`Unhandled Xendit status: ${status} for Order: ${external_id}`);
-    }
+  if (!request) throw new NotFoundException('Withdrawal request not found');
+  if (request.status !== 'PENDING') throw new BadRequestException('Request is not pending');
+
+  // Mark as PROCESSING (optional)
+  await this.prisma.withdrawalRequest.update({
+    where: { id: withdrawalId },
+    data: { status: 'PROCESSING' },
+  });
+
+  // Admin gives money manually here (outside app)
+
+  // Mark as SUCCESS after transfer
+  await this.prisma.withdrawalRequest.update({
+    where: { id: withdrawalId },
+    data: {
+      status: 'SUCCESS',
+      xenditId: null, // no Xendit involved
+      failureMessage: null,
+    },
+  });
+
+  return { success: true, message: 'Withdrawal manually processed' };
+}
+
+
+  async getWithdrawals() {
+    return this.prisma.withdrawalRequest.findMany({ include: { user: true } });
   }
 }

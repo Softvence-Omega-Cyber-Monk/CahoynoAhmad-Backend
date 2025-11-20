@@ -1,0 +1,24 @@
+model WithdrawalRequest {
+  id              String          @id @default(uuid())
+  userId          String
+  amount          Float
+  bankCode        String
+  accountNumber   String
+  accountName     String
+  status          WithdrawStatus  @default(PENDING)
+  xenditId        String?
+  failureMessage  String?
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user            Credential  @relation(fields: [userId], references: [id])
+}
+
+enum WithdrawStatus {
+  PENDING
+  APPROVED
+  PROCESSING
+  SUCCESS
+  FAILED
+}
