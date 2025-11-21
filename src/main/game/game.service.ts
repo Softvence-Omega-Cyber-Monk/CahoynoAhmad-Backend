@@ -584,4 +584,102 @@ async deleteDuaTable(){
     message:"Deleted all dua data"
   }
 }
+
+// //* COMPOETE MISSIONS OF USER
+async completeUserMission(userId: string, missionId: string) {
+  //  Fetch the user mission
+  const userMission = await this.prisma.userQuest.findFirst({
+    where: {
+      id: missionId,
+      userId,
+    },
+    include: { quest: true },
+  });
+
+  if (!userMission) {
+    throw new ForbiddenException("Mission not found");
+  }
+
+  //  Check if already completed
+  if (userMission.status === QuestStatus.COMPLETED) {
+    const message =
+      userMission.quest.type === QuestType.WEEKLY
+        ? "You have already completed this weekly mission. Come back next week!"
+        : "You have already completed this daily mission. Come back again tomorrow!";
+    return {
+      success: false,
+      message,
+    };
+  }
+
+  //  Mark as completed
+  await this.prisma.userQuest.update({
+    where: { id: missionId },
+    data: {
+      status: QuestStatus.COMPLETED,
+      completedAt: new Date(),
+    },
+  });
+
+  // Reward XP
+  if (userMission.quest?.xpReward) {
+    await this.prisma.credential.update({
+      where: { id: userId },
+      data: {
+        totalXP: { increment: userMission.quest.xpReward },
+      },
+    });
+  }
+
+  // Prepare success message
+  const successMessage =
+    userMission.quest.type === QuestType.WEEKLY
+      ? `Weekly mission "${userMission.quest.title}" completed! You earned ${userMission.quest.xpReward} XP. Come back next week for a new one.`
+      : `Daily mission "${userMission.quest.title}" completed! You earned ${userMission.quest.xpReward} XP. Come back tomorrow for a new one.`;
+
+  return {
+    success: true,
+    message: successMessage,
+    data: {
+      missionId: userMission.id,
+      title: userMission.quest.title,
+      xpReward: userMission.quest.xpReward,
+      type: userMission.quest.type,
+    },
+  };
+}
+
+
+async getDailyQuests(userId: string) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  return this.prisma.userQuest.findMany({
+    where: {
+      userId,
+      quest: { type: QuestType.DAILY },
+      assignedAt: { gte: today },
+    },
+    include: { quest: true },
+  });
+}
+
+async getWeeklyQuests(userId: string) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const startOfWeek = new Date(today);
+  startOfWeek.setDate(today.getDate() - today.getDay());
+  startOfWeek.setHours(0, 0, 0, 0);
+
+  return this.prisma.userQuest.findMany({
+    where: {
+      userId,
+      quest: { type: QuestType.WEEKLY },
+      assignedAt: { gte: startOfWeek },
+    },
+    include: { quest: true },
+  });
+}
+
 }

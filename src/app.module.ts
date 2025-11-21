@@ -43,6 +43,6 @@ import { PlanModule } from './main/plan/plan.module';
     PlanModule,
   ],
   controllers: [AppController],
-  providers: [AppService, CloudinaryService,AppInitializerService,SeederService],
+  providers: [AppService, CloudinaryService,SeederService],
 })
 export class AppModule {}

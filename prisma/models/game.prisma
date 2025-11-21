@@ -15,9 +15,9 @@ model GameData {
   ayahId            Int?
  dataType String?
   duaName String?
-  ayah              Ayah?       @relation(fields: [ayahId], references: [id])
-  surah             Surah?      @relation(fields: [surahId], references: [id])
-  dua               Dua? @relation(fields: [duaName],references: [duaName])
+  ayah              Ayah?       @relation(fields: [ayahId], references: [id],onDelete: Cascade)
+  surah             Surah?      @relation(fields: [surahId], references: [id],onDelete: Cascade)
+  dua               Dua? @relation(fields: [duaName],references: [duaName],onDelete: Cascade)
   userAnswers       UserAnswer[]
 }
 
@@ -45,7 +45,7 @@ model UserAnswer {
   answeredAt DateTime   @default(now())
   isCorrect  Boolean
   totalAns   Int?
-  game       GameData   @relation(fields: [gameId], references: [id])
+  game       GameData   @relation(fields: [gameId], references: [id],onDelete:Cascade)
   user       Credential @relation(fields: [userId], references: [id],onDelete: Cascade)
 }
 
@@ -61,8 +61,8 @@ model Quest {
   targetCount Int?
   targetJuz   Int?
   targetSurah Int?
-  ayah        Ayah?       @relation(fields: [ayahId], references: [id])
-  surah       Surah?      @relation(fields: [surahId], references: [id])
+  ayah        Ayah?       @relation(fields: [ayahId], references: [id],onDelete: Cascade)
+  surah       Surah?      @relation(fields: [surahId], references: [id],onDelete: Cascade)
   userQuests  UserQuest[]
 }
 
@@ -71,9 +71,9 @@ model UserQuest {
   userId      String
   questId     String
   status      QuestStatus @default(IN_PROGRESS)
-  assignedAt  DateTime    @default(now())
+  assignedAt DateTime @default(now())  
   completedAt DateTime?
-  quest       Quest       @relation(fields: [questId], references: [id])
+  quest       Quest       @relation(fields: [questId], references: [id],onDelete: Cascade)
   user        Credential  @relation(fields: [userId], references: [id],onDelete: Cascade)
 
   @@unique([userId, questId])

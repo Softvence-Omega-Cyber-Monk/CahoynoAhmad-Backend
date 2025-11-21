@@ -116,49 +116,51 @@ export class GameController {
     }
   }
 
-  @Get('quests/daily')
-  @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth()
-  @ApiOperation({ summary: 'Get a user\'s daily quests for today' })
-  @ApiResponse({ status: 200, description: 'List of daily quests for the user' })
-  async getDailyQuests(@Req() req: any) {
+@Get('quests/daily')
+@UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
+@ApiOperation({ summary: 'Get a user\'s daily quests for today' })
+@ApiResponse({ status: 200, description: 'List of daily quests for the user' })
+async getDailyQuests(@Req() req: any) {
+  try {
     const userId = req.user.userId;
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const quests = await this.gameService['prisma'].userQuest.findMany({
-      where: {
-        userId,
-        quest: { type: QuestType.DAILY },
-        assignedAt: { gte: today },
-      },
-      include: { quest: true },
-    });
-    return quests;
+    const quests = await this.gameService.getDailyQuests(userId);
+    return {
+      statusCode: 200,
+      message: 'Daily quests fetched successfully',
+      data: quests,
+    };
+  } catch (error) {
+    return {
+      statusCode: error.status || 500,
+      message: error.message || 'Unexpected error',
+    };
   }
+}
 
-  @Get('quests/weekly')
-  @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth()
-  @ApiOperation({ summary: 'Get a user\'s weekly quests for the current week' })
-  @ApiResponse({ status: 200, description: 'List of weekly quests for the user' })
-  async getWeeklyQuests(@Req() req: any) {
+@Get('quests/weekly')
+@UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
+@ApiOperation({ summary: 'Get a user\'s weekly quests for the current week' })
+@ApiResponse({ status: 200, description: 'List of weekly quests for the user' })
+async getWeeklyQuests(@Req() req: any) {
+  try {
     const userId = req.user.userId;
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const startOfWeek = new Date(today.setDate(today.getDate() - today.getDay()));
-
-    const quests = await this.gameService['prisma'].userQuest.findMany({
-      where: {
-        userId,
-        quest: { type: QuestType.WEEKLY },
-        assignedAt: { gte: startOfWeek },
-      },
-      include: { quest: true },
-    });
-    return quests;
+    const quests = await this.gameService.getWeeklyQuests(userId);
+    return {
+      statusCode: 200,
+      message: 'Weekly quests fetched successfully',
+      data: quests,
+    };
+  } catch (error) {
+    return {
+      statusCode: error.status || 500,
+      message: error.message || 'Unexpected error',
+    };
   }
+}
+
+
 
   @Get('dua/get-all-dua')
   async getAllDua(){
@@ -235,6 +237,23 @@ async deleteDuaTable(){
     return{
       statusCode:HttpStatus.OK,
       message:res.message,
+    }
+  }catch(error){
+    throw new InternalServerErrorException(error.message, error.status)
+  }
+}
+
+
+@UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
+@Patch('complete-mission/:missionId')
+async completeQuest(@Param('missionId') missionId:string,@Req() req:any,){
+  try{
+    const res=await this.gameService.completeUserMission(req.user.userId,missionId)
+    return{
+      statusCode:HttpStatus.OK,
+      message:res.message,
+      data:res.data
     }
   }catch(error){
     throw new InternalServerErrorException(error.message, error.status)
