@@ -13,6 +13,7 @@ import axios from 'axios';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateXenditPaymentDto } from './dto/create-xendit-payment.dto';
 import { CreateWithdrawalRequestDto } from './dto/createWithdrawRequest.dto';
+import { GetWithdrawlsDto } from './dto/getWithdrawls.dto';
 
 @Injectable()
 export class XenditPaymentService {
@@ -111,9 +112,14 @@ export class XenditPaymentService {
   // ================= Withdrawal =================
   async createWithdrawlRequst(dto: CreateWithdrawalRequestDto, userId: string) {
     const user = await this.prisma.credential.findFirst({ where: { id: userId } });
+
     if (!user) throw new NotFoundException('User not found');
+
     if (user.total_earnings < dto.amount) throw new BadRequestException('Insufficient balance');
 
+    if(user.total_earnings<500){
+      throw new BadRequestException('Minimum withdrawal amount is 500');
+    }
     return this.prisma.withdrawalRequest.create({ data: { ...dto, userId } });
   }
 
@@ -122,7 +128,7 @@ export class XenditPaymentService {
     where: { id: withdrawalId },
     include: { user: true },
   });
-
+  
   if (!request) throw new NotFoundException('Withdrawal request not found');
   if (request.status !== 'PENDING') throw new BadRequestException('Request is not pending');
 
@@ -148,7 +154,20 @@ export class XenditPaymentService {
 }
 
 
-  async getWithdrawals() {
-    return this.prisma.withdrawalRequest.findMany({ include: { user: true } });
+//* Get withdrawls
+  async getWithdrawals(filter:GetWithdrawlsDto) {
+    const {page=1,limit=10,status}=filter
+    const skip=(page-1)*limit
+    const where:any={}
+    if(status){
+      where.status=status
+    }
+    return this.prisma.withdrawalRequest.findMany({ 
+      where,
+      skip,
+      take:Number(limit),
+      orderBy:{createdAt:'desc'},
+      include: { user: true } 
+    });
   }
 }

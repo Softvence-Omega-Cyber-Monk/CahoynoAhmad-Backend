@@ -114,7 +114,7 @@ export class GameService {
   }
   
 async submitAnswer(userId: string, gameId: string, answer: string) {
-  // 1️⃣ Fetch the question with related Surah & Juz (if exists)
+  // 1️⃣ Fetch the question with related Surah & Juz
   const game = await this.prisma.gameData.findUnique({
     where: { id: gameId },
     include: {
@@ -126,31 +126,30 @@ async submitAnswer(userId: string, gameId: string, answer: string) {
     throw new NotFoundException(`Game question with ID ${gameId} not found`);
   }
 
-  //* Determine type: null = surah, 'dua' = dua
-  const type = game.dataType ?? 'surah';
+  // 2️⃣ Determine type (surah / dua)
+  const type = game.dataType ?? "surah";
 
-  //*  Normalize and check correctness
-  const normalize = (s?: string) => (s ?? '').trim().toLowerCase();
+  // 3️⃣ Normalize answer
+  const normalize = (s?: string) => (s ?? "").trim().toLowerCase();
+
   const isCorrect =
     normalize(answer) === normalize(game.correctIndonesian) ||
     normalize(answer) === normalize(game.correctArabic) ||
     normalize(answer) === normalize(game.correctEnglish);
 
-  //  Find existing answer
+  // 4️⃣ Find existing answer
   const existingAnswer = await this.prisma.userAnswer.findFirst({
     where: { userId, gameId },
   });
 
   let scoreIncrement = 0;
 
-  //  Calculate score increment
-  if (!existingAnswer) {
-    if (isCorrect) scoreIncrement = 1;
-  } else if (!existingAnswer.isCorrect && isCorrect) {
+  // 5️⃣ Score increment logic
+  if (!existingAnswer && isCorrect) scoreIncrement = 1;
+  else if (existingAnswer && !existingAnswer.isCorrect && isCorrect)
     scoreIncrement = 1;
-  }
 
-  // Create or update user's answer
+  // 6️⃣ Create / update answer
   if (existingAnswer) {
     await this.prisma.userAnswer.update({
       where: { id: existingAnswer.id },
@@ -162,21 +161,21 @@ async submitAnswer(userId: string, gameId: string, answer: string) {
     });
   }
 
-  //  Prepare progress query
+  // 7️⃣ Prepare progress lookup
   const progressWhere: any = { userId, dataType: type };
-  if (type === 'surah') progressWhere.surahId = game.surahId!;
-  else if (type === 'dua') progressWhere.duaName = game.duaName!;
+  if (type === "surah") progressWhere.surahId = game.surahId!;
+  else progressWhere.duaName = game.duaName!;
 
-  // Fetch or create progress
+  // 8️⃣ Fetch or create progress
   let progress = await this.prisma.userGameProgress.findFirst({
     where: progressWhere,
   });
 
   if (progress?.completed) {
     throw new ForbiddenException(
-      type === 'surah'
-        ? 'You have already completed this Surah.'
-        : 'You have already completed this Dua.'
+      type === "surah"
+        ? "You have already completed this Surah."
+        : "You have already completed this Dua."
     );
   }
 
@@ -185,8 +184,8 @@ async submitAnswer(userId: string, gameId: string, answer: string) {
       data: {
         userId,
         dataType: type,
-        surahId: type === 'surah' ? game.surahId! : null,
-        duaName: type === 'dua' ? game.duaName! : null,
+        surahId: type === "surah" ? game.surahId! : null,
+        duaName: type === "dua" ? game.duaName! : null,
         score: scoreIncrement,
         completed: false,
       },
@@ -198,58 +197,64 @@ async submitAnswer(userId: string, gameId: string, answer: string) {
     });
   }
 
-  // 9️⃣ Count total questions for this item
+  // 9️⃣ Count total questions
   const totalQuestions = await this.prisma.gameData.count({
     where:
-      type === 'surah'
+      type === "surah"
         ? { surahId: game.surahId }
-        : { dataType: 'dua', duaName: game.duaName },
+        : { dataType: "dua", duaName: game.duaName },
   });
 
-  // 🔟 Check completion
-  let completed = false;
+  // 🔟 Fetch updated progress
   const updatedProgress = await this.prisma.userGameProgress.findUnique({
     where: { id: progress.id },
   });
 
-  if (updatedProgress && updatedProgress.score! >= totalQuestions && !updatedProgress.completed) {
+  let completed = false;
+
+  // 1️⃣1️⃣ Check completion
+  if (
+    updatedProgress &&
+    updatedProgress.score! >= totalQuestions &&
+    !updatedProgress.completed
+  ) {
     completed = true;
 
-    // Mark as completed
     await this.prisma.userGameProgress.update({
       where: { id: updatedProgress.id },
       data: { completed: true },
     });
 
     // Reward XP
-    const xpReward = type === 'surah' ? 20 : 10;
+    const xpReward = type === "surah" ? 20 : 10;
     await this.prisma.credential.update({
       where: { id: userId },
       data: { totalXP: { increment: xpReward } },
     });
 
-    // Daily quest only for Surah
-    if (type === 'surah') {
+    // Daily quest for Surah
+    if (type === "surah") {
       await this.completeDailyQuest(userId, game.surahId!, game.ayahId!);
     }
   } else if (updatedProgress?.completed) {
     completed = true;
   }
 
-  // 1️⃣1️⃣ Weekly quests for both types
+  // 1️⃣2️⃣ Weekly quests
   await this.checkAndCompleteWeeklyQuests(
     userId,
     isCorrect,
     completed,
-    type === 'surah' ? game.surahId : null,
+    type === "surah" ? game.surahId : null,
     game.surah?.juzId ?? null
   );
 
-  // 1️⃣2️⃣ Update overall progress
+  // 1️⃣3️⃣ Update total overall progress
   const completedItems = await this.prisma.userGameProgress.count({
     where: { userId, completed: true },
   });
-  const totalItems = 114 + 18; // total surah + total dua
+
+  const totalItems = 114 + 18;
   const progressPercent = (completedItems / totalItems) * 100;
 
   await this.prisma.credential.update({
@@ -257,15 +262,40 @@ async submitAnswer(userId: string, gameId: string, answer: string) {
     data: { progress: progressPercent },
   });
 
-  // 🔚 Return result
+
+  // 1️⃣4️⃣ total correct and total wrong
+  const answerFilter =
+    type === "surah"
+      ? { userId, game: { surahId: game.surahId } }
+      : { userId, game: { dataType: "dua", duaName: game.duaName } };
+
+  const totalCorrect = await this.prisma.userAnswer.count({
+    where: { ...answerFilter, isCorrect: true },
+  });
+
+  const totalWrong = await this.prisma.userAnswer.count({
+    where: { ...answerFilter, isCorrect: false },
+  });
+
+  // * Final Score %
+  const finalScore =
+    totalQuestions > 0 ? (totalCorrect / totalQuestions) * 100 : 0;
+
+  //* Final response
   return {
     isCorrect,
     answeredCount: updatedProgress?.score ?? 0,
     totalQuestions,
     completed,
-    overallProgress: progressPercent.toFixed(2), // percentage
+    overallProgress: progressPercent.toFixed(2),
+    summary: {
+      totalCorrect,
+      totalWrong,
+      finalScore: finalScore.toFixed(2) + "%",
+    },
   };
 }
+
 
 
 

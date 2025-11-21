@@ -9,14 +9,15 @@ import {
   UsePipes, 
   ValidationPipe,
   Logger,
-  HttpStatus, // Added HttpStatus for clean code
+  HttpStatus,
   HttpException,
   UseGuards,
   Req,
   InternalServerErrorException,
   Patch,
   Param,
-  Get
+  Get,
+  Query
 } from '@nestjs/common';
 import { XenditPaymentService } from './xendit-payment.service';
 
@@ -25,6 +26,7 @@ import type { XenditInvoiceEvent } from './dto/event.interface';
 import { JwtAuthGuard } from 'src/utils/jwt-auth.guard';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
 import { CreateWithdrawalRequestDto } from './dto/createWithdrawRequest.dto';
+import { GetWithdrawlsDto } from './dto/getWithdrawls.dto';
 
 @Controller('xendit-payment')
 @UsePipes(new ValidationPipe({ transform: true }))
@@ -139,12 +141,27 @@ async createWithdreawlRequest(@Body() dto:CreateWithdrawalRequestDto,@Req() req:
 
 
   @Get('withdrawl-request')
-  async getAllWithdrawelRequest(){
+  async getAllWithdrawelRequest(@Query() filter:GetWithdrawlsDto){
     try{
-      return this.xenditPaymentService.getWithdrawals()
+      const res=await this.xenditPaymentService.getWithdrawals(filter)
+      return{
+        status:HttpStatus.OK,
+        message:"Withdrawls request fetched successfully",
+        data:res
+        
+      }
     }catch(error){
       throw new InternalServerErrorException(error.messge,error.status)
     }
   }
 
+
+  @Patch('decline-payment')
+  async declinePayment(){
+    try{
+
+    }catch(error){
+      throw new InternalServerErrorException(error.message, error.status)
+    }
+  }
 }
