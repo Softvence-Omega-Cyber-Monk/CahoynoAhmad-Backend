@@ -7,6 +7,7 @@ import { QuestStatus, QuestType } from 'generated/prisma';
 import * as fs from 'fs';
 import * as path from 'path';
 import { DuaDto } from './dto/createDua.dto';
+import { GetGameDto } from './dto/getGame.dto';
 
 
 @Injectable()
@@ -50,8 +51,12 @@ export class GameService {
     });
   }
   
-  async findAll() {
+  async findAll(filer:GetGameDto) {
+    const {page=1,limit=10}=filer
+    const skip=(page-1)*limit
     return this.prisma.gameData.findMany({
+      skip:skip,
+      take:limit,
       orderBy: { createdAt: 'desc' },
     });
   }

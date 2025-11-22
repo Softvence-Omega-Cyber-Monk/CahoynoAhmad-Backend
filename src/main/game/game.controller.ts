@@ -7,6 +7,7 @@ import { UpdateGameDto } from './dto/update-game.dto';
 import { JwtAuthGuard } from 'src/utils/jwt-auth.guard';
 import { QuestType } from 'generated/prisma';
 import { DuaDto } from './dto/createDua.dto';
+import { GetGameDto } from './dto/getGame.dto';
 
 
 @ApiTags('Game')
@@ -50,8 +51,8 @@ export class GameController {
   @Get()
   @ApiOperation({ summary: 'Get all game questions' })
   @ApiResponse({ status: 200, description: 'List of game questions' })
-  findAll() {
-    return this.gameService.findAll();
+  findAll(@Query() filter:GetGameDto) {
+    return this.gameService.findAll(filter);
   }
 
   @Get(':id')
