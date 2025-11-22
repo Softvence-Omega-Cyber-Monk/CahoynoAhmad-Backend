@@ -38,7 +38,7 @@ export class GameService {
         arabicText: createGameDto.arabicText,
         indonesianText: createGameDto.indonesianText,
         audioUrl: createGameDto.audioUrl ?? null,
-        correctIndonesian: createGameDto.correct,
+        correctIndonesian: createGameDto.correctIndonesian,
         optionsIndonesian: createGameDto.optionsIndonesian,
         correctArabic: createGameDto.correctArabic,
         optionsArabic: createGameDto.optionsArabic,
@@ -76,6 +76,7 @@ export class GameService {
   }
 
   async update(id: string, updateGameDto: UpdateGameDto) {
+    console.log(updateGameDto)
     const game = await this.prisma.gameData.findUnique({ where: { id } });
     if (!game) {
       throw new NotFoundException(`Game question with id ${id} not found`);
@@ -88,7 +89,7 @@ export class GameService {
         arabicText: updateGameDto.arabicText,
         indonesianText: updateGameDto.indonesianText,
         audioUrl: updateGameDto.audioUrl ?? null,
-        correctIndonesian: updateGameDto.correct,
+        correctIndonesian: updateGameDto.correctIndonesian,
         optionsIndonesian: updateGameDto.optionsIndonesian,
         correctArabic: updateGameDto.correctArabic,
         optionsArabic: updateGameDto.optionsArabic,

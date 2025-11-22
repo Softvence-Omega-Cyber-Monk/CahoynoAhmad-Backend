@@ -75,7 +75,7 @@ export class GameController {
     
     }
   }
-
+  
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a game question by ID' })
   remove(@Param('id') id: string) {

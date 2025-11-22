@@ -30,7 +30,7 @@ export class CreateGameDto {
   //  Indonesian side
   @ApiProperty({ example: 'Praise', description: 'Correct Indonesian meaning' })
   @IsString()
-  correct: string;
+  correctIndonesian: string;
 
   @ApiProperty({
     example: ['Praise', 'Book', 'Mercy', 'Day'],
