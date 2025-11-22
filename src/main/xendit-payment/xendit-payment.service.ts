@@ -170,4 +170,12 @@ export class XenditPaymentService {
       include: { user: true } 
     });
   }
+
+  //* withdrawl history
+  async getMyWithdrawlHistory(userId:string){
+    return this.prisma.withdrawalRequest.findMany({
+      where:{userId},
+      orderBy:{createdAt:'desc'}
+    })
+  }
 }

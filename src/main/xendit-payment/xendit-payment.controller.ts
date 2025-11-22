@@ -164,4 +164,22 @@ async createWithdreawlRequest(@Body() dto:CreateWithdrawalRequestDto,@Req() req:
       throw new InternalServerErrorException(error.message, error.status)
     }
   }
+
+
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @Get('my-withdrawl-history')
+  async getMyWithdrawlHistory(@Req() req:any){
+    try{
+      const user=req.user
+      const res=await this.xenditPaymentService.getMyWithdrawlHistory(user.userId)
+      return{
+        status:HttpStatus.OK,
+        message:"Withdrawls history fetched successfully",
+        data:res
+      }
+    }catch(error){
+      throw new InternalServerErrorException(error.message, error.status)
+    }
+  }
 }
