@@ -123,7 +123,7 @@ export class XenditPaymentService {
     return this.prisma.withdrawalRequest.create({ data: { ...dto, userId } });
   }
 
- async acceptWithdrawRequestManual(withdrawalId: string, adminId: string) {
+  async acceptWithdrawRequestManual(withdrawalId: string, adminId: string) {
   const request = await this.prisma.withdrawalRequest.findUnique({
     where: { id: withdrawalId },
     include: { user: true },
@@ -151,10 +151,10 @@ export class XenditPaymentService {
   });
 
   return { success: true, message: 'Withdrawal manually processed' };
-}
+ }
 
 
-//* Get withdrawls
+  //* Get withdrawls
   async getWithdrawals(filter:GetWithdrawlsDto) {
     const {page=1,limit=10,status}=filter
     const skip=(page-1)*limit

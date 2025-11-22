@@ -42,13 +42,22 @@ export class AuthService {
           }
         });
         if(refferUser){
+          const payment=await this.prisma.payment.findFirst({
+            where:{
+              userId:refferUser.id,
+            }
+          })
+          if(!payment){
+            throw new HttpException('We do not accept referrals from free-tier users.', HttpStatus.BAD_REQUEST);
+          }
+          const increMentPercent=(payment.amount*10)/100
           await this.prisma.credential.update({
             where:{
               id:refferUser.id
             },
             data:{
               totalAffiliate:{increment:1},
-              total_earnings:{increment:50}
+              total_earnings:{increment:increMentPercent}
             }
           });
         }
