@@ -317,4 +317,34 @@ async updateUserProgress(userId: string) {
   return progress;
 }
 
+
+//* get user report
+async getUserReport(userId: string) {
+  const totalCorrectAns = await this.prisma.userAnswer.count({
+    where: {
+      userId,
+      isCorrect: true,
+    },
+  });
+
+  const totalWrongAns = await this.prisma.userAnswer.count({
+    where: {
+      userId,
+      isCorrect: false,
+    },
+  });
+
+  const totalAnswers = totalCorrectAns + totalWrongAns;
+
+  const accuracy =
+    totalAnswers > 0 ? (totalCorrectAns / totalAnswers) * 100 : 0;
+
+  return {
+    totalCorrectAns,
+    totalWrongAns,
+    totalAnswers,
+    accuracy: Number(accuracy.toFixed(2)),
+  };
+}
+
 }

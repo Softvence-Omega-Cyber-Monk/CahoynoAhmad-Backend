@@ -12,6 +12,8 @@ import {
   HttpStatus,
   Delete,
   Param,
+  InternalServerErrorException,
+  Req,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { JwtAuthGuard } from 'src/utils/jwt-auth.guard';
@@ -210,6 +212,24 @@ export class UserController {
       };
     } catch (error) {
       throw new HttpException(error.message, error.status);
+    }
+  }
+
+
+   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @Get('user-report')
+  async getUserReport(@Req() req:any){
+    try{
+      const user=req.user
+      const res=await this.userService.getUserReport(user.userId)
+      return{
+        status:HttpStatus.OK,
+        message:"User report fetch succesful",
+        data:res
+      }
+    }catch(error){
+      throw new InternalServerErrorException(error.message,error.status)
     }
   }
 }
