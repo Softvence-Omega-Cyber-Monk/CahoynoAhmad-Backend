@@ -12,14 +12,14 @@ export class QuestSchedulerService {
     private readonly questService: QuestService,
   ) {}
 
-  // TESTING MODE → Runs every 5 seconds
-  @Cron(CronExpression.EVERY_5_SECONDS)
+  // TESTING MODE → Runs every day
+  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
   async handleDailyQuestCron() {
     this.logger.log('Running DAILY quest test cron...');
     await this.assignQuestsToAllUsers('DAILY');
   }
 
-  @Cron(CronExpression.EVERY_5_SECONDS)
+  @Cron(CronExpression.EVERY_WEEK)
   async handleWeeklyQuestCron() {
     this.logger.log('Running WEEKLY quest test cron...');
     await this.assignQuestsToAllUsers('WEEKLY');
