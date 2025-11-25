@@ -25,6 +25,7 @@ export class QuestSchedulerService {
     await this.assignQuestsToAllUsers('WEEKLY');
   }
 
+  //*assing dailyQuest
   private async assignQuestsToAllUsers(questType: 'DAILY' | 'WEEKLY') {
     const users = await this.prisma.credential.findMany({ select: { id: true } });
 
