@@ -18,7 +18,6 @@ export class QuranService {
   async seedQuran() {
     const filePath = path.join(__dirname, '..', '..', '..', 'quran.json');
     const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-
     for (const surah of data) {
       await this.prisma.surah.create({
         data: {
