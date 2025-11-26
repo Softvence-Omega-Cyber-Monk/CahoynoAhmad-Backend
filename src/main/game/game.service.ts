@@ -521,7 +521,8 @@ async deleteBulkGame(){
 async getAllDuaGame(){
   const dua=await this.prisma.gameData.findMany({
     where:{
-      dataType:"dua"
+      ayahId:null,
+      surahId:null
     }
   })
   return dua
