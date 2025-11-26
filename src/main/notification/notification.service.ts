@@ -3,12 +3,9 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import * as admin from 'firebase-admin';
 import { FirebaseAdmin } from './firebase/admin.provider';
 
-
-
 interface BroadcastPayload {
   title: string;
   body: string;
-
 }
 
 @Injectable()
@@ -20,10 +17,11 @@ export class NotificationService {
     @Inject(FirebaseAdmin) private readonly firebaseApp: admin.app.App,
   ) {}
 
+  // 🔊 Broadcast to all
   async broadcastToAll(payload: BroadcastPayload) {
     const credentials = await this.prisma.credential.findMany({
       select: { fcmToken: true },
-      where: { fcmToken: { not: null }}
+      where: { fcmToken: { not: null } }
     });
 
     if (!credentials.length) {
@@ -39,11 +37,6 @@ export class NotificationService {
         title: payload.title,
         body: payload.body,
       },
-      data: {
-        // deepLink: payload.deepLink ?? '',
-        // contentType: payload.contentType,
-        // contentId: payload.contentId ?? '',
-      },
       android: { priority: 'high' },
       apns: { payload: { aps: { sound: 'default', contentAvailable: true } } },
     });
@@ -52,6 +45,7 @@ export class NotificationService {
       `Broadcast complete: success=${resp.successCount}, fail=${resp.failureCount}`,
     );
 
+    // Remove invalid tokens
     const invalidTokens = resp.responses
       .map((r, i) =>
         !r.success &&
@@ -74,22 +68,21 @@ export class NotificationService {
     return { message: 'Broadcast sent' };
   }
 
-async sendToUser(payload: BroadcastPayload, userId: string) {
-  const credentials = await this.prisma.credential.findUnique({
-    where: { id: userId },
-    select: { fcmToken: true },
-  });
+  // 🎯 Send notification to ONE USER
+  async sendToUser(payload: BroadcastPayload, userId: string) {
+    const credentials = await this.prisma.credential.findUnique({
+      where: { id: userId },
+      select: { fcmToken: true },
+    });
 
-  if (!credentials?.fcmToken) return;
+    if (!credentials?.fcmToken) return;
 
-  await this.firebaseApp.messaging().sendEachForMulticast({
-    tokens: [credentials.fcmToken],
-    notification: {
-      title: payload.title,
-      body: payload.body,
-    },
-  });
-}
-
-
+    await this.firebaseApp.messaging().sendEachForMulticast({
+      tokens: [credentials.fcmToken], // ✅ Correct
+      notification: {
+        title: payload.title,
+        body: payload.body,
+      },
+    });
+  }
 }
