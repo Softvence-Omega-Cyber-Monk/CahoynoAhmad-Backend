@@ -254,7 +254,7 @@ async submitAnswer(userId: string, gameId: string, answer: string) {
         body:
           type === "surah"
             ? `Great job! You finished Surah ${game.surah?.name}!`
-            : `You finished all Dua questions!`,
+            : `You finished all Dua questions!!!`,
       },
       userId,
     );
