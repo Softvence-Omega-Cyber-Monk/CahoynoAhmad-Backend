@@ -163,7 +163,7 @@ async getWeeklyQuests(@Req() req: any) {
 
 
 
-  @Get('dua/get-all-dua')
+  @Get('dua/get-all-posted-dua')
   async getAllDua(){
     try{
     const res=await this.gameService.getAllDua();

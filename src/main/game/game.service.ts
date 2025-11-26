@@ -519,11 +519,7 @@ async deleteBulkGame(){
   
 
 async getAllDua(){
-  const dua=await this.prisma.gameData.findMany({
-    where:{
-      dataType:"dua"
-    }
-  })
+  const dua=await this.prisma.dua.findMany()
   return dua
 }
 
