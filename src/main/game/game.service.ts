@@ -528,11 +528,20 @@ async deleteBulkGame(){
 }
   
 
+async getAllDuaGame(){
+  const dua=await this.prisma.gameData.findMany({
+    where:{
+      ayahId:null,
+      surahId:null
+    }
+  })
+  return dua
+}
+
 async getAllDua(){
   const dua=await this.prisma.dua.findMany()
   return dua
 }
-
 
 async postDua(dto:DuaDto){
   const {duaDisplayName,duaReletionName}=dto
