@@ -8,11 +8,12 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { DuaDto } from './dto/createDua.dto';
 import { GetGameDto } from './dto/getGame.dto';
+import { NotificationService } from '../notification/notification.service';
 
 
 @Injectable()
 export class GameService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService,private readonly notification:NotificationService) {}
 
   async create(createGameDto: CreateGameDto) {
 
@@ -230,7 +231,7 @@ async submitAnswer(userId: string, gameId: string, answer: string) {
       where: { id: updatedProgress.id },
       data: { completed: true },
     });
-
+    
     // Reward XP
     const xpReward = type === "surah" ? 20 : 10;
     await this.prisma.credential.update({
@@ -244,6 +245,10 @@ async submitAnswer(userId: string, gameId: string, answer: string) {
     }
   } else if (updatedProgress?.completed) {
     completed = true;
+    await this.notification.sendToUser({
+      title: "You have already completed this Surah.",
+      body: "You have already completed this Surah."
+    }, userId)
   }
 
   // 1️⃣2️⃣ Weekly quests
@@ -301,7 +306,6 @@ async submitAnswer(userId: string, gameId: string, answer: string) {
     },
   };
 }
-
 
 
 

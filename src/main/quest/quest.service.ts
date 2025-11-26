@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { QuestService } from './questService';
+import { NotificationService } from '../notification/notification.service';
 
 @Injectable()
 export class QuestSchedulerService {
@@ -10,6 +11,7 @@ export class QuestSchedulerService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly questService: QuestService,
+    private readonly notification:NotificationService
   ) {}
 
   // TESTING MODE → Runs every day
@@ -17,12 +19,17 @@ export class QuestSchedulerService {
   async handleDailyQuestCron() {
     this.logger.log('Running DAILY quest test cron...');
     await this.assignQuestsToAllUsers('DAILY');
+     await this.notification.broadcastToAll({
+      title: 'Your Daily Task is Assing',
+      body: 'New Daily task has been.'
+    })
   }
 
   @Cron(CronExpression.EVERY_WEEK)
   async handleWeeklyQuestCron() {
     this.logger.log('Running WEEKLY quest test cron...');
     await this.assignQuestsToAllUsers('WEEKLY');
+   
   }
 
   //*assing dailyQuest

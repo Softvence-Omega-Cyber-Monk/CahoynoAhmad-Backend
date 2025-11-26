@@ -21,6 +21,8 @@ import { XenditPaymentModule } from './main/xendit-payment/xendit-payment.module
 import { AdminModule } from './main/admin/admin.module';
 import { SeederService } from './main/seed/seeder.service';
 import { PlanModule } from './main/plan/plan.module';
+import { FirebaseModule } from './main/notification/firebase/firebase.module';
+// import { NotificationModule } from './main/notification/notification.module';
 
 @Module({
   imports: [
@@ -41,6 +43,8 @@ import { PlanModule } from './main/plan/plan.module';
     XenditPaymentModule,
     AdminModule,
     PlanModule,
+    FirebaseModule
+    // NotificationModule,
   ],
   controllers: [AppController],
   providers: [AppService, CloudinaryService,SeederService],
