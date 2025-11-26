@@ -26,4 +26,13 @@ export class LoginDTO {
   @IsNotEmpty()
   @IsString()
   password: string;
+
+  @ApiProperty({
+    description: 'FCM Token for push notifications',
+    example: 'your-fcm-token-here',
+    required: false,
+  })
+  @IsString()
+  @IsOptional()
+  fcmToken?:string
 }

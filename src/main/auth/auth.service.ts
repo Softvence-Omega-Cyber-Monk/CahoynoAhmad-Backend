@@ -86,13 +86,16 @@ export class AuthService {
 
   // This function for login user
 async login(loginDto: LoginDTO) {
-  const { phone, email, password } = loginDto;
+  const { phone, email, password, fcmToken } = loginDto;
 
   try {
     // --- Find user by email OR phone ---
     const user = await this.prisma.credential.findFirst({
       where: {
-        OR: [...(email ? [{ email }] : []), ...(phone ? [{ phone }] : [])],
+        OR: [
+          ...(email ? [{ email }] : []),
+          ...(phone ? [{ phone }] : [])
+        ],
       },
     });
 
@@ -106,6 +109,14 @@ async login(loginDto: LoginDTO) {
       throw new HttpException('Invalid password', HttpStatus.UNAUTHORIZED);
     }
 
+    // --- Update FCM token AFTER successful login ---
+    if (fcmToken) {
+      await this.prisma.credential.update({
+        where: { id: user.id },
+        data: { fcmToken },
+      });
+    }
+
     // --- Build JWT payload ---
     const payload = {
       userId: user.id,
@@ -117,13 +128,13 @@ async login(loginDto: LoginDTO) {
 
     const accessToken = await this.jwtService.signAsync(payload);
 
-    // --- Remove password before returning user ---
     const { password: _, ...safeUser } = user;
 
     return {
       accessToken,
       user: safeUser,
     };
+
   } catch (error) {
     throw new HttpException(
       error.message || 'Login failed',
