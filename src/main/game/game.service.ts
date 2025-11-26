@@ -219,7 +219,7 @@ async submitAnswer(userId: string, gameId: string, answer: string) {
 
   let completed = false;
 
-  // 1️⃣1️⃣ Check completion
+  // 1️⃣1️⃣ Completion logic (ONLY FIXED SECTION)
   if (
     updatedProgress &&
     updatedProgress.score! >= totalQuestions &&
@@ -231,25 +231,37 @@ async submitAnswer(userId: string, gameId: string, answer: string) {
       where: { id: updatedProgress.id },
       data: { completed: true },
     });
-    
-    // Reward XP
+
+    // XP reward
     const xpReward = type === "surah" ? 20 : 10;
     await this.prisma.credential.update({
       where: { id: userId },
       data: { totalXP: { increment: xpReward } },
     });
 
-    // Daily quest for Surah
+    // Daily quest
     if (type === "surah") {
       await this.completeDailyQuest(userId, game.surahId!, game.ayahId!);
     }
-  } else if (updatedProgress?.completed) {
-    completed = true;
-    await this.notification.sendToUser({
-      title: "You have already completed this Surah.",
-      body: "You have already completed this Surah."
-    }, userId)
+
+    // 🎉 FIXED: Completion notification sent only ONCE
+    await this.notification.sendToUser(
+      {
+        title:
+          type === "surah"
+            ? `Surah ${game.surah?.name} Completed!`
+            : `${game.duaName} Completed!`,
+        body:
+          type === "surah"
+            ? `Great job! You finished Surah ${game.surah?.name}!`
+            : `You finished all Dua questions!`,
+      },
+      userId,
+    );
   }
+
+  // Removed duplicate ❌
+  // No “you have already completed this” notification anymore.
 
   // 1️⃣2️⃣ Weekly quests
   await this.checkAndCompleteWeeklyQuests(
@@ -273,8 +285,7 @@ async submitAnswer(userId: string, gameId: string, answer: string) {
     data: { progress: progressPercent },
   });
 
-
-  // 1️⃣4️⃣ total correct and total wrong
+  // 1️⃣4️⃣ Total correct & wrong
   const answerFilter =
     type === "surah"
       ? { userId, game: { surahId: game.surahId } }
@@ -288,11 +299,9 @@ async submitAnswer(userId: string, gameId: string, answer: string) {
     where: { ...answerFilter, isCorrect: false },
   });
 
-  // * Final Score %
   const finalScore =
     totalQuestions > 0 ? (totalCorrect / totalQuestions) * 100 : 0;
 
-  //* Final response
   return {
     isCorrect,
     answeredCount: updatedProgress?.score ?? 0,
@@ -306,6 +315,7 @@ async submitAnswer(userId: string, gameId: string, answer: string) {
     },
   };
 }
+
 
 
 

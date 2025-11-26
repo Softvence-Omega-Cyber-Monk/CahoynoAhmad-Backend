@@ -74,53 +74,22 @@ export class NotificationService {
     return { message: 'Broadcast sent' };
   }
 
-   async sendToUser(payload: BroadcastPayload, userId: string) {
-  // Fetch the FCM token for the specific user
-  const credential = await this.prisma.credential.findFirst({
+async sendToUser(payload: BroadcastPayload, userId: string) {
+  const credentials = await this.prisma.credential.findUnique({
+    where: { id: userId },
     select: { fcmToken: true },
-    where: { id: userId, fcmToken: { not: null } },
   });
 
-  if (!credential?.fcmToken) {
-    this.logger.warn(`No valid FCM token found for user ${userId}`);
-    return { message: 'No valid FCM token for this user' };
-  }
+  if (!credentials?.fcmToken) return;
 
-  try {
-    const response = await this.firebaseApp.messaging().send({
-      token: credential.fcmToken,
-      notification: {
-        title: payload.title,
-        body: payload.body,
-      },
-      data: {
-        // deepLink: payload.deepLink ?? '',
-        // contentType: payload.contentType,
-        // contentId: payload.contentId ?? '',
-      },
-      android: { priority: 'high' },
-      apns: { payload: { aps: { sound: 'default', contentAvailable: true } } },
-    });
-
-    this.logger.log(`Notification sent to user ${userId}: ${response}`);
-    return { message: 'Notification sent' };
-  } catch (error: any) {
-    // Handle invalid token errors
-    if (
-      ['messaging/invalid-argument', 'messaging/registration-token-not-registered'].includes(
-        error.code,
-      )
-    ) {
-      await this.prisma.credential.updateMany({
-        where: { id: userId },
-        data: { fcmToken: null },
-      });
-      this.logger.warn(`Removed invalid FCM token for user ${userId}`);
-    }
-
-    this.logger.error(`Failed to send notification to user ${userId}`, error);
-    return { message: 'Failed to send notification', error };
-  }
+  await this.firebaseApp.messaging().sendEachForMulticast({
+    tokens: [credentials.fcmToken],
+    notification: {
+      title: payload.title,
+      body: payload.body,
+    },
+  });
 }
+
 
 }
