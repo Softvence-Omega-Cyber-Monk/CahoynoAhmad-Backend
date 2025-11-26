@@ -162,6 +162,19 @@ async getWeeklyQuests(@Req() req: any) {
 }
 
 
+  @Get('dua/get-all-dua')
+  async getAllDuaGame(){
+    try{
+    const res=await this.gameService.getAllDuaGame();
+    return{
+      statusCode:HttpStatus.OK,
+      message:"Successfully fetched all dua",
+      data:res
+    }
+    }catch(error){
+      throw new InternalServerErrorException(error.message,error.status)
+    }
+  }
 
   @Get('dua/get-all-posted-dua')
   async getAllDua(){
