@@ -65,8 +65,8 @@ export class GameController {
   @Get()
   @ApiOperation({ summary: 'Get all game questions' })
   @ApiResponse({ status: 200, description: 'List of game questions' })
-  findAll(@Query() filter:GetGameDto) {
-    return this.gameService.findAll(filter);
+  findAll() {
+    return this.gameService.findAll();
   }
 
   @Get(':id')

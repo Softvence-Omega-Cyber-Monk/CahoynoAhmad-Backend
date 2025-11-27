@@ -52,12 +52,9 @@ export class GameService {
     });
   }
   
-  async findAll(filer:GetGameDto) {
-    const {page=1,limit=10}=filer
-    const skip=(page-1)*limit
+  async findAll() {
+  
     return this.prisma.gameData.findMany({
-      skip:skip,
-      take:limit,
       orderBy: { createdAt: 'desc' },
     });
   }
@@ -173,18 +170,10 @@ async submitAnswer(userId: string, gameId: string, answer: string) {
   if (type === "surah") progressWhere.surahId = game.surahId!;
   else progressWhere.duaName = game.duaName!;
 
-  // 8️⃣ Fetch or create progress
+  // 8️⃣ Fetch or create progress — ❗️Allow play even if completed
   let progress = await this.prisma.userGameProgress.findFirst({
     where: progressWhere,
   });
-
-  if (progress?.completed) {
-    throw new ForbiddenException(
-      type === "surah"
-        ? "You have already completed this Surah."
-        : "You have already completed this Dua."
-    );
-  }
 
   if (!progress) {
     progress = await this.prisma.userGameProgress.create({
@@ -197,7 +186,8 @@ async submitAnswer(userId: string, gameId: string, answer: string) {
         completed: false,
       },
     });
-  } else if (scoreIncrement > 0) {
+  } else if (!progress.completed && scoreIncrement > 0) {
+    // ❗️Only add score BEFORE completion (prevents infinite XP farming)
     progress = await this.prisma.userGameProgress.update({
       where: { id: progress.id },
       data: { score: { increment: scoreIncrement } },
@@ -219,7 +209,7 @@ async submitAnswer(userId: string, gameId: string, answer: string) {
 
   let completed = false;
 
-  // 1️⃣1️⃣ Completion logic (ONLY FIXED SECTION)
+  // 1️⃣1️⃣ Completion logic
   if (
     updatedProgress &&
     updatedProgress.score! >= totalQuestions &&
@@ -244,7 +234,7 @@ async submitAnswer(userId: string, gameId: string, answer: string) {
       await this.completeDailyQuest(userId, game.surahId!, game.ayahId!);
     }
 
-    // 🎉 FIXED: Completion notification sent only ONCE
+    // Send completion notification ONCE
     await this.notification.sendToUser(
       {
         title:
@@ -254,14 +244,11 @@ async submitAnswer(userId: string, gameId: string, answer: string) {
         body:
           type === "surah"
             ? `Great job! You finished Surah ${game.surah?.name}!`
-            : `You finished all Dua questions!!!`,
+            : `You finished all Dua questions!`,
       },
-      userId,
+      userId
     );
   }
-
-  // Removed duplicate ❌
-  // No “you have already completed this” notification anymore.
 
   // 1️⃣2️⃣ Weekly quests
   await this.checkAndCompleteWeeklyQuests(
