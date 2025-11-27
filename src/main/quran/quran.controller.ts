@@ -11,6 +11,7 @@ import {
   BadRequestException,
   Body,
   InternalServerErrorException,
+  Delete,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -246,6 +247,16 @@ async uploadQuranZip(@UploadedFile() file: Express.Multer.File) {
   }
   
 
- 
+ @Delete('clean-all')
+ async deleteSeedetQuran(){
+  try{
+    const res=await this.quranService.deleteSeededQuran()
+    return{
+      message:"Database clean successfull"
+    }
+  }catch(error){
+    throw new InternalServerErrorException(error.message,error.status)
+  }
+ }
 
 }

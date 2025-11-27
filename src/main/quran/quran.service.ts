@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import path from 'path';
 import * as fs from 'fs';
@@ -16,6 +16,11 @@ export class QuranService {
   }
   // post all-quran to database one time just
   async seedQuran() {
+    const isExist=await this.prisma.surah.findMany()
+    const isExistAyah=await this.prisma.ayah.findMany()
+    if(isExist || isExistAyah){
+      throw new BadRequestException('Already You Have  quran mazid in you databse,at first you need to clean then you can add again.')
+    }
     const filePath = path.join(__dirname, '..', '..', '..', 'quran.json');
     const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
     for (const surah of data) {
@@ -110,4 +115,22 @@ export class QuranService {
   async getAllSurahIcons(){
     return this.prisma.surahIcon.findMany()
   }
+
+
+
+ async deleteSeededQuran() {
+  await this.prisma.$executeRawUnsafe(`
+    TRUNCATE TABLE 
+      "GameData",
+      "Ayah",
+      "Surah",
+      "Dua"
+    RESTART IDENTITY CASCADE;
+  `);
+
+  return {
+    message: "All Quran data deleted and IDs reset to 1"
+  };
+}
+
 }
