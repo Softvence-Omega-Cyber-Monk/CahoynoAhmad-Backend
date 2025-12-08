@@ -89,7 +89,11 @@ async seedQuran() {
         },
         include: {
           ayahs: true,
-          gameData:true
+          gameData:{
+            orderBy:{
+              createdAt:"asc"
+            }
+          }
         },
       });
       return res;
