@@ -47,7 +47,8 @@ export class GameService {
         correctEnglish: createGameDto.correctEnglish,
         optionsEnglish: createGameDto.optionsEnglish,
         dataType:createGameDto.dataType,
-        duaName:createGameDto.duaName
+        duaName:createGameDto.duaName,
+        orderIndex:9
       },
     });
   }
@@ -426,14 +427,12 @@ async submitAnswer(userId: string, gameId: string, answer: string) {
 
 async createBulk() {
   try {
-    //  Step 1: Locate and read the JSON file
-
-    const isExistGametable=await this.prisma.gameData.findFirst()
-    if(isExistGametable){
-      throw new ForbiddenException('Game table already exist you cant create again');
+    const isExistGametable = await this.prisma.gameData.findFirst();
+    if (isExistGametable) {
+      throw new ForbiddenException('Game table already exists. You cannot create again.');
     }
-    const filePath = path.join(process.cwd(), 'quests_merged.json');
 
+    const filePath = path.join(process.cwd(), 'quests_merged.json');
     if (!fs.existsSync(filePath)) {
       throw new ForbiddenException('quests_merged.json file not found in project root');
     }
@@ -442,46 +441,36 @@ async createBulk() {
     const dataArray = JSON.parse(rawData);
 
     if (!Array.isArray(dataArray) || dataArray.length === 0) {
-      throw new ForbiddenException('quests_merged.json is empty or not a valid array');
+      throw new ForbiddenException('quests_merged.json is empty or invalid');
     }
 
-    //  Step 2: Filter out undefined IDs for safe querying
-    const uniqueSurahIds = [
-      ...new Set(
-        dataArray.map((d) => d.surahId).filter((id): id is number => id !== undefined)
-      ),
-    ];
-    const uniqueAyahIds = [
-      ...new Set(
-        dataArray.map((d) => d.ayahId).filter((id): id is number => id !== undefined)
-      ),
-    ];
+    // Optional: check missing surahs or ayahs
+    const uniqueSurahIds = [...new Set(dataArray.map(d => d.surahId).filter((id): id is number => id !== undefined))];
+    const uniqueAyahIds = [...new Set(dataArray.map(d => d.ayahId).filter((id): id is number => id !== undefined))];
 
-    //  Step 3: Find existing Surahs and Ayahs (optional, can skip if you don't need validation)
     const existingSurahs = await this.prisma.surah.findMany({
       where: { id: { in: uniqueSurahIds } },
       select: { id: true },
     });
-
     const existingAyahs = await this.prisma.ayah.findMany({
       where: { id: { in: uniqueAyahIds } },
       select: { id: true },
     });
 
-    const foundSurahIds = existingSurahs.map((s) => s.id);
-    const foundAyahIds = existingAyahs.map((a) => a.id);
+    const foundSurahIds = existingSurahs.map(s => s.id);
+    const foundAyahIds = existingAyahs.map(a => a.id);
 
-    const missingSurahs = uniqueSurahIds.filter((id) => !foundSurahIds.includes(id));
-    const missingAyahs = uniqueAyahIds.filter((id) => !foundAyahIds.includes(id));
+    const missingSurahs = uniqueSurahIds.filter(id => !foundSurahIds.includes(id));
+    const missingAyahs = uniqueAyahIds.filter(id => !foundAyahIds.includes(id));
 
     if (missingSurahs.length > 0) console.warn('⚠ Missing Surahs:', missingSurahs);
     if (missingAyahs.length > 0) console.warn('⚠ Missing Ayahs:', missingAyahs);
 
-    //  Step 4: Prepare and insert data into gameData
+    // Insert rows with incremental orderIndex
     const result = await this.prisma.gameData.createMany({
-      data: dataArray.map((d) => ({
-        surahId: d.surahId ?? null, // optional
-        ayahId: d.ayahId ?? null,   // optional
+      data: dataArray.map((d, idx) => ({
+        surahId: d.surahId ?? null,
+        ayahId: d.ayahId ?? null,
         arabicText: d.arabicText,
         indonesianText: d.indonesianText,
         audioUrl: d.audioUrl ?? null,
@@ -493,11 +482,11 @@ async createBulk() {
         optionsIndonesian: d.optionsIndonesian,
         dataType: d.dataType ?? null,
         duaName: d.duaName ?? null,
+        orderIndex: idx, // 👈 incremental order
       })),
       skipDuplicates: true,
     });
 
-    //  Step 5: Return summary
     return {
       message: `✅ Successfully inserted ${result.count} records from quests_merged.json.`,
     };
@@ -506,6 +495,7 @@ async createBulk() {
     throw new InternalServerErrorException(err.message);
   }
 }
+
 
 async deleteBulkGame(){
   await this.prisma.gameData.deleteMany();

@@ -13,13 +13,15 @@ model GameData {
   updatedAt         DateTime    @updatedAt
   surahId           Int?
   ayahId            Int?
- dataType String?
-  duaName String?
-  ayah              Ayah?       @relation(fields: [ayahId], references: [id],onDelete: Cascade)
-  surah             Surah?      @relation(fields: [surahId], references: [id],onDelete: Cascade)
-  dua               Dua? @relation(fields: [duaName],references: [duaName],onDelete: Cascade)
+  dataType          String?
+  duaName           String?
+  orderIndex        Int        
+  ayah              Ayah?       @relation(fields: [ayahId], references: [id], onDelete: Cascade)
+  surah             Surah?      @relation(fields: [surahId], references: [id], onDelete: Cascade)
+  dua               Dua?        @relation(fields: [duaName], references: [duaName], onDelete: Cascade)
   userAnswers       UserAnswer[]
 }
+
 
 
 model UserGameProgress {

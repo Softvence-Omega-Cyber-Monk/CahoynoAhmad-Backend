@@ -81,26 +81,26 @@ async seedQuran() {
   }
 
   // get surah by name
-  async getSurahByName(name: string) {
-    try {
-      const res = await this.prisma.surah.findUnique({
-        where: {
-          name: name,
+async getSurahByName(name: string) {
+  try {
+    const res = await this.prisma.surah.findUnique({
+      where: { name },
+      include: {
+        ayahs: true,
+        gameData: {
+          orderBy: {
+            orderIndex: 'asc',
+          },
         },
-        include: {
-          ayahs: true,
-          gameData:{
-            orderBy:{
-              createdAt:"asc"
-            }
-          }
-        },
-      });
-      return res;
-    } catch (error) {
-      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
-    }
+      },
+    });
+    return res;
+  } catch (error) {
+    throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
   }
+}
+
+
 
   async  uploadIcon(dto:any, file:any){
     const findIconWithSurh=await this.prisma.surahIcon.findFirst({

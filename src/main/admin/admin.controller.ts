@@ -176,6 +176,18 @@ async updateAdminProfile(
   }
 
 
+  @Post('test-primeum-user/:userID')
  
-
+async createPrUser(@Param('id') userId:string){
+try{
+      const res=await this.adminService.createPrUser(userId);
+      return{
+        status:HttpStatus.ACCEPTED,
+        message:"user blocked success",
+        data:res
+      }
+    }catch(error){
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST)
+    }
+}
 }

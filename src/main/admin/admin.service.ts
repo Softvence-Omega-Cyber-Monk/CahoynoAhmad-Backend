@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { UpdateAdminDto } from './dto/update-admin.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { getUserDTO } from './dto/get_all_user';
@@ -281,5 +281,38 @@ export class AdminService {
       })
       return res;
 
+  }
+
+  async createPrUser(userId:string){
+    const isUserexit=await this.prisma.credential.findFirst({
+      where:{
+        id:userId
+      }
+    })
+    if(!isUserexit){
+      throw new NotFoundException("User not found")
+    }
+  const res=  await this.prisma.credential.update({
+      where:{
+        id:userId
+      },
+      data:{
+        isSubscribe:true
+      }
+    })
+    const res3=await this.prisma.payment.create({
+      data:{
+        userId:userId,
+        amount:500,
+        status:"PAID",
+        planName:"PRO",
+        planId:"2",
+        userEmail:isUserexit.email
+      }
+    })
+    return {
+      user:res,
+      paymet:res3
+    }
   }
 }
