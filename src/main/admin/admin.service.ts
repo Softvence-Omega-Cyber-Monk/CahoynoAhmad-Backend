@@ -298,7 +298,8 @@ export class AdminService {
         id:userId
       },
       data:{
-        isSubscribe:true
+        isSubscribe:true,
+        subscription:"PREMIUM"
       }
     })
     const res3=await this.prisma.payment.create({
