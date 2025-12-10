@@ -284,6 +284,7 @@ export class AdminService {
   }
 
   async createPrUser(userId:string){
+    // console.log(userId)
     const isUserexit=await this.prisma.credential.findFirst({
       where:{
         id:userId
