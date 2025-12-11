@@ -69,7 +69,7 @@ export class AuthController {
       return {
         statusCode: HttpStatus.OK,
         success: true,
-        message: 'Password reset link sent successfully',
+        message: 'OTP sent to your email',
         data: result,
       };
     } catch (error) {

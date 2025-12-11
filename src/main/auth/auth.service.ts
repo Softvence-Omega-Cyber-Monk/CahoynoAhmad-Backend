@@ -7,6 +7,7 @@ import { LoginDTO } from './dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
 import { randomBytes } from 'crypto';
 import { MailService } from '../mail/mail.service';
+import { EmailTemplateService } from '../mail/template/templete';
 
 @Injectable()
 export class AuthService {
@@ -14,6 +15,7 @@ export class AuthService {
     private prisma: PrismaService,
     private jwtService: JwtService,
     private mailService: MailService,
+    private readonly mailTemplate:EmailTemplateService
   ) {}
 
   // This function will create user
@@ -164,14 +166,21 @@ async login(loginDto: LoginDTO) {
     },
   });
 
-  // Send the OTP via email
-  await this.mailService.sendMail({
-    to: email,
-    subject: 'Password Reset OTP',
-    html: `<h1>Password Reset Request</h1><p>Your OTP is: <strong>${otp}</strong></p><p>This OTP is valid for 10 minutes.</p>`,
-    from: process.env.SMTP_USER as string,
-  });
+// In your auth service or controller
+const htmlContent = this.mailTemplate.generateOtpEmail({
+  otp: otp.toString(),
+  expiryMinutes: 10,
+  recipientName: 'John' // optional
+});
 
+await this.mailService.sendMail({
+  to: email,
+  subject: 'Password Reset OTP',
+  html: htmlContent,
+  from: process.env.SMTP_USER as string,
+});
+
+  
   return { message: 'Password reset OTP sent successfully' };
 }
   async resetPassword(token: string, newPassword: string) {
