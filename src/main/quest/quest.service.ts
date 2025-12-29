@@ -16,14 +16,15 @@ export class QuestSchedulerService {
 
   // TESTING MODE → Runs every day
   @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
-  async handleDailyQuestCron() {
-    this.logger.log('Running DAILY quest test cron...');
-    await this.assignQuestsToAllUsers('DAILY');
-     await this.notification.broadcastToAll({
-      title: 'Your Daily Task is Assing',
-      body: 'New Daily task has been.'
-    })
-  }
+async handleDailyQuestCron() {
+  this.logger.log('Running DAILY quest test cron...');
+  await this.assignQuestsToAllUsers('DAILY');
+  await this.notification.broadcastToAll({
+    title: 'Tugas Harianmu Telah Diberikan',
+    body: 'Tugas harian baru sudah tersedia.'
+  });
+}
+
 
   @Cron(CronExpression.EVERY_WEEK)
   async handleWeeklyQuestCron() {

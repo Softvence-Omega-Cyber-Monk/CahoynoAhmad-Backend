@@ -23,6 +23,7 @@ import { SeederService } from './main/seed/seeder.service';
 import { PlanModule } from './main/plan/plan.module';
 import { FirebaseModule } from './main/notification/firebase/firebase.module';
 // import { NotificationModule } from './main/notification/notification.module';
+import { ApplePurchaseModule } from './main/apple-purchase/apple-purchase.module';
 
 @Module({
   imports: [
@@ -43,7 +44,8 @@ import { FirebaseModule } from './main/notification/firebase/firebase.module';
     XenditPaymentModule,
     AdminModule,
     PlanModule,
-    FirebaseModule
+    FirebaseModule,
+    ApplePurchaseModule
     // NotificationModule,
   ],
   controllers: [AppController],

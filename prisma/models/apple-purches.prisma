@@ -1,0 +1,32 @@
+model ApplePurchase {
+  id String @id @default(uuid())
+
+  userId String
+  productId String?      
+  planId String?
+
+  transactionId String? @unique
+  originalTransactionId String?
+
+  purchaseDate DateTime?
+  expiresDate DateTime?
+  revocationDate DateTime?
+
+  signedTransactionInfo String? @db.Text
+  signedRenewalInfo String?     @db.Text
+  recipt             String?
+
+  status ApplePurchaseStatus?
+
+  user Credential @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum ApplePurchaseStatus {
+  ACTIVE
+  EXPIRED
+  REFUNDED
+  REVOKED
+}

@@ -236,19 +236,19 @@ async submitAnswer(userId: string, gameId: string, answer: string) {
     }
 
     // Send completion notification ONCE
-    await this.notification.sendToUser(
-      {
-        title:
-          type === "surah"
-            ? `Surah ${game.surah?.name} Completed!`
-            : `${game.duaName} Completed!`,
-        body:
-          type === "surah"
-            ? `Great job! You finished Surah ${game.surah?.name}!`
-            : `You finished all Dua questions!`,
-      },
-      userId
-    );
+  await this.notification.sendToUser(
+  {
+    title:
+      type === "surah"
+        ? `Surah ${game.surah?.name} Selesai!`
+        : `${game.duaName} Selesai!`,
+    body:
+      type === "surah"
+        ? `Kerja bagus! Kamu telah menyelesaikan Surah ${game.surah?.name}!`
+        : `Kamu telah menyelesaikan semua pertanyaan Doa!`,
+  },
+  userId
+);
   }
 
   // 1️⃣2️⃣ Weekly quests

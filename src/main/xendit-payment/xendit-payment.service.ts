@@ -30,45 +30,56 @@ export class XenditPaymentService {
   }
 
   // ================= Payment / Invoice =================
-  async createInvoice(dto: CreateXenditPaymentDto, email: string) {
-    const externalId = `ORD-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-    const successUrl = process.env.APP_BASE_URL + '/payment/success';
-    const failureUrl = process.env.APP_BASE_URL + '/payment/failure';
+async createInvoice(dto: CreateXenditPaymentDto, email: string) {
+  const externalId = `ORD-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+  const successUrl = process.env.APP_BASE_URL + '/payment/success';
+  const failureUrl = process.env.APP_BASE_URL + '/payment/failure';
 
-    try {
-      const user = await this.prisma.credential.findFirst({ where: { email } });
-      if (!user) throw new NotFoundException('User with this email does not exist.');
-
-      this.logger.log(`Creating Xendit invoice for ${dto.amount} with external_id: ${externalId}`);
-
-      const response = await axios.post(
-        'https://api.xendit.co/invoices',
-        {
-          external_id: externalId,
-          amount: dto.amount,
-          description: dto.description,
-          payer_email: email,
-          success_redirect_url: successUrl,
-          failure_redirect_url: failureUrl,
-          currency: dto.currency,
-        },
-        {
-          auth: { username: process.env.XENDIT_SECRET_KEY!, password: '' },
-        },
-      );
-
-      const invoice = response.data;
-
-      return {
-        success: true,
-        invoiceUrl: invoice.invoice_url,
-        externalId: invoice.external_id,
-        xenditId: invoice.id,
-      };
-    } catch (error: any) {
-      throw new HttpException(error.response?.data || error.message, error.response?.status || 500);
+  try {
+    const user = await this.prisma.credential.findFirst({ where: { email } });
+    if (!user) {
+      throw new NotFoundException('User with this email does not exist.');
     }
+
+    // 🔍 Hard log (prove value)
+    this.logger.log(`RAW AMOUNT BEFORE SEND: ${dto.amount} (${typeof dto.amount})`);
+
+    const xenditAxios = axios.create({
+      baseURL: 'https://api.xendit.co',
+      auth: {
+        username: process.env.XENDIT_SECRET_KEY!,
+        password: '',
+      },
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const response = await xenditAxios.post('/invoices', {
+      external_id: externalId,
+      amount: Number(dto.amount)*1000, // force numeric
+      description: dto.description,
+      payer_email: email,
+      success_redirect_url: successUrl,
+      failure_redirect_url: failureUrl,
+      currency: dto.currency ?? 'IDR',
+    });
+
+    const invoice = response.data;
+
+    return {
+      success: true,
+      invoiceUrl: invoice.invoice_url,
+      externalId: invoice.external_id,
+      xenditId: invoice.id,
+    };
+  } catch (error: any) {
+    throw new HttpException(
+      error.response?.data || error.message,
+      error.response?.status || 500,
+    );
   }
+}
 
   // ================= Webhook =================
   validateWebhookSignature(receivedToken: string) {
