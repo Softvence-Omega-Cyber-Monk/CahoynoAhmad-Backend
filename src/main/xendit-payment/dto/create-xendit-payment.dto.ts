@@ -39,29 +39,4 @@ export class CreateXenditPaymentDto {
   @IsOptional()
   @IsString({ message: 'Currency must be a string.' })
   currency?: string = 'IDR';
-
-  // @ApiPropertyOptional({
-  //   description: 'Optional custom data to be passed and returned in the webhook.',
-  //   example: '{ "userId": 12345 }',
-  //   type: String,
-  // })
-  // @IsOptional()
-  // @IsString({ message: 'Custom metadata must be a string.' })
-  // metadata?: string;
-
-  // @ApiProperty({
-  //   description: 'The ID of the plan associated with this payment.',
-  //   example: 'plan_123',
-  // })
-  // @IsNotEmpty({ message: 'Plan ID is required.' })
-  // @IsString({ message: 'Plan ID must be a string.' })
-  // planId: string;
-
-  // @ApiProperty({
-  //   description: 'The name of the plan associated with this payment.',
-  //   example: 'Premium Plan',
-  // })
-  // @IsNotEmpty({ message: 'Plan name is required.' })
-  // @IsString({ message: 'Plan name must be a string.' })
-  // planName: string;
 }
